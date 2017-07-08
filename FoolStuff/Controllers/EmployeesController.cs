@@ -13,6 +13,7 @@ namespace FoolStuff.Controllers
 
         public IEnumerable<Employee> Get()
         {
+            //Get Verb 
             using (EmployeeDBEntities entities = new EmployeeDBEntities())
             {
                 return entities.Employees.ToList();
