@@ -244,6 +244,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UseraccountController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -332,6 +333,10 @@
     <ProjectReference Include="..\EmployeeDataAccess\EmployeeDataAccess.csproj">
       <Project>{8f02c96c-4c5f-402c-a728-2096db118a47}</Project>
       <Name>EmployeeDataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FoolStaffDataAccess\FoolStaffDataAccess.csproj">
+      <Project>{315b5817-4074-43d1-b746-970fade71811}</Project>
+      <Name>FoolStaffDataAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -123,9 +123,11 @@ flippy.fancy :hover {
     /*color: white !important;*/
 }
 
+/*
 .panel-heading {
     color:#4985e5 !important;
 }
+*/
 .navbar-fixed-top {
      box-shadow: 2px 1px 1px 1px rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.2) !important;
 }
