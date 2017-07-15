@@ -1,7 +1,22 @@
 ﻿"use strict";
 angular
 .module('FoolStackApp')
-.controller('RegisterController', ["$scope", "RestService", function ($scope, RestService) {
+.controller('RegisterController', ["$scope", "RestService", "CostantUrl", function ($scope, RestService, CostantUrl) {
+
+    var vm = this;
+
+    vm.user = {
+        name: "",
+        surname: "",
+        phone: "",
+        email: "",
+        password: ""
+    };
+
+
+
+    vm.signUser = _signUser;
+
 
     init();
     function init() {
@@ -17,6 +32,14 @@ angular
         //elaboro i dati per il binding
     }
 
-   
+    function _signUser() {
+        console.log("sign");
+
+        RestService.PostData(CostantUrl.urlAccount, "register", vm.user).then(function (response) {
+            console.log(response);
+        })
+
+
+    }
 
 }]);
