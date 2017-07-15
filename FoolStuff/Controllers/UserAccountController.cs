@@ -15,7 +15,7 @@ namespace FoolStuff.Controllers
         [Route("isAlive")]
         public HttpResponseMessage isAlive()
         {
-            return Request.CreateResponse(HttpStatusCode.OK);
+            return Request.CreateResponse(HttpStatusCode.OK, "I'm Alive");
         }
 
         [HttpPost]
@@ -30,7 +30,6 @@ namespace FoolStuff.Controllers
                     entities.SaveChanges();
 
                     var message = Request.CreateResponse(HttpStatusCode.Created, user);
-                    message.Headers.Location = new Uri(Request.RequestUri + user.Id.ToString());
                     return message;
                 }
             }
