@@ -241,6 +241,6 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 
-*.Config
-
-EmployeeDataAccess/App.config
+EmployeeDataAccess/App.Config
+FoolStaffdataAccess/App.Config
+FoolStuff/Web.config
