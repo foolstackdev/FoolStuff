@@ -15,7 +15,7 @@ namespace FoolStuff.Controllers
         [Route("isAlive")]
         public HttpResponseMessage isAlive()
         {
-            return Request.CreateResponse(HttpStatusCode.OK, "I'm Alive");
+            return Request.CreateResponse(HttpStatusCode.OK, "I'm Alive, Hello!");
         }
 
         [HttpPost]

@@ -240,7 +240,3 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
-
-EmployeeDataAccess/App.Config
-FoolStaffdataAccess/App.Config
-FoolStuff/Web.config
