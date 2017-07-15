@@ -33,7 +33,7 @@ angular
     }
 
     function _signUser() {
-        console.log("sign");
+        console.log(vm.user);
 
         RestService.PostData(CostantUrl.urlAccount, "register", vm.user).then(function (response) {
             console.log(response);
