@@ -16,7 +16,6 @@ using Microsoft.Owin.Security.OAuth;
 using FoolStuff.Models;
 using FoolStuff.Providers;
 using FoolStuff.Results;
-using FoolStaffDataAccess;
 
 namespace FoolStuff.Controllers
 {
@@ -322,14 +321,8 @@ namespace FoolStuff.Controllers
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterBindingModelCustomUser oAuthModel)
+        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
-            RegisterBindingModel model = new RegisterBindingModel();
-            model.Email = oAuthModel.Email;
-            model.Password = oAuthModel.Password;
-            model.ConfirmPassword = oAuthModel.Password;
-
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -343,29 +336,6 @@ namespace FoolStuff.Controllers
             {
                 return GetErrorResult(result);
             }
-
-            try
-            {
-
-                User oUser = new User();
-                oUser.Name = oAuthModel.Name;
-                oUser.Surname = oAuthModel.Surname;
-                oUser.Phone = oAuthModel.Phone;
-                oUser.Email = oAuthModel.Email;
-                oUser.Password = oAuthModel.Password;
-
-                using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
-                {
-                    entities.Users.Add(oUser);
-                    entities.SaveChanges();
-                }
-            }
-            catch (Exception ex)
-            {
-                //To DO
-                //Implementare un sistema di logger e avviso utente di modificare le proprie generalità dopo la login.
-            }
-
 
             return Ok();
         }

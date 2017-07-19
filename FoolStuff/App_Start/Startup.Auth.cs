@@ -38,7 +38,7 @@ namespace FoolStuff
                 TokenEndpointPath = new PathString("/Token"),
                 Provider = new ApplicationOAuthProvider(PublicClientId),
                 AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromHours(2),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
                 // In modalità di produzione impostare AllowInsecureHttp = false
                 AllowInsecureHttp = true
             };

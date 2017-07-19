@@ -50,28 +50,6 @@ namespace FoolStuff.Models
         public string ConfirmPassword { get; set; }
     }
 
-    public class RegisterBindingModelCustomUser
-    {
-        [Required]
-        [Display(Name = "Posta elettronica")]
-        public string Email { get; set; }
-
-        [Required]
-        [StringLength(100, ErrorMessage = "La lunghezza di {0} deve essere di almeno {2} caratteri.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "Password")]
-        public string Password { get; set; }
-
-        [Required]
-        public string Name { get; set; }
-
-        [Required]
-        public string Surname { get; set; }
-
-        [Required]
-        public string Phone { get; set; }
-    }
-
     public class RegisterExternalBindingModel
     {
         [Required]
