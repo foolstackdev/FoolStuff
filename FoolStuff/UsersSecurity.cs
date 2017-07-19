@@ -12,7 +12,7 @@ namespace FoolStuff
         {
             using(FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
             {
-                return entities.Users.Any(user => user.EMAIL.Equals(username, StringComparison.OrdinalIgnoreCase) && user.PASSWORD == password);
+                return entities.Users.Any(user => user.Email.Equals(username, StringComparison.OrdinalIgnoreCase) && user.Password == password);
             }
         }
 

@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 07/13/2017 22:58:28
+-- Date Created: 07/19/2017 20:02:10
 -- Generated from EDMX file: D:\GITREPO\FoolStuff\FoolStaffDataAccess\FoolStaffDataModel.edmx
 -- --------------------------------------------------
 
@@ -22,8 +22,8 @@ GO
 -- Dropping existing tables
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[USERS]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[USERS];
+IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Users];
 GO
 
 -- --------------------------------------------------
@@ -33,11 +33,11 @@ GO
 -- Creating table 'Users'
 CREATE TABLE [dbo].[Users] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [NAME] nvarchar(50)  NOT NULL,
-    [SURNAME] nvarchar(50)  NOT NULL,
-    [PHONE] nvarchar(20)  NOT NULL,
-    [EMAIL] nvarchar(50)  NOT NULL,
-    [PASSWORD] nvarchar(20)  NOT NULL
+    [Name] nvarchar(50)  NOT NULL,
+    [Surname] nvarchar(50)  NOT NULL,
+    [Phone] nvarchar(20)  NOT NULL,
+    [Email] nvarchar(50)  NOT NULL,
+    [Password] nvarchar(20)  NOT NULL
 );
 GO
 
