@@ -94,6 +94,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\model\constants\constants.js" />
+    <Content Include="app\view\assets\content\css\bootrap-override.css" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -114,7 +116,7 @@
     <Content Include="app\app.js" />
     <Content Include="app\controller\register.controller.js" />
     <Content Include="app\controller\login.controller.js" />
-    <Content Include="app\model\rest.service.js" />
+    <Content Include="app\model\services\rest.service.js" />
     <Content Include="app\view\assets\content\css\bootstrap.min.css" />
     <Content Include="app\view\assets\content\css\style.css" />
     <Content Include="app\view\assets\content\fonts\glyphicons-halflings-regular.svg" />

@@ -16,9 +16,9 @@ angular
                     });
                 return deferred.promise;
             },
-            PostData: function (json) {
+            PostData: function (path,method,json) {
             var deferred = $q.defer();
-            $http.post("https://jsonplaceholder.typicode.com/posts/1/comments", json)
+            $http.post(path+method, json)
                 .then(function (result) {
                     console.log("Success");
                     deferred.resolve(result);

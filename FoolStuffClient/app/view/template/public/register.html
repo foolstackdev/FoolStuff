@@ -1,1 +1,61 @@
-﻿register page
+﻿<div class="panel panel-default">
+    <form class="form-horizontal" role="form">
+        <div class="panel-heading"><h2>Registrati</h2></div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="firstName" class="col-sm-3 control-label">Nome</label>
+                <div class="col-sm-9">
+                    <input type="text" id="firstName" placeholder="Nome" class="form-control" autofocus data-ng-model="registerCtrl.user.name">
+                    <!--<span class="help-block">Last Name, First Name, eg.: Smith, Harry</span>-->
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="lastname" class="col-sm-3 control-label">Cognome</label>
+                <div class="col-sm-9">
+                    <input type="text" id="lastName" placeholder="Cognome" class="form-control" autofocus data-ng-model="registerCtrl.user.surname">
+                    <!--<span class="help-block">Last Name, First Name, eg.: Smith, Harry</span>-->
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="phone" class="col-sm-3 control-label">Telefono</label>
+                <div class="col-sm-9">
+                    <input type="text" id="phone" placeholder="Telefono" class="form-control" autofocus data-ng-model="registerCtrl.user.phone">
+                    <span class="help-block">es.: 3331234567</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email" class="col-sm-3 control-label">Email</label>
+                <div class="col-sm-9">
+                    <input type="email" id="email" placeholder="Email" class="form-control" data-ng-model="registerCtrl.user.email">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password" class="col-sm-3 control-label">Password</label>
+                <div class="col-sm-9">
+                    <input type="password" id="password" placeholder="Password" class="form-control" data-ng-model="registerCtrl.user.password">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-9 col-sm-offset-3">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox">I accept <a href="#">terms</a>
+                        </label>
+                    </div>
+                </div>
+            </div> <!-- /.form-group -->
+        </div>
+        <div class="panel-footer">
+            <div class="form-group">
+                <div class="col-sm-9 col-sm-offset-3">
+                    <button type="submit" class="btn btn-primary btn-block" data-ng-click="registerCtrl.signUser()">Register</button>
+                </div>
+            </div>
+        </div>
+    </form> <!-- /form -->
+</div>
+
+
+
+
+
