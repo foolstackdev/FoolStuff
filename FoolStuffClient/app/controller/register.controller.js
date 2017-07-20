@@ -9,8 +9,10 @@ angular
         name: "",
         surname: "",
         phone: "",
+        address: "",
         email: "",
         password: ""
+        
     };
 
 
@@ -35,9 +37,9 @@ angular
     function _signUser() {
         console.log(vm.user);
 
-        RestService.PostData(CostantUrl.urlAccount, "register", vm.user).then(function (response) {
-            console.log(response);
-        })
+        //RestService.PostData(CostantUrl.urlAccount, "register", vm.user).then(function (response) {
+        //    console.log(response);
+        //})
 
 
     }
