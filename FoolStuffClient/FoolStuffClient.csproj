@@ -97,6 +97,8 @@
     <Content Include="app\controller\users.controller.js" />
     <Content Include="app\model\constants\constants.js" />
     <Content Include="app\view\assets\content\css\bootrap-override.css" />
+    <Content Include="app\view\assets\img\FoolStackers.jpg" />
+    <Content Include="app\view\assets\img\Logo.png" />
     <Content Include="app\view\assets\lib\angular-toast\angular-toastr.min.css" />
     <Content Include="app\view\assets\lib\angular-toast\angular-toastr.tpls.min.js" />
     <Content Include="app\view\template\public\users.html" />
@@ -144,9 +146,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="app\view\assets\img\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
