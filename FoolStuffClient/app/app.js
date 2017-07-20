@@ -1,4 +1,7 @@
 ﻿"use strict";
 (function () {
-    angular.module('FoolStackApp', ['ui.router']);
+    angular.module('FoolStackApp', [
+        'ui.router',
+        'toastr'
+    ]);
 })();

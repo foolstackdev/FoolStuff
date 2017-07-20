@@ -39,6 +39,25 @@ namespace FoolStuff.Controllers
             }
         }
 
+        [BasicAuthentication]
+        [HttpGet]
+        [Route("allusers")]
+        public HttpResponseMessage allUsers([FromBody]User user)
+        {
+            try
+            {
+                using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
+                {
+                    var entity = entities.Users.ToList();
+                    return Request.CreateResponse(HttpStatusCode.OK, entity);
+                }
+            }
+            catch(Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            }
+
+        }
 
     }
 }
