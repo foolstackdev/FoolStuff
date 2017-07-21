@@ -1,4 +1,8 @@
-﻿/* immagini principali in home page */
-.immaginiPrincipali {
+﻿/* immagini nella home page */
+.immaginiCopertina {
     width: 100%;
+}
+
+h1 {
+    text-align:center;
 }

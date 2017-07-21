@@ -35,4 +35,11 @@
             controllerAs: "registerCtrl",
             data: { pageTitle: 'Register view' }
         })
+        .state('unlogged.users', {
+            url: "/users",
+            templateUrl: "app/view/template/public/users.html",
+            controller: "UsersController",
+            controllerAs: "usersCtrl",
+            data: { pageTitle: 'Users view' }
+        })
 }]);
