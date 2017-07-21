@@ -19,7 +19,7 @@ namespace FoolStuff.Controllers
                 return entities.Employees.ToList();
             }
         }
-
+        // grazie a Gianluca ho capito come fare!!
         public HttpResponseMessage Get(int id)
         {
             using (EmployeeDBEntities entities = new EmployeeDBEntities())
