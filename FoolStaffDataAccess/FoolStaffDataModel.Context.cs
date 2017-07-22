@@ -26,5 +26,7 @@ namespace FoolStaffDataAccess
         }
     
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Tesoreria> Tesoreria { get; set; }
+        public virtual DbSet<User_Tesoreria> User_Tesoreria { get; set; }
     }
 }

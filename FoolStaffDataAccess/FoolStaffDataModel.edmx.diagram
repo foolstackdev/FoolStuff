@@ -6,6 +6,10 @@
     <edmx:Diagrams>
       <Diagram DiagramId="bf4353ed42034e37979d89bc541e940a" Name="Diagram1" >
         <EntityTypeShape EntityType="FoolStaffDataModel.User" Width="1.5" PointX="4.125" PointY="1" />
+        <EntityTypeShape EntityType="FoolStaffDataModel.Tesoreria" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="FoolStaffDataModel.User_Tesoreria" Width="1.5" PointX="7.125" PointY="2.875" />
+        <AssociationConnector Association="FoolStaffDataModel.UserToUser_Tesoreria" />
+        <AssociationConnector Association="FoolStaffDataModel.TesoreriaToUser_Tesoreria" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

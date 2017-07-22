@@ -2,6 +2,7 @@
 (function () {
     angular.module('FoolStackApp', [
         'ui.router',
-        'toastr'
+        'toastr',
+        'ui.bootstrap'
     ]);
 })();

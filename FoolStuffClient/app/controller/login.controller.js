@@ -25,7 +25,7 @@ angular
         RestService.PostContentTypeText(CostantUrl.urlToken, "token", JsonObj).then(function (response) {
             toastr.success('Cool, you\' re now logged', 'Confirmed');
             sessionStorage.setItem('accessToken', response.data.access_token);
-            $state.go("signed.users");
+            $state.go("signed.homepage");
         }, function (err) {
             console.log(err)
             if (err.data == null)
