@@ -55,20 +55,6 @@ angular
                     deferred.reject(error);
                 })
 
-
-
-                //$http.post(path + method, text)
-                //.then(function (result) {
-                //    console.log("Success");
-                //    deferred.resolve(result);
-                //}, function (err) {
-                //    if (err.status == 401) {
-                //        toastr.error('Not allowed, you should first login', 'Unauthorized');
-                //        $state.go("unlogged.login");
-                //    }
-                //    console.log(err);
-                //    deferred.reject(err);
-                //});
                 return deferred.promise;
             }
         };

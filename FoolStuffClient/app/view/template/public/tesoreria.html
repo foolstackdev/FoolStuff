@@ -1,0 +1,138 @@
+﻿<uib-tabset active="active">
+    <uib-tab index="0" heading="Generale">
+        <div class="row" style="margin-top:10px">
+
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <form class="form-horizontal" role="form">
+                        <div class="panel-heading"><h4>Gestione Tesoreria</h4></div>
+                        <div class="panel-body">
+
+                        </div>
+                        <div class="panel-footer">
+
+                        </div>
+                    </form> <!-- /form -->
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="panel panel-default">
+                    <form class="form-horizontal" role="form">
+                        <div class="panel-heading"><h4>Gestione Tesoreria</h4></div>
+                        <div class="panel-body">
+
+                        </div>
+                        <div class="panel-footer">
+
+                        </div>
+                    </form> <!-- /form -->
+                </div>
+            </div>
+
+
+
+
+
+
+
+        </div>
+
+
+
+    </uib-tab>
+
+    <!--<uib-tab index="1" select="alertMe()">-->
+    <uib-tab index="1" select="tesoreriaCtrl.getUsers()">
+        <uib-tab-heading>
+            <i class="glyphicon glyphicon-calendar"></i> Gestione Versamenti
+        </uib-tab-heading>
+
+        <div class="row" style="margin-top:10px">
+
+            <div class="col-lg-8">
+                <div class="panel panel-default">
+                    <form class="form-horizontal" role="form">
+                        <div class="panel-heading"><h4>Seleziona Utenti</h4></div>
+                        <div class="panel-body">
+                            <table class="table table-hover">
+                                <tr data-ng-repeat="user in tesoreriaCtrl.users track by $index">
+                                    <td>
+                                        <!--<input type="checkbox" ng-checked="item.isRowSelected" data-ng-click="toggleSelection(item)">-->
+                                        <input type="checkbox" data-ng-model="tesoreriaCtrl.userSelected[$index].check">
+                                        <!--<input type="checkbox" data-ng-change="tesoreriaCtrl.userSelected[$index].check = !tesoreriaCtrl.userSelected[$index].check" data-ng-model="tesoreriaCtrl.userSelected[$index].check">-->
+                                    </td>
+                                    <td>
+                                        {{user.name}}
+                                    </td>
+                                    <td>
+                                        {{user.surname}}
+                                    </td>
+                                    <td>
+                                        {{user.phone}}
+                                    </td>
+                                    <td>
+                                        {{user.email}}
+                                    </td>
+                                    <td>
+                                        {{user.password}}
+                                    </td>
+
+                                </tr>
+
+
+                            </table>
+                        </div>
+                        <div class="panel-footer">
+
+                        </div>
+                    </form> <!-- /form -->
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <form class="form-horizontal" role="form">
+                        <div class="panel-heading"><h4>Gestione Tesoreria</h4></div>
+                        <div class="panel-body">
+                            <button class="btn btn-primary btn-block" data-ng-click="tesoreriaCtrl.updatePayment()">Login</button>
+                        </div>
+                        <div class="panel-footer">
+
+                        </div>
+                    </form> <!-- /form -->
+                </div>
+            </div>
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+    </uib-tab>
+</uib-tabset>
+
+
+<uib-tabset active="activeJustified" justified="true">
+    <uib-tab index="0" heading="Justified">Justified content</uib-tab>
+    <uib-tab index="1" heading="SJ">Short Labeled Justified content</uib-tab>
+    <uib-tab index="2" heading="Long Justified">Long Labeled Justified content</uib-tab>
+</uib-tabset>
+
+
+<uib-tabset active="activePill" vertical="true" type="pills">
+    <uib-tab index="0" heading="Vertical 1">Vertical content 1</uib-tab>
+    <uib-tab index="1" heading="Vertical 2">Vertical content 2</uib-tab>
+</uib-tabset>
+
+
