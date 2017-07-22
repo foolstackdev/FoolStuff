@@ -15,10 +15,10 @@ namespace FoolStaffDataAccess
     public partial class User
     {
         public int Id { get; set; }
-        public string NAME { get; set; }
-        public string SURNAME { get; set; }
-        public string PHONE { get; set; }
-        public string EMAIL { get; set; }
-        public string PASSWORD { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }

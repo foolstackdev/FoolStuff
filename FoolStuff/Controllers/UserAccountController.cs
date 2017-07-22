@@ -35,10 +35,30 @@ namespace FoolStuff.Controllers
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
 
+        //[BasicAuthentication]
+        [Authorize]
+        [HttpGet]
+        [Route("allusers")]
+        public HttpResponseMessage allUsers([FromBody]User user)
+        {
+            try
+            {
+                using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
+                {
+                    var entity = entities.Users.ToList();
+                    return Request.CreateResponse(HttpStatusCode.OK, entity);
+                }
+            }
+            catch(Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+
+        }
 
     }
 }
