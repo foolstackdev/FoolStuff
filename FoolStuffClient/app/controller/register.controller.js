@@ -27,10 +27,10 @@ angular
         RestService.PostData(CostantUrl.urlAccount, "register", vm.user).then(function (response) {
             toastr.success('Cool, you\' re now a FoolStack member', 'Confirmed');
             $state.go("unlogged.home");
-        }), function (err) {
+        }, function (err) {
             console.log(err)
-            toastr.error('Problems during registration', 'Something went wrong');
-        }
+            toastr.error('Problems during registration', 'Something went wrong [' + err + ']');
+        });
     }
 
 }]);

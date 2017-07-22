@@ -9,7 +9,7 @@ angular
     init();
     function init() {
         console.log("Inside Users controller");
-        RestService.GetData(CostantUrl.urlAccount, "allusers").then(function (response) {
+        RestService.GetData(CostantUrl.urlUserAccount, "allusers").then(function (response) {
             vm.users = response.data;
         })
     }
