@@ -94,6 +94,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\controller\signed.controller.js" />
+    <Content Include="app\controller\tesoreria.controller.js" />
     <Content Include="app\controller\users.controller.js" />
     <Content Include="app\model\constants\constants.js" />
     <Content Include="app\view\assets\content\css\bootrap-override.css" />
@@ -101,7 +103,11 @@
     <Content Include="app\view\assets\img\Logo.png" />
     <Content Include="app\view\assets\lib\angular-toast\angular-toastr.min.css" />
     <Content Include="app\view\assets\lib\angular-toast\angular-toastr.tpls.min.js" />
-    <Content Include="app\view\template\public\users.html" />
+    <Content Include="app\view\assets\lib\bootstrap\ui-bootstrap-tpls-2.5.0.min.js" />
+    <Content Include="app\view\template\common\contentSigned.html" />
+    <Content Include="app\view\template\private\homepage.html" />
+    <Content Include="app\view\template\private\users.html" />
+    <Content Include="app\view\template\public\tesoreria.html" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

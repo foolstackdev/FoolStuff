@@ -16,13 +16,16 @@ Chiudere la cartella e chiudere la shell.
 Selezionare il secondo progetto (FoolStaffDataAccess) e ripetere la procedura
 
 Digitare: 
-git update-index --assume -unchanged App.Config
+git update-index --skip-worktree App.Config
 
 ATTENZIONE:
 Per quanto riguarda l'ultimo progetto il file a cui far ignorare le modifiche da git sarà il Web.config, quindi:
 ripeto la procedura sul progetto FoolStuff
 
 Digitare:
-git update-index --assume -unchanged Web.config
+git update-index --skip-worktree Web.config
 
 Per quanto riguarda il file di configurazione del client per ora lo lasciamo editabile al fine di poter inserire modifiche eventualmente utili al front end, non ci sono password sopra, non è un problema.
+
+Comando da lanciare quando modifichiamo l'app o web config per non far committare
+le modifiche

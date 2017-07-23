@@ -12,20 +12,19 @@ namespace FoolStaffDataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Tesoreria
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
+        public Tesoreria()
         {
             this.User_Tesoreria = new HashSet<User_Tesoreria>();
         }
     
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public System.DateTime DataOperazione { get; set; }
+        public string Operazione { get; set; }
+        public decimal Totale { get; set; }
+        public string Note { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User_Tesoreria> User_Tesoreria { get; set; }

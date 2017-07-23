@@ -1,15 +1,23 @@
 ﻿angular
 .module('FoolStackApp')
-.config(["$locationProvider", "$urlRouterProvider", "$stateProvider", function config($locationProvider, $urlRouterProvider, $stateProvider) {
+.config(["$locationProvider", "$urlRouterProvider", "$stateProvider", "$httpProvider", function config($locationProvider, $urlRouterProvider, $stateProvider, $httpProvider) {
 
     $locationProvider.html5Mode(true);
     $urlRouterProvider.otherwise('/index/home');
+    $httpProvider.interceptors.push('httpRequestInterceptor');
 
     $stateProvider
         .state('unlogged', {
             abstract: true,
             url: "/index",
             templateUrl: "app/view/template/common/content.html"
+        })
+        .state('signed', {
+            abstract: true,
+            url: "/foolstaff",
+            templateUrl: "app/view/template/common/contentSigned.html",
+            controller: "SignedController",
+            controllerAs: "signedCtrl"
         })
         .state('unlogged.home', {
             url: "/home",
@@ -35,11 +43,35 @@
             controllerAs: "registerCtrl",
             data: { pageTitle: 'Register view' }
         })
-        .state('unlogged.users', {
+        .state('signed.homepage', {
+            url: "/homepage",
+            templateUrl: "app/view/template/private/homepage.html",
+            data: { pageTitle: 'Users view' }
+        })
+        .state('signed.users', {
             url: "/users",
-            templateUrl: "app/view/template/public/users.html",
+            templateUrl: "app/view/template/private/users.html",
             controller: "UsersController",
             controllerAs: "usersCtrl",
             data: { pageTitle: 'Users view' }
         })
+        .state('unlogged.tesoreria', {
+            url: "/tesoreria",
+            templateUrl: "app/view/template/public/tesoreria.html",
+            controller: "TesoreriaController",
+            controllerAs: "tesoreriaCtrl",
+            data: { pageTitle: 'Users view' }
+        })
+}])
+.run([function () {
+    //sessionStorage.clear();
+}])
+.service('httpRequestInterceptor', [function () {
+    var service = this;
+
+    service.request = function (config) {
+        if (sessionStorage.getItem('accessToken') != null)
+            config.headers.Authorization = 'Bearer ' + sessionStorage.getItem('accessToken');
+        return config;
+    };
 }]);

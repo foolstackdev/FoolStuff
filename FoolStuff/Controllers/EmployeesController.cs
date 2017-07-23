@@ -52,7 +52,7 @@ namespace FoolStuff.Controllers
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
 
@@ -105,7 +105,7 @@ namespace FoolStuff.Controllers
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
     }

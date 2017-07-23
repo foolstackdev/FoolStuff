@@ -6,7 +6,8 @@ angular
         return {
             GetData: function (path, method) {
                 var deferred = $q.defer();
-                $http.get(path + method)
+                var urltoCall = path + method;
+                $http.get(urltoCall)
                     .then(function (result) {
                         console.log("Success");
                         deferred.resolve(result);
@@ -34,6 +35,26 @@ angular
                         console.log(err);
                         deferred.reject(err);
                     });
+                return deferred.promise;
+            },
+            PostContentTypeText: function (path, method, text) {
+                var deferred = $q.defer();
+                var urltoCall = path + method;
+                $http({
+                    method: 'POST',
+                    url: urltoCall,
+                    data: text,
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                }).then(function (result) {
+                    console.log(result);
+                    deferred.resolve(result);
+                }, function (error) {
+                    console.log(error);
+                    deferred.reject(error);
+                })
+
                 return deferred.promise;
             }
         };
