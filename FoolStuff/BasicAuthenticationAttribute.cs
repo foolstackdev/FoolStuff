@@ -15,31 +15,31 @@ namespace FoolStuff
     public class BasicAuthenticationAttribute : AuthorizationFilterAttribute
     {
 
-        public override void OnAuthorization(HttpActionContext actionContext)
-        {
-            if(actionContext.Request.Headers.Authorization == null)
-            {
-                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
-            }
-            else
-            {
-                string authenticationToken = actionContext.Request.Headers.Authorization.Parameter;
-                string decodedAuthenticationToken =  Encoding.UTF8.GetString(Convert.FromBase64String(authenticationToken));
-                string[] usernamePassowrdArray = decodedAuthenticationToken.Split(':');
+        //public override void OnAuthorization(HttpActionContext actionContext)
+        //{
+        //    if(actionContext.Request.Headers.Authorization == null)
+        //    {
+        //        actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
+        //    }
+        //    else
+        //    {
+        //        string authenticationToken = actionContext.Request.Headers.Authorization.Parameter;
+        //        string decodedAuthenticationToken =  Encoding.UTF8.GetString(Convert.FromBase64String(authenticationToken));
+        //        string[] usernamePassowrdArray = decodedAuthenticationToken.Split(':');
 
-                string username = usernamePassowrdArray[0];
-                string password = usernamePassowrdArray[1];
+        //        string username = usernamePassowrdArray[0];
+        //        string password = usernamePassowrdArray[1];
 
-                if(UsersSecurity.Login(username, password))
-                {
-                    Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null);
-                }
-                else
-                {
-                    actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
-                }
-            }
-        }
+        //        if(UsersSecurity.Login(username, password))
+        //        {
+        //            Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null);
+        //        }
+        //        else
+        //        {
+        //            actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
+        //        }
+        //    }
+        //}
 
     }
 }

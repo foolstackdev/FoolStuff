@@ -5,12 +5,34 @@
             <div class="col-lg-4">
                 <div class="panel panel-default">
                     <form class="form-horizontal" role="form">
-                        <div class="panel-heading"><h4>Gestione Tesoreria</h4></div>
+                        <div class="panel-heading"><h4>Nuovo versamento</h4></div>
                         <div class="panel-body">
-
+                            <div class="col-lg-12 col-md-6">
+                                <div class="form-group">
+                                    <p class="input-group">
+                                        <input type="text" class="form-control" uib-datepicker-popup="{{tesoreriaCtrl.format}}" ng-model="tesoreriaCtrl.versamento.dataOperazione" is-open="tesoreriaCtrl.popupDP.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="tesoreriaCtrl.openDP()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="note" class="col-sm-3 control-label">Note</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" id="note" placeholder="Note.." class="form-control" autofocus data-ng-model="tesoreriaCtrl.versamento.note">
+                                        <!--<span class="help-block">Last Name, First Name, eg.: Smith, Harry</span>-->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="panel-footer">
-
+                            <div class="form-group">
+                                <div class="col-sm-9 col-sm-offset-3">
+                                    <button type="submit" class="btn btn-primary btn-block" data-ng-click="tesoreriaCtrl.insertVersamento()">Inserisci Data Versamento</button>
+                                </div>
+                            </div>
                         </div>
                     </form> <!-- /form -->
                 </div>
@@ -19,9 +41,79 @@
             <div class="col-lg-8">
                 <div class="panel panel-default">
                     <form class="form-horizontal" role="form">
-                        <div class="panel-heading"><h4>Gestione Tesoreria</h4></div>
+                        <div class="panel-heading"><h4>Riepilogo Entrate/Uscite</h4></div>
                         <div class="panel-body">
+                            <div class="col-lg-12">
 
+                                <uib-tabset active="activeJustified" justified="true">
+                                    <uib-tab index="0" heading="Entrate" select="tesoreriaCtrl.riepilogoEntrate()">
+
+                                        <table class="table table-hover">
+                                            <tr>
+                                                <th>
+                                                    Data Operazione
+                                                </th>
+                                                <th>
+                                                    Operazione
+                                                </th>
+                                                <th>
+                                                    Totale
+                                                </th>
+                                                <th>
+                                                    Note
+                                                </th>
+                                            </tr>
+                                            <tr data-ng-repeat="info in tesoreriaCtrl.infoEntrate">
+                                                <td>
+                                                    {{info.dataOperazione}}
+                                                </td>
+                                                <td>
+                                                    {{info.operazione}}
+                                                </td>
+                                                <td>
+                                                    {{info.totale}}
+                                                </td>
+                                                <td>
+                                                    {{info.note}}
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </uib-tab>
+                                    <uib-tab index="1" heading="Uscite" select="tesoreriaCtrl.riepilogoUscite()">
+                                        <table class="table table-hover">
+                                            <tr>
+                                                <th>
+                                                    Data Operazione
+                                                </th>
+                                                <th>
+                                                    Operazione
+                                                </th>
+                                                <th>
+                                                    Totale
+                                                </th>
+                                                <th>
+                                                    Note
+                                                </th>
+                                            </tr>
+                                            <tr data-ng-repeat="info in tesoreriaCtrl.infoUscite">
+                                                <td>
+                                                    {{info.dataOperazione}}
+                                                </td>
+                                                <td>
+                                                    {{info.operazione}}
+                                                </td>
+                                                <td>
+                                                    {{info.totale}}
+                                                </td>
+                                                <td>
+                                                    {{info.note}}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </uib-tab>
+                                </uib-tabset>
+                            </div>
                         </div>
                         <div class="panel-footer">
 
@@ -29,13 +121,6 @@
                     </form> <!-- /form -->
                 </div>
             </div>
-
-
-
-
-
-
-
         </div>
 
 
@@ -53,13 +138,22 @@
             <div class="col-lg-8">
                 <div class="panel panel-default">
                     <form class="form-horizontal" role="form">
-                        <div class="panel-heading"><h4>Seleziona Utenti</h4></div>
+                        <div class="panel-heading">
+                            <div class="col-lg-6">  
+                                <h4>Seleziona Utenti</h4>
+                            </div>
+                            <div class="col-lg-6">
+                                <select class="pull-right" ng-model="tesoreriaCtrl.dateSelected" required>
+                                    <option data-ng-repeat="info in tesoreriaCtrl.infoEntrate" value="{{info.id}}" >{{info.dataOperazione}}</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="panel-body">
                             <table class="table table-hover">
                                 <tr data-ng-repeat="user in tesoreriaCtrl.users track by $index">
                                     <td>
                                         <!--<input type="checkbox" ng-checked="item.isRowSelected" data-ng-click="toggleSelection(item)">-->
-                                        <input type="checkbox" data-ng-model="tesoreriaCtrl.userSelected[$index].check">
+                                        <input type="checkbox" data-ng-model="tesoreriaCtrl.userSelected[$index].check" required>
                                         <!--<input type="checkbox" data-ng-change="tesoreriaCtrl.userSelected[$index].check = !tesoreriaCtrl.userSelected[$index].check" data-ng-model="tesoreriaCtrl.userSelected[$index].check">-->
                                     </td>
                                     <td>
@@ -84,7 +178,7 @@
                             </table>
                         </div>
                         <div class="panel-footer">
-
+                            <button type="submit" class="btn btn-primary btn-block" data-ng-click="tesoreriaCtrl.updatePayment()">Update Payments</button>
                         </div>
                     </form> <!-- /form -->
                 </div>
@@ -95,7 +189,7 @@
                     <form class="form-horizontal" role="form">
                         <div class="panel-heading"><h4>Gestione Tesoreria</h4></div>
                         <div class="panel-body">
-                            <button class="btn btn-primary btn-block" data-ng-click="tesoreriaCtrl.updatePayment()">Login</button>
+                            
                         </div>
                         <div class="panel-footer">
 
@@ -123,16 +217,9 @@
 </uib-tabset>
 
 
-<uib-tabset active="activeJustified" justified="true">
-    <uib-tab index="0" heading="Justified">Justified content</uib-tab>
-    <uib-tab index="1" heading="SJ">Short Labeled Justified content</uib-tab>
-    <uib-tab index="2" heading="Long Justified">Long Labeled Justified content</uib-tab>
-</uib-tabset>
-
-
-<uib-tabset active="activePill" vertical="true" type="pills">
+<!--<uib-tabset active="activePill" vertical="true" type="pills">
     <uib-tab index="0" heading="Vertical 1">Vertical content 1</uib-tab>
     <uib-tab index="1" heading="Vertical 2">Vertical content 2</uib-tab>
-</uib-tabset>
+</uib-tabset>-->
 
 

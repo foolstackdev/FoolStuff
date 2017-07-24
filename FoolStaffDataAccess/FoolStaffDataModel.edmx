@@ -6,60 +6,48 @@
     <edmx:StorageModels>
     <Schema Namespace="FoolStaffDataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="FoolStaffDataModelStoreContainer">
-    <EntitySet Name="Users" EntityType="FoolStaffDataModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserInfo" EntityType="FoolStaffDataModel.Store.UserInfo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Tesoreria" EntityType="FoolStaffDataModel.Store.Tesoreria" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="User_Tesoreria" EntityType="FoolStaffDataModel.Store.User_Tesoreria" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="UserToUser_Tesoreria" Association="FoolStaffDataModel.Store.UserToUser_Tesoreria">
-      <End Role="User" EntitySet="Users" />
-      <End Role="User_Tesoreria" EntitySet="User_Tesoreria" />
-    </AssociationSet>
     <AssociationSet Name="TesoreriaToUser_Tesoreria" Association="FoolStaffDataModel.Store.TesoreriaToUser_Tesoreria">
       <End Role="Tesoreria" EntitySet="Tesoreria" />
       <End Role="User_Tesoreria" EntitySet="User_Tesoreria" />
     </AssociationSet>
+    <AssociationSet Name="UserInfoToUser_Tesoreria" Association="FoolStaffDataModel.Store.UserInfoToUser_Tesoreria">
+      <End Role="UserInfo" EntitySet="UserInfo" />
+      <End Role="User_Tesoreria" EntitySet="User_Tesoreria" />
+    </AssociationSet>
   </EntityContainer>
-  <EntityType Name="Users">
+  <EntityType Name="UserInfo">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
     <Property Name="Surname" Type="nvarchar" Nullable="false" MaxLength="50" />
     <Property Name="Phone" Type="nvarchar" Nullable="false" MaxLength="20" />
     <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="50" />
     <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="Id" Type="nvarchar" Nullable="false" MaxLength="128" />
   </EntityType>
   <EntityType Name="Tesoreria">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="DataOperazione" Type="datetime" Nullable="false" />
+    <Property Name="DataOperazione" Type="datetimeoffset" Nullable="false" />
     <Property Name="Operazione" Type="nvarchar" Nullable="false" MaxLength="20" />
-    <Property Name="Totale" Type="decimal" Nullable="false" />
+    <Property Name="Totale" Type="decimal" Nullable="false" Precision="18" Scale="0" />
     <Property Name="Note" Type="nvarchar" Nullable="false" MaxLength="250" />
   </EntityType>
   <EntityType Name="User_Tesoreria">
     <Key>
-      <PropertyRef Name="UserId" />
       <PropertyRef Name="TesoreriaId" />
+      <PropertyRef Name="UserInfoId" />
     </Key>
-    <Property Name="Versamento" Type="decimal" Nullable="false" />
-    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="Versamento" Type="decimal" Nullable="false" Precision="18" Scale="0" />
     <Property Name="TesoreriaId" Type="int" Nullable="false" />
+    <Property Name="UserInfoId" Type="nvarchar" Nullable="false" MaxLength="128" />
   </EntityType>
-  <Association Name="UserToUser_Tesoreria">
-    <End Role="User" Type="FoolStaffDataModel.Store.Users" Multiplicity="1" />
-    <End Role="User_Tesoreria" Type="FoolStaffDataModel.Store.User_Tesoreria" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="User_Tesoreria">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="TesoreriaToUser_Tesoreria">
     <End Role="Tesoreria" Type="FoolStaffDataModel.Store.Tesoreria" Multiplicity="1" />
     <End Role="User_Tesoreria" Type="FoolStaffDataModel.Store.User_Tesoreria" Multiplicity="*" />
@@ -72,69 +60,69 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="UserInfoToUser_Tesoreria">
+    <End Role="UserInfo" Type="FoolStaffDataModel.Store.UserInfo" Multiplicity="1" />
+    <End Role="User_Tesoreria" Type="FoolStaffDataModel.Store.User_Tesoreria" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserInfo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User_Tesoreria">
+        <PropertyRef Name="UserInfoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="FoolStaffDataModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
         <EntityContainer Name="FoolStaffDataModelContainer" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Users" EntityType="FoolStaffDataModel.User" />
+          <EntitySet Name="UserInfo" EntityType="FoolStaffDataModel.UserInfo" />
           <EntitySet Name="Tesoreria" EntityType="FoolStaffDataModel.Tesoreria" />
           <EntitySet Name="User_Tesoreria" EntityType="FoolStaffDataModel.User_Tesoreria" />
-          <AssociationSet Name="UserToUser_Tesoreria" Association="FoolStaffDataModel.UserToUser_Tesoreria">
-            <End Role="User" EntitySet="Users" />
-            <End Role="User_Tesoreria" EntitySet="User_Tesoreria" />
-          </AssociationSet>
           <AssociationSet Name="TesoreriaToUser_Tesoreria" Association="FoolStaffDataModel.TesoreriaToUser_Tesoreria">
             <End Role="Tesoreria" EntitySet="Tesoreria" />
             <End Role="User_Tesoreria" EntitySet="User_Tesoreria" />
           </AssociationSet>
+          <AssociationSet Name="UserInfoToUser_Tesoreria" Association="FoolStaffDataModel.UserInfoToUser_Tesoreria">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="User_Tesoreria" EntitySet="User_Tesoreria" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="User">
+        <EntityType Name="UserInfo">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="Surname" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="Phone" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="User_Tesoreria" Relationship="FoolStaffDataModel.UserToUser_Tesoreria" FromRole="User" ToRole="User_Tesoreria" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User_Tesoreria" Relationship="FoolStaffDataModel.UserInfoToUser_Tesoreria" FromRole="UserInfo" ToRole="User_Tesoreria" />
         </EntityType>
         <EntityType Name="Tesoreria">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DataOperazione" Type="DateTime" Nullable="false" />
-          <Property Name="Operazione" Type="String" Nullable="false" MaxLength="20" />
-          <Property Name="Totale" Type="Decimal" Nullable="false" />
-          <Property Name="Note" Type="String" Nullable="false" MaxLength="250" />
+          <Property Name="DataOperazione" Type="DateTimeOffset" Nullable="false" />
+          <Property Name="Operazione" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="Totale" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Note" Type="String" Nullable="false" MaxLength="250" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="User_Tesoreria" Relationship="FoolStaffDataModel.TesoreriaToUser_Tesoreria" FromRole="Tesoreria" ToRole="User_Tesoreria" />
         </EntityType>
         <EntityType Name="User_Tesoreria" >
           <Key>
-            <PropertyRef Name="UserId" />
             <PropertyRef Name="TesoreriaId" />
+            <PropertyRef Name="UserInfoId" />
           </Key>
-          <Property Name="Versamento" Type="Decimal" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="FoolStaffDataModel.UserToUser_Tesoreria" FromRole="User_Tesoreria" ToRole="User" />
-          <Property Name="UserId" Nullable="false" Type="Int32" />
+          <Property Name="Versamento" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <NavigationProperty Name="Tesoreria" Relationship="FoolStaffDataModel.TesoreriaToUser_Tesoreria" FromRole="User_Tesoreria" ToRole="Tesoreria" />
           <Property Name="TesoreriaId" Nullable="false" Type="Int32" />
+          <NavigationProperty Name="UserInfo" Relationship="FoolStaffDataModel.UserInfoToUser_Tesoreria" FromRole="User_Tesoreria" ToRole="UserInfo" />
+          <Property Name="UserInfoId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
         </EntityType>
-        <Association Name="UserToUser_Tesoreria">
-          <End Type="FoolStaffDataModel.User" Role="User" Multiplicity="1" />
-          <End Type="FoolStaffDataModel.User_Tesoreria" Role="User_Tesoreria" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="User_Tesoreria">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="TesoreriaToUser_Tesoreria">
           <End Type="FoolStaffDataModel.Tesoreria" Role="Tesoreria" Multiplicity="1" />
           <End Type="FoolStaffDataModel.User_Tesoreria" Role="User_Tesoreria" Multiplicity="*" />
@@ -147,15 +135,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="UserInfoToUser_Tesoreria">
+          <End Type="FoolStaffDataModel.UserInfo" Role="UserInfo" Multiplicity="1" />
+          <End Type="FoolStaffDataModel.User_Tesoreria" Role="User_Tesoreria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_Tesoreria">
+              <PropertyRef Name="UserInfoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="FoolStaffDataModelStoreContainer" CdmEntityContainer="FoolStaffDataModelContainer">
-    <EntitySetMapping Name="Users">
-      <EntityTypeMapping TypeName="IsTypeOf(FoolStaffDataModel.User)">
-        <MappingFragment StoreEntitySet="Users">
+    <EntitySetMapping Name="UserInfo">
+      <EntityTypeMapping TypeName="IsTypeOf(FoolStaffDataModel.UserInfo)">
+        <MappingFragment StoreEntitySet="UserInfo">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Surname" ColumnName="Surname" />
@@ -179,8 +179,8 @@
     <EntitySetMapping Name="User_Tesoreria">
       <EntityTypeMapping TypeName="IsTypeOf(FoolStaffDataModel.User_Tesoreria)">
         <MappingFragment StoreEntitySet="User_Tesoreria">
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="TesoreriaId" ColumnName="TesoreriaId" />
+          <ScalarProperty Name="UserInfoId" ColumnName="UserInfoId" />
           <ScalarProperty Name="Versamento" ColumnName="Versamento" />
         </MappingFragment>
       </EntityTypeMapping>

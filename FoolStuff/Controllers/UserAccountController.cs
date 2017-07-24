@@ -20,13 +20,13 @@ namespace FoolStuff.Controllers
 
         [HttpPost]
         [Route("register")]
-        public HttpResponseMessage Register([FromBody]User user)
+        public HttpResponseMessage Register([FromBody]UserInfo user)
         {
             try
             {
                 using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
                 {
-                    entities.Users.Add(user);
+                    entities.UserInfo.Add(user);
                     entities.SaveChanges();
 
                     var message = Request.CreateResponse(HttpStatusCode.Created, user);
@@ -50,7 +50,7 @@ namespace FoolStuff.Controllers
                 using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
                 {
                     entities.Configuration.ProxyCreationEnabled = false;
-                    var entity = entities.Users.ToList();
+                    var entity = entities.UserInfo.ToList();
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
             }
@@ -64,13 +64,13 @@ namespace FoolStuff.Controllers
         [Authorize]
         [HttpPost]
         [Route("updateuserinfo")]
-        public HttpResponseMessage updateUserInfo([FromBody]User user)
+        public HttpResponseMessage updateUserInfo([FromBody]UserInfo user)
         {
             try
             {
                 using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
                 {
-                    var entity = entities.Users.FirstOrDefault(u => u.Email == user.Email);
+                    var entity = entities.UserInfo.FirstOrDefault(u => u.Email == user.Email);
                     if (entity != null)
                     {
                         entity.Name = user.Name;
@@ -91,60 +91,6 @@ namespace FoolStuff.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
 
-        }
-
-        [HttpPost]
-        [Route("insertpayment")]
-        public HttpResponseMessage insertPayment([FromBody]User[] users)
-        {
-            try
-            {
-                using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
-                {
-                    Tesoreria oTesoreria = new Tesoreria();
-                    oTesoreria.Operazione = "VERSAMENTO";
-                    oTesoreria.DataOperazione = DateTime.Now;
-                    oTesoreria.Note = "Versamento settimanale 5 Euro";
-
-                    entities.Tesoreria.Add(oTesoreria);
-                    //entities.SaveChanges();
-
-                    foreach (User u in users)
-                    {
-                        User_Tesoreria pagamento = new User_Tesoreria();
-                        pagamento.User = u;
-                        pagamento.Tesoreria = oTesoreria;
-                        pagamento.Versamento = 5;
-
-                        entities.User_Tesoreria.Add(pagamento);
-
-                    }
-                    entities.SaveChanges();
-                    return Request.CreateResponse(HttpStatusCode.OK);
-
-
-
-                    //var entity = entities.Users.FirstOrDefault(u => u.Email == user.Email);
-                    //if (entity != null)
-                    //{
-                    //    entity.Name = user.Name;
-                    //    entity.Surname = user.Surname;
-                    //    entity.Phone = user.Phone;
-
-                    //    entities.SaveChanges();
-                    //    return Request.CreateResponse(HttpStatusCode.OK, entity);
-                    //}
-                    //else
-                    //{
-                    //    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "User with Email [" + user.Email + "] not found.");
-                    //}
-                }
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
-            }
-        }
-        
+        }        
     }
 }

@@ -15,10 +15,10 @@ namespace FoolStaffDataAccess
     public partial class User_Tesoreria
     {
         public decimal Versamento { get; set; }
-        public int UserId { get; set; }
         public int TesoreriaId { get; set; }
+        public string UserInfoId { get; set; }
     
-        public virtual User User { get; set; }
         public virtual Tesoreria Tesoreria { get; set; }
+        public virtual UserInfo UserInfo { get; set; }
     }
 }

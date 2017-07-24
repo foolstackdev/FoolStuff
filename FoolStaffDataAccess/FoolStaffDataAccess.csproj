@@ -70,7 +70,7 @@
     <Compile Include="Tesoreria.cs">
       <DependentUpon>FoolStaffDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="User.cs">
+    <Compile Include="UserInfo.cs">
       <DependentUpon>FoolStaffDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="User_Tesoreria.cs">

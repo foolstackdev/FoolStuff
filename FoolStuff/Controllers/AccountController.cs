@@ -324,7 +324,7 @@ namespace FoolStuff.Controllers
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModelCustomUser oAuthModel)
         {
-            RegisterBindingModel model = new RegisterBindingModel();
+           RegisterBindingModel model = new RegisterBindingModel();
             model.Email = oAuthModel.Email;
             model.Password = oAuthModel.Password;
             model.ConfirmPassword = oAuthModel.Password;
@@ -347,16 +347,17 @@ namespace FoolStuff.Controllers
             try
             {
 
-                User oUser = new User();
+                UserInfo oUser = new UserInfo();
                 oUser.Name = oAuthModel.Name;
                 oUser.Surname = oAuthModel.Surname;
                 oUser.Phone = oAuthModel.Phone;
                 oUser.Email = oAuthModel.Email;
                 oUser.Password = oAuthModel.Password;
+                oUser.Id = user.Id;
 
                 using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
                 {
-                    entities.Users.Add(oUser);
+                    entities.UserInfo.Add(oUser);
                     entities.SaveChanges();
                 }
             }
