@@ -66,20 +66,22 @@ namespace FoolStuff.Controllers
         
 
        [HttpPost]
-        [Route("insertpayment")]
-        public HttpResponseMessage insertPayment([FromBody]UserInfo[] users)
+        [Route("insertpayment/{id}")]
+        public HttpResponseMessage insertPayment(string id,[FromBody]UserInfo[] users)
         {
             try
             {
                 using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
                 {
-                    Tesoreria oTesoreria = new Tesoreria();
-                    oTesoreria.Operazione = "VERSAMENTO";
-                    oTesoreria.DataOperazione = DateTime.Now;
-                    oTesoreria.Note = "Versamento settimanale 5 Euro";
+                    //Tesoreria oTesoreria = new Tesoreria();
+                    //oTesoreria.Operazione = "VERSAMENTO";
+                    //oTesoreria.DataOperazione = DateTime.Now;
+                    //oTesoreria.Note = "Versamento settimanale 5 Euro";
 
-                    entities.Tesoreria.Add(oTesoreria);
-                    //entities.SaveChanges();
+                    //entities.Tesoreria.Add(oTesoreria);
+                    ////entities.SaveChanges();
+                    int oId = Convert.ToInt32(id);
+                    Tesoreria oTesoreria = entities.Tesoreria.FirstOrDefault(e => e.Id == oId);
 
                     foreach (UserInfo u in users)
                     {
