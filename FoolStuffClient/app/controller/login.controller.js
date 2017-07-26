@@ -23,12 +23,12 @@ angular
         var JsonObj = "userName=" + vm.user.username + "&password=" + vm.user.password + "&grant_type=password";
 
         RestService.PostContentTypeText(CostantUrl.urlToken, "token", JsonObj).then(function (response) {
+            sessionStorage.setItem('accessToken', response.data.access_token);
             RestService.GetData(CostantUrl.urlUserAccount, "getuserinfo/" + vm.user.username + "/").then(function (responseUser) {
                 console.log(responseUser);
                 sessionStorage.setItem('userId', responseUser.data.id);
                 sessionStorage.setItem('user', responseUser.data);
                 toastr.success('Cool, you\' re now logged', 'Confirmed');
-                sessionStorage.setItem('accessToken', response.data.access_token);
                 $state.go("signed.homepage");
             }, function (err) {
                 console.log(err);
