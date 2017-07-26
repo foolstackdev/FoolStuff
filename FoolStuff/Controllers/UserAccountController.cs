@@ -93,7 +93,7 @@ namespace FoolStuff.Controllers
 
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         [Route("getuserinfo/{email}")]
         public HttpResponseMessage getUserInfo(string email)
