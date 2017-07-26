@@ -91,6 +91,34 @@ namespace FoolStuff.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
 
-        }        
+        }
+
+        //[Authorize]
+        [HttpGet]
+        [Route("getuserinfo/{email}")]
+        public HttpResponseMessage getUserInfo(string email)
+        {
+            try
+            {
+                using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
+                {
+                    entities.Configuration.ProxyCreationEnabled = false;
+                    var entity = entities.UserInfo.FirstOrDefault(u => u.Email == email);
+                    if (entity != null)
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, entity);
+                    }
+                    else
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "User with Email [" + email + "] not found.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+
+        }
     }
 }
