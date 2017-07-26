@@ -83,16 +83,19 @@ namespace FoolStuff.Controllers
                     int oId = Convert.ToInt32(id);
                     Tesoreria oTesoreria = entities.Tesoreria.FirstOrDefault(e => e.Id == oId);
 
+                    decimal sommaIncasso = 0;
+
                     foreach (UserInfo u in users)
                     {
                         User_Tesoreria pagamento = new User_Tesoreria();
                         pagamento.UserInfoId = u.Id;
                         pagamento.Tesoreria = oTesoreria;
                         pagamento.Versamento = 5;
-
+                        sommaIncasso += pagamento.Versamento;
                         entities.User_Tesoreria.Add(pagamento);
 
                     }
+                    oTesoreria.Totale = sommaIncasso;
                     entities.SaveChanges();
                     return Request.CreateResponse(HttpStatusCode.OK);
                 }
