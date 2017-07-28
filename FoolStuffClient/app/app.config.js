@@ -62,6 +62,13 @@
             controllerAs: "tesoreriaCtrl",
             data: { pageTitle: 'Users view' }
         })
+     .state('signed.update', {
+         url: "/update",
+         templateUrl: "app/view/template/private/update.html",
+         controller: "UpdateController",
+         controllerAs: "updateCtrl",
+         data: { pageTitle: 'Users view' }
+     })
 }])
 .run([function () {
     //sessionStorage.clear();

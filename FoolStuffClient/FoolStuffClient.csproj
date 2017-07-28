@@ -96,6 +96,7 @@
   <ItemGroup>
     <Content Include="app\controller\signed.controller.js" />
     <Content Include="app\controller\tesoreria.controller.js" />
+    <Content Include="app\controller\update.controller.js" />
     <Content Include="app\controller\users.controller.js" />
     <Content Include="app\model\constants\constants.js" />
     <Content Include="app\view\assets\content\css\bootrap-override.css" />
@@ -108,6 +109,7 @@
     <Content Include="app\view\template\private\homepage.html" />
     <Content Include="app\view\template\private\users.html" />
     <Content Include="app\view\template\public\tesoreria.html" />
+    <Content Include="app\view\template\public\update.html" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

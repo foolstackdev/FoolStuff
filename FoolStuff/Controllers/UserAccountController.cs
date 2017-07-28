@@ -64,25 +64,26 @@ namespace FoolStuff.Controllers
         [Authorize]
         [HttpPost]
         [Route("updateuserinfo")]
-        public HttpResponseMessage updateUserInfo([FromBody]UserInfo user)
+        public HttpResponseMessage updateUserInfo(string id, [FromBody]UserInfo user)
         {
             try
             {
                 using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
                 {
-                    var entity = entities.UserInfo.FirstOrDefault(u => u.Email == user.Email);
+                    var entity = entities.UserInfo.FirstOrDefault(u => u.Id == user.Id);
                     if (entity != null)
                     {
                         entity.Name = user.Name;
                         entity.Surname = user.Surname;
                         entity.Phone = user.Phone;
+                        entity.Email = user.Email;
 
                         entities.SaveChanges();
                         return Request.CreateResponse(HttpStatusCode.OK, entity);
                     }
                     else
                     {
-                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "User with Email [" + user.Email + "] not found.");
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "User with Id [" + user.Id + "] not found.");
                     }
                 }
             }
@@ -93,7 +94,7 @@ namespace FoolStuff.Controllers
 
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         [Route("getuserinfo/{email}")]
         public HttpResponseMessage getUserInfo(string email)
