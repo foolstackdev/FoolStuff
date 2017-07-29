@@ -70,7 +70,7 @@ namespace FoolStuff.Controllers
             {
                 using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
                 {
-                    var entity = entities.UserInfo.FirstOrDefault(u => u.Id == user.Id);
+                    var entity = entities.UserInfo.FirstOrDefault(u => u.Id == id);
                     if (entity != null)
                     {
                         entity.Name = user.Name;

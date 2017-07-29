@@ -19,7 +19,7 @@ angular
     }
 
     function _login() {
-
+        console.log(JsonObj);
         var JsonObj = "userName=" + vm.user.username + "&password=" + vm.user.password + "&grant_type=password";
 
         RestService.PostContentTypeText(CostantUrl.urlToken, "token", JsonObj).then(function (response) {
