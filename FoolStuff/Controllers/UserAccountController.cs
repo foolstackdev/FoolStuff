@@ -63,7 +63,7 @@ namespace FoolStuff.Controllers
 
         [Authorize]
         [HttpPost]
-        [Route("updateuserinfo")]
+        [Route("updateuserinfo/{id}")]
         public HttpResponseMessage updateUserInfo(string id, [FromBody]UserInfo user)
         {
             try
@@ -76,7 +76,7 @@ namespace FoolStuff.Controllers
                         entity.Name = user.Name;
                         entity.Surname = user.Surname;
                         entity.Phone = user.Phone;
-                        entity.Email = user.Email;
+                       
 
                         entities.SaveChanges();
                         return Request.CreateResponse(HttpStatusCode.OK, entity);

@@ -8,8 +8,7 @@ angular
     vm.user = {
         name: "",
         surname: "",
-        phone: "",
-        email: ""
+        phone: ""
     };
 
     vm.updateUser = _updateUser;
@@ -18,14 +17,16 @@ angular
     init();
     function init() {
         console.log("Inside Update controller");
+        console.log(sessionStorage.getItem('userId'));
+        
     }
 
     function _updateUser() {
         console.log(vm.user);
 
-        RestService.PostData(CostantUrl.urlUserAccount, "updateuserinfo",sessionStorage.getItem('userId'), vm.user).then(function (response) {
+        RestService.PostData(CostantUrl.urlUserAccount, "updateuserinfo/"+ sessionStorage.getItem('userId')+"/", vm.user).then(function (response) {
             toastr.success('Cool, your personal data has been updated!', 'Confirmed');
-            $state.go("unlogged.home");
+            
         }, function (err) {
             console.log(err)
             toastr.error('Problems during update', 'Something went wrong [' + err + ']');

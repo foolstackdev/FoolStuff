@@ -19,9 +19,9 @@ angular
     }
 
     function _login() {
-        console.log(JsonObj);
+        sessionStorage.clear();
         var JsonObj = "userName=" + vm.user.username + "&password=" + vm.user.password + "&grant_type=password";
-
+        
         RestService.PostContentTypeText(CostantUrl.urlToken, "token", JsonObj).then(function (response) {
             sessionStorage.setItem('accessToken', response.data.access_token);
             RestService.GetData(CostantUrl.urlUserAccount, "getuserinfo/" + vm.user.username + "/").then(function (responseUser) {
@@ -32,10 +32,12 @@ angular
                 $state.go("signed.homepage");
             }, function (err) {
                 console.log(err);
+                sessionStorage.clear();
                 throw err;
             });
         }, function (err) {
             console.log(err)
+            sessionStorage.clear();
             if (err.data == null)
                 toastr.error('Problems during login, maybe username or password are incorrect', 'Something went wrong');
             else
