@@ -40,7 +40,7 @@ namespace FoolStuff.Controllers
         }
 
         //[BasicAuthentication]
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         [Route("allusers")]
         public HttpResponseMessage allUsers()
@@ -95,7 +95,7 @@ namespace FoolStuff.Controllers
 
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         [Route("getuserinfo/{email}")]
         public HttpResponseMessage getUserInfo(string email)

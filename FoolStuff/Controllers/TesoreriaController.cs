@@ -8,6 +8,7 @@ using System.Web.Http;
 
 namespace FoolStuff.Controllers
 {
+    [Authorize]
     [RoutePrefix("api/tesoreria")]
     public class TesoreriaController : ApiController
     {
