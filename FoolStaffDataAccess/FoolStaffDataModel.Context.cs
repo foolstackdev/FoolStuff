@@ -18,7 +18,7 @@ namespace FoolStaffDataAccess
         public FoolStaffDataModelContainer()
             : base("name=FoolStaffDataModelContainer")
         {
-            this.Configuration.ProxyCreationEnabled = false;
+            this.Configuration.ProxyCreationEnabled = false;    
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

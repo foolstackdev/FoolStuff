@@ -9,22 +9,45 @@
                             <h4>{{item.titolo}}</h4>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">
-                            <h6 class="pull-right">{{item.dataCreazione}}</h6>
+                            <div class="col-sm-6" ng-switch on="item.priorita">
+                                <h6 class="pull-right" style="font-size:medium; color:red;" ng-switch-when="5">Massima</h6>
+                                <h6 class="pull-right" style="font-size:medium; color:darkorange" ng-switch-when="4">Alta</h6>
+                                <h6 class="pull-right" style="font-size:medium; color:orange" ng-switch-when="3">Media</h6>
+                                <h6 class="pull-right" style="font-size:medium; color:deepskyblue" ng-switch-when="2">Bassa</h6>
+                                <h6 class="pull-right" style="font-size:medium; color:aqua" ng-switch-when="1">Tempo libero</h6>
+                            </div>
+                            <div class="col-sm-6">
+                                <h6 class="pull-right">{{item.dataCreazione}}</h6>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="panel-body">
-                    <p>{{item.descrizione}}</p>
+                    <div class="col-sm-8">
+                        <p>{{item.descrizione}}</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <div ng-if="item.userInfo.length > 0" class="pull-right">
+                            <h6>Utenti coinvolti</h6>
+                            <ul data-ng-repeat="user in item.userInfo">
+                                <li>
+                                    {{user.name}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div class="panel-footer">
-                    <button class="btn btn-primary pull-right" data-ng-click="taskCtrl.takeTask($index)">Take care of this</button>
+                <div class="panel-footer" ng-switch="taskCtrl.userIsAlreadyAssigned($index)">
+                    <button ng-switch-when="false" class="btn btn-primary pull-right" data-ng-click="taskCtrl.takeTask($index)">Take care of this</button>
+                    <button ng-switch-when="true" class="btn btn-warning" data-ng-click="taskCtrl.giveUpTask($index)">Give up</button>
+                    <button ng-switch-when="true" class="btn btn-success pull-right" data-ng-click="taskCtrl.closeTask($index)">Task Completed</button>
                     <div class="clearfix"></div>
                 </div>
             </div>
         </div>
 
     </uib-tab>
-    <uib-tab index="1" heading="Gestisci Task">
+    <uib-tab index="1" heading="Inserisci Task">
         <div class="panel panel-default">
             <form class="form-horizontal" role="form">
                 <div class="panel-heading">
@@ -70,6 +93,53 @@
                     <button type="submit" class="btn btn-primary btn-block" data-ng-click="taskCtrl.insertTask()">Insert task</button>
                 </div>
             </form> <!-- /form -->
+        </div>
+    </uib-tab>
+    <uib-tab index="2" heading="Task chiusi" select="taskCtrl.riepilogoTaskChiusi()">
+        <div style="margin-top:15px;"></div>
+        <div data-ng-repeat="item in taskCtrl.taskClosedList track by $index">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <h4>{{item.titolo}}</h4>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="col-sm-6" ng-switch on="item.priorita">
+                                <h6 class="pull-right" style="font-size:medium; color:red;" ng-switch-when="5">Massima</h6>
+                                <h6 class="pull-right" style="font-size:medium; color:darkorange" ng-switch-when="4">Alta</h6>
+                                <h6 class="pull-right" style="font-size:medium; color:orange" ng-switch-when="3">Media</h6>
+                                <h6 class="pull-right" style="font-size:medium; color:deepskyblue" ng-switch-when="2">Bassa</h6>
+                                <h6 class="pull-right" style="font-size:medium; color:aqua" ng-switch-when="1">Tempo libero</h6>
+                            </div>
+                            <div class="col-sm-6">
+                                <h6 class="pull-right">{{item.dataCreazione}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-8">
+                        <p>{{item.descrizione}}</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <div ng-if="item.userInfo.length > 0" class="pull-right">
+                            <h6>Utenti coinvolti</h6>
+                            <ul data-ng-repeat="user in item.userInfo">
+                                <li>
+                                    {{user.name}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <!--<button ng-switch-when="false" class="btn btn-primary pull-right" data-ng-click="taskCtrl.takeTask($index)">Take care of this</button>
+                    <button ng-switch-when="true" class="btn btn-warning" data-ng-click="taskCtrl.giveUpTask($index)">Give up</button>
+                    <button ng-switch-when="true" class="btn btn-success pull-right" data-ng-click="taskCtrl.closeTask($index)">Task Completed</button>-->
+                    <div class="clearfix"></div>
+                </div>
+            </div>
         </div>
     </uib-tab>
 </uib-tabset>
