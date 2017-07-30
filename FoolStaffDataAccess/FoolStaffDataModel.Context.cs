@@ -18,6 +18,7 @@ namespace FoolStaffDataAccess
         public FoolStaffDataModelContainer()
             : base("name=FoolStaffDataModelContainer")
         {
+            this.Configuration.ProxyCreationEnabled = false;    
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -28,5 +29,6 @@ namespace FoolStaffDataAccess
         public virtual DbSet<UserInfo> UserInfo { get; set; }
         public virtual DbSet<Tesoreria> Tesoreria { get; set; }
         public virtual DbSet<User_Tesoreria> User_Tesoreria { get; set; }
+        public virtual DbSet<Task> Task { get; set; }
     }
 }

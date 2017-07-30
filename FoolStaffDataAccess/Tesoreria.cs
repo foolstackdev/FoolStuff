@@ -21,7 +21,7 @@ namespace FoolStaffDataAccess
         }
     
         public int Id { get; set; }
-        public System.DateTimeOffset DataOperazione { get; set; }
+        public System.DateTime DataOperazione { get; set; }
         public string Operazione { get; set; }
         public decimal Totale { get; set; }
         public string Note { get; set; }
