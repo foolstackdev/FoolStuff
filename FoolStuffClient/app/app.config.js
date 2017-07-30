@@ -55,9 +55,9 @@
             controllerAs: "usersCtrl",
             data: { pageTitle: 'Users view' }
         })
-        .state('unlogged.tesoreria', {
+        .state('signed.tesoreria', {
             url: "/tesoreria",
-            templateUrl: "app/view/template/public/tesoreria.html",
+            templateUrl: "app/view/template/private/tesoreria.html",
             controller: "TesoreriaController",
             controllerAs: "tesoreriaCtrl",
             data: { pageTitle: 'Users view' }

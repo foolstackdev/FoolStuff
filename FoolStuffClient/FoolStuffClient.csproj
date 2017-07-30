@@ -108,7 +108,7 @@
     <Content Include="app\view\template\common\contentSigned.html" />
     <Content Include="app\view\template\private\homepage.html" />
     <Content Include="app\view\template\private\users.html" />
-    <Content Include="app\view\template\public\tesoreria.html" />
+    <Content Include="app\view\template\private\tesoreria.html" />
     <Content Include="app\view\template\private\update.html" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
