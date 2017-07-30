@@ -70,6 +70,7 @@ namespace FoolStuff.Controllers
             {
                 using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
                 {
+                    entities.Configuration.ProxyCreationEnabled = false;
                     var entity = entities.UserInfo.FirstOrDefault(u => u.Id == id);
                     if (entity != null)
                     {
