@@ -30,7 +30,7 @@ namespace FoolStuff.Controllers
                 {
                     entities.Configuration.ProxyCreationEnabled = false;
 
-                    
+
                     //var entriesTesoreria = from b in entities.Tesoreria
                     //            where b.Operazione.Equals("VERSAMENTO")
                     //            orderby b.DataOperazione descending
@@ -46,6 +46,7 @@ namespace FoolStuff.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
+
         [HttpGet]
         [Route("getallexit")]
         public HttpResponseMessage getAllExit()
@@ -64,11 +65,11 @@ namespace FoolStuff.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
-        
 
-       [HttpPost]
+
+        [HttpPost]
         [Route("insertpayment/{id}")]
-        public HttpResponseMessage insertPayment(string id,[FromBody]UserInfo[] users)
+        public HttpResponseMessage insertPayment(string id, [FromBody]UserInfo[] users)
         {
             try
             {
@@ -106,6 +107,7 @@ namespace FoolStuff.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
+
         [HttpPost]
         [Route("insertpaymentdate")]
         public HttpResponseMessage insertPaymentDate([FromBody]Tesoreria tesoreria)

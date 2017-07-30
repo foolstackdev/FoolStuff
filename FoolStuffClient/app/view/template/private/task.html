@@ -1,0 +1,80 @@
+﻿<uib-tabset active="activeJustified" justified="true">
+    <uib-tab index="0" heading="Task" select="taskCtrl.riepilogoTask()">
+        <div style="margin-top:15px;"></div>
+        <div data-ng-repeat="item in taskCtrl.tasklist track by $index">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <h4>{{item.titolo}}</h4>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <h6 class="pull-right">{{item.dataCreazione}}</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <p>{{item.descrizione}}</p>
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-primary pull-right" data-ng-click="taskCtrl.takeTask($index)">Take care of this</button>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+    </uib-tab>
+    <uib-tab index="1" heading="Gestisci Task">
+        <div class="panel panel-default">
+            <form class="form-horizontal" role="form">
+                <div class="panel-heading">
+                    <div class="col-lg-12">
+                        <h4>Inserisci Task</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="titolo" class="col-sm-3 control-label">Titolo</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="titolo" data-ng-model="taskCtrl.task.titolo" class="form-control" placeholder="Inserisci il titolo del task" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="descrizione" class="col-sm-3 control-label">Descrizione</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" rows="5" style="resize:none;" ng-model="taskCtrl.task.descrizione" placeholder="Inserisci la descrizione del task"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="priorita" class="col-sm-3 control-label">Priorit&agrave;</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" ng-model="taskCtrl.task.priorita" required>
+                                    <option value="5">Massima</option>
+                                    <option value="4">Alta</option>
+                                    <option value="3">Media</option>
+                                    <option value="2">Bassa</option>
+                                    <option value="1">Tempo Libero</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel-footer">
+                    <button type="submit" class="btn btn-primary btn-block" data-ng-click="taskCtrl.insertTask()">Insert task</button>
+                </div>
+            </form> <!-- /form -->
+        </div>
+    </uib-tab>
+</uib-tabset>
+<!--Questa cacciavitata consente di correggere il problema del footer che si mangia parti della pagina-->
+<div style="height:50px;">
+
+</div>
+

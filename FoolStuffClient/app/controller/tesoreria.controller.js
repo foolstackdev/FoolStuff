@@ -49,7 +49,6 @@ angular
 
         RestService.PostData(CostantUrl.urlTesoreria, "insertpayment/"+vm.dateSelected, itemToSend).then(function (response) {
             toastr.success('Payments updated', 'Confirmed');
-            //$state.go("unlogged.tesoreria");
         }, function (err) {
             console.log(err)
             toastr.error('Problems during payments', 'Something went wrong [' + err + ']');

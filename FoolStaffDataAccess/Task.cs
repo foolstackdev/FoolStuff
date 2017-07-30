@@ -12,25 +12,24 @@ namespace FoolStaffDataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class UserInfo
+    public partial class Task
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public UserInfo()
+        public Task()
         {
-            this.User_Tesoreria = new HashSet<User_Tesoreria>();
-            this.Task = new HashSet<Task>();
+            this.UserInfo = new HashSet<UserInfo>();
         }
     
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string Id { get; set; }
+        public int Id { get; set; }
+        public System.DateTime DataCreazione { get; set; }
+        public Nullable<System.DateTime> DataOperazione { get; set; }
+        public Nullable<System.DateTime> DataChiusura { get; set; }
+        public string Stato { get; set; }
+        public string Titolo { get; set; }
+        public string Descrizione { get; set; }
+        public short Priorita { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User_Tesoreria> User_Tesoreria { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Task> Task { get; set; }
+        public virtual ICollection<UserInfo> UserInfo { get; set; }
     }
 }

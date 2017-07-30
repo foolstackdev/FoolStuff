@@ -9,6 +9,8 @@
     <EntitySet Name="UserInfo" EntityType="FoolStaffDataModel.Store.UserInfo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Tesoreria" EntityType="FoolStaffDataModel.Store.Tesoreria" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="User_Tesoreria" EntityType="FoolStaffDataModel.Store.User_Tesoreria" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Task" EntityType="FoolStaffDataModel.Store.Task" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserInfoTask" EntityType="FoolStaffDataModel.Store.UserInfoTask" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="TesoreriaToUser_Tesoreria" Association="FoolStaffDataModel.Store.TesoreriaToUser_Tesoreria">
       <End Role="Tesoreria" EntitySet="Tesoreria" />
       <End Role="User_Tesoreria" EntitySet="User_Tesoreria" />
@@ -16,6 +18,14 @@
     <AssociationSet Name="UserInfoToUser_Tesoreria" Association="FoolStaffDataModel.Store.UserInfoToUser_Tesoreria">
       <End Role="UserInfo" EntitySet="UserInfo" />
       <End Role="User_Tesoreria" EntitySet="User_Tesoreria" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserInfoTask_UserInfo" Association="FoolStaffDataModel.Store.FK_UserInfoTask_UserInfo">
+      <End Role="UserInfo" EntitySet="UserInfo" />
+      <End Role="UserInfoTask" EntitySet="UserInfoTask" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserInfoTask_Task" Association="FoolStaffDataModel.Store.FK_UserInfoTask_Task">
+      <End Role="Task" EntitySet="Task" />
+      <End Role="UserInfoTask" EntitySet="UserInfoTask" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="UserInfo">
@@ -34,7 +44,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="DataOperazione" Type="datetimeoffset" Nullable="false" />
+    <Property Name="DataOperazione" Type="datetime" Nullable="false" />
     <Property Name="Operazione" Type="nvarchar" Nullable="false" MaxLength="20" />
     <Property Name="Totale" Type="decimal" Nullable="false" Precision="18" Scale="0" />
     <Property Name="Note" Type="nvarchar" Nullable="false" MaxLength="250" />
@@ -47,6 +57,27 @@
     <Property Name="Versamento" Type="decimal" Nullable="false" Precision="18" Scale="0" />
     <Property Name="TesoreriaId" Type="int" Nullable="false" />
     <Property Name="UserInfoId" Type="nvarchar" Nullable="false" MaxLength="128" />
+  </EntityType>
+  <EntityType Name="Task">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DataCreazione" Type="datetime" Nullable="false" />
+    <Property Name="DataOperazione" Type="datetime" Nullable="true" />
+    <Property Name="DataChiusura" Type="datetime" Nullable="true" />
+    <Property Name="Stato" Type="nvarchar" Nullable="false" MaxLength="15" />
+    <Property Name="Titolo" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Descrizione" Type="nvarchar" Nullable="false" MaxLength="250" />
+    <Property Name="Priorita" Type="smallint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserInfoTask">
+    <Key>
+      <PropertyRef Name="UserInfo_Id" />
+      <PropertyRef Name="Task_Id" />
+    </Key>
+    <Property Name="UserInfo_Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="Task_Id" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="TesoreriaToUser_Tesoreria">
     <End Role="Tesoreria" Type="FoolStaffDataModel.Store.Tesoreria" Multiplicity="1" />
@@ -72,6 +103,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_UserInfoTask_UserInfo">
+    <End Role="UserInfo" Type="FoolStaffDataModel.Store.UserInfo" Multiplicity="1" />
+    <End Role="UserInfoTask" Type="FoolStaffDataModel.Store.UserInfoTask" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserInfo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserInfoTask">
+        <PropertyRef Name="UserInfo_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserInfoTask_Task">
+    <End Role="UserInfoTask" Type="FoolStaffDataModel.Store.UserInfoTask" Multiplicity="*" />
+    <End Role="Task" Type="FoolStaffDataModel.Store.Task" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Task">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserInfoTask">
+        <PropertyRef Name="Task_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -88,6 +143,11 @@
             <End Role="UserInfo" EntitySet="UserInfo" />
             <End Role="User_Tesoreria" EntitySet="User_Tesoreria" />
           </AssociationSet>
+          <EntitySet Name="Task" EntityType="FoolStaffDataModel.Task" />
+          <AssociationSet Name="UserInfoTask" Association="FoolStaffDataModel.UserInfoTask">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="Task" EntitySet="Task" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="UserInfo">
           <Key>
@@ -100,13 +160,14 @@
           <Property Name="Password" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
           <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="User_Tesoreria" Relationship="FoolStaffDataModel.UserInfoToUser_Tesoreria" FromRole="UserInfo" ToRole="User_Tesoreria" />
+          <NavigationProperty Name="Task" Relationship="FoolStaffDataModel.UserInfoTask" FromRole="UserInfo" ToRole="Task" />
         </EntityType>
         <EntityType Name="Tesoreria">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DataOperazione" Type="DateTimeOffset" Nullable="false" />
+          <Property Name="DataOperazione" Type="DateTime" Nullable="false" />
           <Property Name="Operazione" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
           <Property Name="Totale" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="Note" Type="String" Nullable="false" MaxLength="250" Unicode="true" FixedLength="false" />
@@ -147,6 +208,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DataCreazione" Type="DateTime" Nullable="false" />
+          <Property Name="DataOperazione" Type="DateTime" Nullable="true" />
+          <Property Name="DataChiusura" Type="DateTime" Nullable="true" />
+          <Property Name="Stato" Type="String" Nullable="false" MaxLength="15" />
+          <Property Name="Titolo" Type="String" Nullable="false" MaxLength="100" />
+          <Property Name="Descrizione" Type="String" Nullable="false" MaxLength="250" />
+          <NavigationProperty Name="UserInfo" Relationship="FoolStaffDataModel.UserInfoTask" FromRole="Task" ToRole="UserInfo" />
+          <Property Name="Priorita" Type="Int16" Nullable="false" />
+        </EntityType>
+        <Association Name="UserInfoTask">
+          <End Type="FoolStaffDataModel.UserInfo" Role="UserInfo" Multiplicity="*" />
+          <End Type="FoolStaffDataModel.Task" Role="Task" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -185,6 +264,28 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Task">
+      <EntityTypeMapping TypeName="IsTypeOf(FoolStaffDataModel.Task)">
+        <MappingFragment StoreEntitySet="Task">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DataCreazione" ColumnName="DataCreazione" />
+          <ScalarProperty Name="DataOperazione" ColumnName="DataOperazione" />
+          <ScalarProperty Name="DataChiusura" ColumnName="DataChiusura" />
+          <ScalarProperty Name="Stato" ColumnName="Stato" />
+          <ScalarProperty Name="Titolo" ColumnName="Titolo" />
+          <ScalarProperty Name="Descrizione" ColumnName="Descrizione" />
+          <ScalarProperty Name="Priorita" ColumnName="Priorita" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="UserInfoTask" TypeName="FoolStaffDataModel.UserInfoTask" StoreEntitySet="UserInfoTask">
+      <EndProperty Name="UserInfo">
+        <ScalarProperty Name="Id" ColumnName="UserInfo_Id" />
+      </EndProperty>
+      <EndProperty Name="Task">
+        <ScalarProperty Name="Id" ColumnName="Task_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

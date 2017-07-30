@@ -67,6 +67,9 @@
       <DependentUpon>FoolStaffDataModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Task.cs">
+      <DependentUpon>FoolStaffDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Tesoreria.cs">
       <DependentUpon>FoolStaffDataModel.tt</DependentUpon>
     </Compile>
