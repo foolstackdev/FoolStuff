@@ -76,6 +76,13 @@
              controllerAs: "taskCtrl",
              data: { pageTitle: 'Users view' }
          })
+     .state('signed.updatePass', {
+         url: "/updatePass",
+         templateUrl: "app/view/template/private/updateaPass.html",
+         controller: "UpdatePassController",
+         controllerAs: "updatePassCtrl",
+         data: { pageTitle: 'Users view' }
+     })
 }])
 .run([function () {
     //sessionStorage.clear();
