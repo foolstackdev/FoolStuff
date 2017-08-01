@@ -78,7 +78,7 @@
          })
      .state('signed.updatePass', {
          url: "/updatePass",
-         templateUrl: "app/view/template/private/updateaPass.html",
+         templateUrl: "app/view/template/private/updatePass.html",
          controller: "UpdatePassController",
          controllerAs: "updatePassCtrl",
          data: { pageTitle: 'Users view' }

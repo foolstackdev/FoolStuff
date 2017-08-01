@@ -10,12 +10,18 @@
             <ul class="nav navbar-nav">
                 <li class="active"><a ui-sref="signed.homepage">HomePage</a></li>
                 <li><a ui-sref="signed.users">Users</a></li>
-                <li><a ui-sref="signed.update">Modifica Dati</a></li>
                 <li><a ui-sref="signed.tesoreria">Tesoreria</a></li>
                 <li><a ui-sref="signed.task">Task</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a ui-sref="signed.users"><span class="glyphicon glyphicon-user"></span> User</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Profilo<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a ui-sref="signed.update">Modifica Dati</a></li>
+                        <li><a ui-sref="signed.updatePass">Cambia Password</a></li>
+                   
+                    </ul>
+                </li>
                 <li data-ng-click="signedCtrl.logout()"><a href=""><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
             </ul>
         </div>

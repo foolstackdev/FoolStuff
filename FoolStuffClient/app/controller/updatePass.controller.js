@@ -5,7 +5,7 @@ angular
 
     var vm = this;
 
-    var model = {
+     vm.model = {
         oldPassword: "",
         newPassword: "",
         confirmPassword: ""
@@ -20,9 +20,9 @@ angular
     }
 
     function _updatePass() {
-        console.log(model);
+        console.log(vm.model);
 
-        RestService.PostData(CostantUrl.urlAccount, "ChangePassword", model).then(function (response) {
+        RestService.PostData(CostantUrl.urlAccount, "ChangePassword", vm.model).then(function (response) {
             toastr.success('Cool, your password has been updated', 'Confirmed');
             
         }, function (err) {
