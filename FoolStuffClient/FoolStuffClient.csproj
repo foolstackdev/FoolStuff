@@ -24,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -94,6 +95,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\controller\profile.controller.js" />
     <Content Include="app\controller\signed.controller.js" />
     <Content Include="app\controller\tesoreria.controller.js" />
     <Content Include="app\controller\task.controller.js" />
@@ -109,6 +111,7 @@
     <Content Include="app\view\assets\lib\bootstrap\ui-bootstrap-tpls-2.5.0.min.js" />
     <Content Include="app\view\template\common\contentSigned.html" />
     <Content Include="app\view\template\private\homepage.html" />
+    <Content Include="app\view\template\private\myProfile.html" />
     <Content Include="app\view\template\private\task.html" />
     <Content Include="app\view\template\private\updatePass.html" />
     <Content Include="app\view\template\private\users.html" />
