@@ -3,6 +3,7 @@
     angular.module('FoolStackApp', [
         'ui.router',
         'toastr',
-        'ui.bootstrap'
+        'ui.bootstrap',
+        'angularSpinner'
     ]);
 })();

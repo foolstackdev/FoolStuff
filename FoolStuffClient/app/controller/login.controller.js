@@ -1,7 +1,7 @@
 ﻿"use strict";
 angular
 .module('FoolStackApp')
-.controller('LoginController', ["$scope", "RestService", "CostantUrl", "toastr", "$state", function ($scope, RestService, CostantUrl, toastr, $state) {
+.controller('LoginController', ["$scope", "RestService", "CostantUrl", "toastr", "$state", "$rootScope", function ($scope, RestService, CostantUrl, toastr, $state, $rootScope) {
 
     var vm = this;
     vm.login = _login;
@@ -19,6 +19,7 @@ angular
     }
 
     function _login() {
+        $rootScope.$broadcast('start-spin');
         sessionStorage.clear();
         var JsonObj = "userName=" + vm.user.username + "&password=" + vm.user.password + "&grant_type=password";
         
@@ -29,21 +30,24 @@ angular
                 sessionStorage.setItem('userId', responseUser.data.id);
                 sessionStorage.setItem('user', responseUser.data);
                 toastr.success('Cool, you\' re now logged', 'Confirmed');
+                $rootScope.$broadcast('stop-spin');
                 $state.go("signed.homepage");
             }, function (err) {
                 console.log(err);
                 sessionStorage.clear();
+                $rootScope.$broadcast('stop-spin');
                 throw err;
             });
         }, function (err) {
-            console.log(err)
+            console.log(err);
+            $rootScope.$broadcast('stop-spin');
             sessionStorage.clear();
             if (err.data == null)
                 toastr.error('Problems during login, maybe username or password are incorrect', 'Something went wrong');
             else
                 toastr.error('Problems during login [' + err.data.error_description + ']', 'Something went wrong');
         });
-
+        
     }
 
 

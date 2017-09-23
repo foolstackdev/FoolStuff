@@ -99,11 +99,13 @@
     <Content Include="app\controller\task.controller.js" />
     <Content Include="app\controller\update.controller.js" />
     <Content Include="app\controller\updatePass.controller.js" />
+    <Content Include="app\controller\userpage.controller.js" />
     <Content Include="app\controller\users.controller.js" />
     <Content Include="app\model\constants\constants.js" />
     <Content Include="app\view\assets\content\css\bootrap-override.css" />
     <Content Include="app\view\assets\img\FoolStackers.jpg" />
     <Content Include="app\view\assets\img\Logo.png" />
+    <Content Include="app\view\assets\lib\angular-spinner\angular-spinner.min.js" />
     <Content Include="app\view\assets\lib\angular-toast\angular-toastr.min.css" />
     <Content Include="app\view\assets\lib\angular-toast\angular-toastr.tpls.min.js" />
     <Content Include="app\view\assets\lib\bootstrap\ui-bootstrap-tpls-2.5.0.min.js" />
@@ -111,6 +113,7 @@
     <Content Include="app\view\template\private\homepage.html" />
     <Content Include="app\view\template\private\task.html" />
     <Content Include="app\view\template\private\updatePass.html" />
+    <Content Include="app\view\template\private\userPage.html" />
     <Content Include="app\view\template\private\users.html" />
     <Content Include="app\view\template\private\tesoreria.html" />
     <Content Include="app\view\template\private\update.html" />

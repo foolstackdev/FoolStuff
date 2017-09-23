@@ -19,7 +19,7 @@
                     <ul class="dropdown-menu">
                         <li><a ui-sref="signed.update">Modifica Dati</a></li>
                         <li><a ui-sref="signed.updatePass">Cambia Password</a></li>
-                   
+                        <li><a ui-sref="signed.userPage">User Page</a></li>
                     </ul>
                 </li>
                 <li data-ng-click="signedCtrl.logout()"><a href=""><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
@@ -29,6 +29,7 @@
 </div>
 
 <div class="container">
+    <span us-spinner spinner-key="spinner-1"></span>
     <ui-view></ui-view>
 </div>
 

@@ -1,10 +1,14 @@
 ﻿angular
 .module('FoolStackApp')
-.config(["$locationProvider", "$urlRouterProvider", "$stateProvider", "$httpProvider", function config($locationProvider, $urlRouterProvider, $stateProvider, $httpProvider) {
+.config(["$locationProvider", "$urlRouterProvider", "$stateProvider", "$httpProvider", "usSpinnerConfigProvider", function config($locationProvider, $urlRouterProvider, $stateProvider, $httpProvider, usSpinnerConfigProvider) {
 
+    $httpProvider.defaults.useXDomain = true;
     $locationProvider.html5Mode(true);
     $urlRouterProvider.otherwise('/index/home');
+
     $httpProvider.interceptors.push('httpRequestInterceptor');
+
+    usSpinnerConfigProvider.setDefaults({ color: 'blue' });
 
     $stateProvider
         .state('unlogged', {
@@ -76,23 +80,103 @@
              controllerAs: "taskCtrl",
              data: { pageTitle: 'Users view' }
          })
-     .state('signed.updatePass', {
-         url: "/updatePass",
-         templateUrl: "app/view/template/private/updatePass.html",
-         controller: "UpdatePassController",
-         controllerAs: "updatePassCtrl",
-         data: { pageTitle: 'Users view' }
-     })
+        .state('signed.userPage', {
+            url: "/userPage",
+            templateUrl: "app/view/template/private/userPage.html",
+            controller: "UserPageController",
+            controllerAs: "userPageCtrl",
+            data: { pageTitle: 'Users Page view' }
+        })
+         .state('signed.updatePass', {
+             url: "/updatePass",
+             templateUrl: "app/view/template/private/updatePass.html",
+             controller: "UpdatePassController",
+             controllerAs: "updatePassCtrl",
+             data: { pageTitle: 'Users view' }
+         })
+
 }])
 .run([function () {
+    
     //sessionStorage.clear();
 }])
 .service('httpRequestInterceptor', [function () {
     var service = this;
-
+    console.log(service);
     service.request = function (config) {
         if (sessionStorage.getItem('accessToken') != null)
             config.headers.Authorization = 'Bearer ' + sessionStorage.getItem('accessToken');
         return config;
     };
+
+
+    //return {
+    //    'request': function (config) {
+    //        //$rootScope.$broadcast('start-spin');
+    //        if (sessionStorage.getItem('accessToken') != null)
+    //            config.headers.Authorization = 'Bearer ' + sessionStorage.getItem('accessToken');
+    //        return config;
+    //    },
+    //    'response': function (response) {
+    //        console.log("response")
+    //    },
+    //};
+
+    //return {
+    //    'request': function (config) {
+    //        //$rootScope.$broadcast('start-spin');
+    //        if (sessionStorage.getItem('accessToken') != null)
+    //            config.headers.Authorization = 'Bearer ' + sessionStorage.getItem('accessToken');
+    //        return config;
+    //    },
+    //    'response': function (response) {
+    //        console.log("response")
+    //    },
+    //    'responseError': function (rejection) {
+    //        console.log("responseerror")
+    //    }
+    //};
+
+
+
+
+
+
+
+    console.log(service);
+    //service.response = function (rrr) {
+    //    $rootScope.$broadcast('stop-spin');
+    //};
+
+    //service.requestError = function (error) {
+    //    $rootScope.$broadcast('stop-spin');
+    //};
+
+    //service.responseError = function (responseError) {
+    //    $rootScope.$broadcast('stop-spin');
+    //};
+
 }]);
+//.service('httpRequestInterceptor', ["$rootScope",function ($rootScope) {
+//    var service = this;
+
+//    service.request = function (config) {
+//        $rootScope.$broadcast('start-spin');
+//        if (sessionStorage.getItem('accessToken') != null)
+//            config.headers.Authorization = 'Bearer ' + sessionStorage.getItem('accessToken');
+//        return config;
+//    };
+
+//    service.response = function (response) {
+//        $rootScope.$broadcast('stop-spin');
+//    };
+
+//    service.requestError = function (error) {
+//        $rootScope.$broadcast('stop-spin');
+//    };
+
+//    service.responseError = function (responseError) {
+//        $rootScope.$broadcast('stop-spin');
+//    };
+
+//}]);
