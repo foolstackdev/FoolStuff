@@ -9,6 +9,11 @@ angular
           
         };
 
+        init();
+
+        function init() {
+            console.log("Inside Profile Controller")
+        }
         
 
 

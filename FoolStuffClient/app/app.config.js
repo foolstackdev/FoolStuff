@@ -1,6 +1,21 @@
 ﻿angular
 .module('FoolStackApp')
-.config(["$locationProvider", "$urlRouterProvider", "$stateProvider", "$httpProvider", "usSpinnerConfigProvider", function config($locationProvider, $urlRouterProvider, $stateProvider, $httpProvider, usSpinnerConfigProvider) {
+.config(["$locationProvider", "$urlRouterProvider", "$stateProvider", "$httpProvider", "usSpinnerConfigProvider", "ChartJsProvider", function config($locationProvider, $urlRouterProvider, $stateProvider, $httpProvider, usSpinnerConfigProvider, ChartJsProvider) {
+
+    ChartJsProvider.setOptions({
+        chartColors: ['444445','#FF5252', '#FF8A80','444445'],
+        responsive: false
+    });
+    // Configure all line charts
+    ChartJsProvider.setOptions('line', {
+        showLines: false
+    });
+
+
+
+
+
+
 
     $httpProvider.defaults.useXDomain = true;
     $locationProvider.html5Mode(true);
@@ -94,13 +109,20 @@
              controllerAs: "updatePassCtrl",
              data: { pageTitle: 'Users view' }
          })
-            .state('signed.myProfile', {
-                url: "/myProfile",
-                templateUrl: "app/view/template/private/myProfile.html",
-                controller: "ProfileController",
-                controllerAs: "profileCtrl",
-                data: { pageTitle: 'Users view' }
-            })
+        .state('signed.myProfile', {
+            url: "/myProfile",
+            templateUrl: "app/view/template/private/myProfile.html",
+            controller: "ProfileController",
+            controllerAs: "profileCtrl",
+            data: { pageTitle: 'Users view' }
+        })
+        .state('signed.applications', {
+            url: "/applications",
+            templateUrl: "app/view/template/private/applications.html",
+            controller: "ApplicationsController",
+            controllerAs: "applicationsCtrl",
+            data: { pageTitle: 'Applications view' }
+        })
 
 }])
 .run([function () {
