@@ -94,10 +94,17 @@
              controllerAs: "updatePassCtrl",
              data: { pageTitle: 'Users view' }
          })
+            .state('signed.myProfile', {
+                url: "/myProfile",
+                templateUrl: "app/view/template/private/myProfile.html",
+                controller: "ProfileController",
+                controllerAs: "profileCtrl",
+                data: { pageTitle: 'Users view' }
+            })
 
 }])
 .run([function () {
-    
+
     //sessionStorage.clear();
 }])
 .service('httpRequestInterceptor', [function () {
