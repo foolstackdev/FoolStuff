@@ -12,32 +12,33 @@ namespace FoolStuff.Controllers
     public class UseraccountController : ApiController
     {
         [HttpGet]
-        [Route("isAlive")]
+        [Route("isalive")]
         public HttpResponseMessage isAlive()
         {
             return Request.CreateResponse(HttpStatusCode.OK, "I'm Alive, Hello!");
         }
 
-        [HttpPost]
-        [Route("register")]
-        public HttpResponseMessage Register([FromBody]UserInfo user)
-        {
-            try
-            {
-                using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
-                {
-                    entities.UserInfo.Add(user);
-                    entities.SaveChanges();
+        //20171008 Old Method to delete if unused
+        //[HttpPost]
+        //[Route("register")]
+        //public HttpResponseMessage Register([FromBody]UserInfo user)
+        //{
+        //    try
+        //    {
+        //        using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
+        //        {
+        //            entities.UserInfo.Add(user);
+        //            entities.SaveChanges();
 
-                    var message = Request.CreateResponse(HttpStatusCode.Created, user);
-                    return message;
-                }
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
-            }
-        }
+        //            var message = Request.CreateResponse(HttpStatusCode.Created, user);
+        //            return message;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+        //    }
+        //}
 
         //[BasicAuthentication]
         [Authorize]

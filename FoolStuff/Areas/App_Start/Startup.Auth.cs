@@ -10,6 +10,7 @@ using Microsoft.Owin.Security.OAuth;
 using Owin;
 using FoolStuff.Providers;
 using FoolStuff.Models;
+using FoolStuff.Infrastructure;
 
 namespace FoolStuff
 {
@@ -23,8 +24,10 @@ namespace FoolStuff
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configurare il contesto di database e la gestione utenti per l'utilizzo di un'unica istanza per richiesta
+            // 20171008 Aggiunto Role Manager
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
+            app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
 
             // Consentire all'applicazione di utilizzare un cookie per memorizzare informazioni relative all'utente connesso
             // e per memorizzare temporaneamente le informazioni relative a un utente che accede tramite un provider di accesso di terze parti
@@ -35,7 +38,7 @@ namespace FoolStuff
             PublicClientId = "self";
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
-                TokenEndpointPath = new PathString("/Token"),
+                TokenEndpointPath = new PathString("/token"),
                 Provider = new ApplicationOAuthProvider(PublicClientId),
                 AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromHours(2),

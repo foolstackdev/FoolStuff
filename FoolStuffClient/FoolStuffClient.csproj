@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\controller\applications.controller.js" />
+    <Content Include="app\controller\roles.controller.js" />
     <Content Include="app\controller\profile.controller.js" />
     <Content Include="app\controller\signed.controller.js" />
     <Content Include="app\controller\tesoreria.controller.js" />
@@ -120,6 +121,7 @@
     <Content Include="app\view\template\private\task.html" />
     <Content Include="app\view\template\private\updatePass.html" />
     <Content Include="app\view\template\private\applications.html" />
+    <Content Include="app\view\template\private\roles.html" />
     <Content Include="app\view\template\private\userPage.html" />
     <Content Include="app\view\template\private\users.html" />
     <Content Include="app\view\template\private\tesoreria.html" />

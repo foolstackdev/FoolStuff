@@ -17,6 +17,7 @@ using FoolStuff.Models;
 using FoolStuff.Providers;
 using FoolStuff.Results;
 using FoolStaffDataAccess;
+using System.Linq;
 
 namespace FoolStuff.Controllers
 {
@@ -346,6 +347,10 @@ namespace FoolStuff.Controllers
 
             try
             {
+                //Add user to a simpleuser foolstack role.
+                ApplicationDbContext context = new ApplicationDbContext();
+                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                userManager.AddToRole(user.Id, "SimpleUser");
 
                 UserInfo oUser = new UserInfo();
                 oUser.Name = oAuthModel.Name;
@@ -357,7 +362,17 @@ namespace FoolStuff.Controllers
 
                 using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
                 {
-                    entities.UserInfo.Add(oUser);
+
+                    var entity = entities.UserInfo.FirstOrDefault(u => u.Email == oUser.Email);
+
+                    if (entity == null)
+                    {
+                        entities.UserInfo.Add(oUser);
+                    }
+                    else
+                    {
+                        entity.Id = user.Id;
+                    }
                     entities.SaveChanges();
                 }
             }
@@ -365,6 +380,7 @@ namespace FoolStuff.Controllers
             {
                 //To DO
                 //Implementare un sistema di logger e avviso utente di modificare le proprie generalità dopo la login.
+                return InternalServerError(ex);
             }
 
 

@@ -123,6 +123,13 @@
             controllerAs: "applicationsCtrl",
             data: { pageTitle: 'Applications view' }
         })
+        .state('signed.roles', {
+            url: "/roles",
+            templateUrl: "app/view/template/private/roles.html",
+            controller: "RolesController",
+            controllerAs: "rolesCtrl",
+            data: { pageTitle: 'Roles view' }
+        })
 
 }])
 .run([function () {

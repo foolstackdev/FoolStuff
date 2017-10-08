@@ -1,0 +1,61 @@
+﻿<h1>Roles Controller</h1>
+<p>Di seguito la lista dei ruoli</p>
+<table class="table container">
+    <tr>
+        <th>
+            Id
+        </th>
+        <th>
+            Name
+        </th>
+    </tr>
+    <tr data-ng-repeat="role in rolesCtrl.roles">
+        <td>
+            {{role.id}}
+        </td>
+        <td>
+            {{role.name}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="form-group">
+                <input type="text" data-ng-model="rolesCtrl.newRole.Name" class="form-control" placeholder="Inserisci nuovo ruolo" />
+            </div>
+        </td>
+        <td>
+            <button class="btn btn-primary" data-ng-disabled="rolesCtrl.newRole.Name == ''" data-ng-click="rolesCtrl.addRole()">Aggiungi Ruolo</button>
+        </td>
+    </tr>
+</table>
+
+<p>Di seguito i ruoli associati agli utenti</p>
+
+<!--<table class="table table-hover">
+    <tr>
+        <th>
+            Id
+        </th>
+        <th>
+            Name
+        </th>
+    </tr>
+    <tr data-ng-repeat="role in rolesCtrl.roles">
+        <td>
+            {{role.id}}
+        </td>
+        <td>
+            {{role.name}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="form-group">
+                <input type="text" data-ng-model="rolesCtrl.newRole.Name" class="form-control" placeholder="Inserisci nuovo ruolo" />
+            </div>
+        </td>
+        <td>
+            <button class="btn btn-primary" data-ng-disabled="rolesCtrl.newRole.Name == ''" data-ng-click="rolesCtrl.addRole()">Aggiungi Ruolo</button>
+        </td>
+    </tr>
+</table>-->
