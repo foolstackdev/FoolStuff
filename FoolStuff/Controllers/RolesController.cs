@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -30,7 +31,31 @@ namespace FoolStuff.Controllers
         {
             try
             {
+                //ApplicationDbContext context = new ApplicationDbContext();
+                //context.Configuration.ProxyCreationEnabled = false;
+
+                //var bbb = (from user in context.Users
+                //           from userRole in user.Roles
+                //           join role in context.Roles 
+                //           on userRole.RoleId equals role.Id
+                //           select user);
+
+
+
+                //var aaa = (from u in context.Users join r in context.Roles
+                //           on u.Roles equals r.Id
+                //           select u);
+
+                //var uuu = context.Users.Where
+
+
+                //var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+                //var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                //var users = userManager.Users.Include(t => t.Roles).ToList();
                 var roles = this.AppRoleManager.Roles.ToList();
+
+
+
                 return Ok(roles);
 
             }
@@ -50,7 +75,6 @@ namespace FoolStuff.Controllers
                 ApplicationDbContext context = new ApplicationDbContext();
 
                 var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
-                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
                 if (!roleManager.RoleExists(newRole.Name))
                 {

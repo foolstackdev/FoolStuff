@@ -1,6 +1,7 @@
 ﻿<h1>Roles Controller</h1>
-<p>Di seguito la lista dei ruoli</p>
-<table class="table container">
+<p>Di seguito i ruoli associati agli utenti</p>
+
+<table class="table table-hover">
     <tr>
         <th>
             Id
@@ -8,15 +9,34 @@
         <th>
             Name
         </th>
+        <th>
+            <span class="pull-right">User</span>
+        </th>
     </tr>
-    <tr data-ng-repeat="role in rolesCtrl.roles">
-        <td>
-            {{role.id}}
-        </td>
-        <td>
-            {{role.name}}
-        </td>
-    </tr>
+    <tbody data-ng-repeat="role in rolesCtrl.roles">
+        <tr>
+            <td>
+                {{role.id}}
+            </td>
+            <td>
+                {{role.name}}
+            </td>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+        <tr data-ng-repeat="user in role.users">
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                <span style="color:blue" class="pull-right">{{user.userId}}</span>
+            </td>
+        </tr>
+    </tbody>
     <tr>
         <td>
             <div class="form-group">
@@ -24,38 +44,10 @@
             </div>
         </td>
         <td>
-            <button class="btn btn-primary" data-ng-disabled="rolesCtrl.newRole.Name == ''" data-ng-click="rolesCtrl.addRole()">Aggiungi Ruolo</button>
+            &nbsp;
+        </td>
+        <td>
+            <button class="btn btn-primary pull-right" data-ng-disabled="rolesCtrl.newRole.Name == ''" data-ng-click="rolesCtrl.addRole()">Aggiungi Ruolo</button>
         </td>
     </tr>
 </table>
-
-<p>Di seguito i ruoli associati agli utenti</p>
-
-<!--<table class="table table-hover">
-    <tr>
-        <th>
-            Id
-        </th>
-        <th>
-            Name
-        </th>
-    </tr>
-    <tr data-ng-repeat="role in rolesCtrl.roles">
-        <td>
-            {{role.id}}
-        </td>
-        <td>
-            {{role.name}}
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <div class="form-group">
-                <input type="text" data-ng-model="rolesCtrl.newRole.Name" class="form-control" placeholder="Inserisci nuovo ruolo" />
-            </div>
-        </td>
-        <td>
-            <button class="btn btn-primary" data-ng-disabled="rolesCtrl.newRole.Name == ''" data-ng-click="rolesCtrl.addRole()">Aggiungi Ruolo</button>
-        </td>
-    </tr>
-</table>-->
