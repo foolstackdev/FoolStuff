@@ -7,36 +7,23 @@
             Id
         </th>
         <th>
-            Name
+            Email
         </th>
         <th>
-            <span class="pull-right">User</span>
+            Role
         </th>
     </tr>
-    <tbody data-ng-repeat="role in rolesCtrl.roles">
-        <tr>
-            <td>
-                {{role.id}}
-            </td>
-            <td>
-                {{role.name}}
-            </td>
-            <td>
-                &nbsp;
-            </td>
-        </tr>
-        <tr data-ng-repeat="user in role.users">
-            <td>
-                &nbsp;
-            </td>
-            <td>
-                &nbsp;
-            </td>
-            <td>
-                <span style="color:blue" class="pull-right">{{user.userId}}</span>
-            </td>
-        </tr>
-    </tbody>
+    <tr data-ng-repeat="role in rolesCtrl.roles">
+        <td>
+            {{role.user.id}}
+        </td>
+        <td>
+            {{role.user.email}}
+        </td>
+        <td>
+            {{role.roles}}
+        </td>
+    </tr>
     <tr>
         <td>
             <div class="form-group">

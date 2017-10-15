@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -31,32 +32,35 @@ namespace FoolStuff.Controllers
         {
             try
             {
-                //ApplicationDbContext context = new ApplicationDbContext();
-                //context.Configuration.ProxyCreationEnabled = false;
+                ApplicationDbContext context = new ApplicationDbContext();
+                context.Configuration.ProxyCreationEnabled = false;
 
-                //var bbb = (from user in context.Users
-                //           from userRole in user.Roles
-                //           join role in context.Roles 
-                //           on userRole.RoleId equals role.Id
-                //           select user);
+                var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+
+                var bbb = (from user in context.Users
+                           from userRole in user.Roles
+                           join role in context.Roles
+                           on userRole.RoleId equals role.Id
+                           select user);
 
 
 
-                //var aaa = (from u in context.Users join r in context.Roles
-                //           on u.Roles equals r.Id
+                //var aaa = (from u in context.Users
+                //           join r in context.Roles
+                //            on u.Roles equals r.Id
                 //           select u);
 
                 //var uuu = context.Users.Where
-
-
-                //var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
-                //var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                //var usersWithRoles = context.Users.Select(x => new UserWithRolesViewModel { User = x, UserRoles = x.Roles }).ToList();
+                var allUsers = userManager.Users.ToList();
+                var users = allUsers.Select(u => new UsersViewModel { User = u, Roles = String.Join(",", roleManager.Roles.Where(role => role.Users.Any(user => user.UserId == u.Id)).Select(r => r.Name)) }).ToList();
                 //var users = userManager.Users.Include(t => t.Roles).ToList();
-                var roles = this.AppRoleManager.Roles.ToList();
+               // var roles = this.AppRoleManager.Roles.ToList();
 
 
 
-                return Ok(roles);
+                return Ok(users);
 
             }
             catch (Exception ex)
@@ -92,7 +96,19 @@ namespace FoolStuff.Controllers
                 return InternalServerError(ex);
             }
         }
+        public class UsersViewModel
+        {
+            [Display(Name = "User")]
+            public ApplicationUser User { get; set; }
 
+            [Display(Name = "Roles")]
+            public string Roles { get; set; }
+        }
+        //private class UserWithRolesViewModel
+        //{
+        //    public ApplicationUser User { get; set; }
+        //    public ICollection<IdentityUserRole> UserRoles { get; set; }
+        //}
     }
 
 }

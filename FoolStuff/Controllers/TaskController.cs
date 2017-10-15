@@ -28,7 +28,7 @@ namespace FoolStuff.Controllers
             {
                 using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
                 {
-
+                    //entities.Configuration.ProxyCreationEnabled = false;
                     var entity = entities.Task.Where(t => t.Stato == "OPEN").Include(t => t.UserInfo).OrderByDescending(t => t.Priorita).ToList();
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
@@ -137,6 +137,7 @@ namespace FoolStuff.Controllers
 
                     if (entityTask != null)
                     {
+                        entityTask.DataChiusura = DateTime.Today; 
                         entityTask.Stato = "CLOSED";
                         entities.SaveChanges();
                     }
@@ -152,21 +153,32 @@ namespace FoolStuff.Controllers
 
         [HttpGet]
         [Route("getclosedtask")]
-        public HttpResponseMessage getClosedTask()
+        public IHttpActionResult getClosedTask()
         {
             try
             {
                 using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
                 {
-                    var entityTask = entities.Task.Include(t => t.UserInfo).ToList();
+                    //entities.Configuration.LazyLoadingEnabled = false;
+                    //entities.Configuration.ProxyCreationEnabled = false;
 
-                    var entity = entities.Task.Where(t => t.Stato == "CLOSED").Include(t => t.UserInfo).OrderByDescending(t => t.Priorita).ToList(); 
-                    return Request.CreateResponse(HttpStatusCode.OK, entity);
+                    //var example = from user in entities.UserInfo
+                    //              from tasks in user.Task
+                    //              select new
+                    //              {
+                    //                  user = user,
+                    //                  tasks = tasks
+                    //              };
+
+                    var entityTask = entities.Task.Where(t => t.Stato == "CLOSED").Include(t => t.UserInfo).OrderByDescending(t => t.DataChiusura).ToList();
+
+                    //var entity = entities.Task.Where(t => t.Stato == "CLOSED").Include(t => t.UserInfo).OrderByDescending(t => t.DataChiusura).ToList(); 
+                    return Ok(entityTask);
                 }
             }
             catch (Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+                return InternalServerError(ex);
             }
         }
     }

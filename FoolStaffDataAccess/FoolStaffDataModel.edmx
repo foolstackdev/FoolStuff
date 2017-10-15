@@ -4,84 +4,84 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FoolStaffDataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Alias="Self" Namespace="FoolStaffDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012">
   <EntityContainer Name="FoolStaffDataModelStoreContainer">
-    <EntitySet Name="UserInfo" EntityType="FoolStaffDataModel.Store.UserInfo" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Tesoreria" EntityType="FoolStaffDataModel.Store.Tesoreria" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="User_Tesoreria" EntityType="FoolStaffDataModel.Store.User_Tesoreria" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Task" EntityType="FoolStaffDataModel.Store.Task" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="UserInfoTask" EntityType="FoolStaffDataModel.Store.UserInfoTask" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserInfo" EntityType="FoolStaffDataModel.Store.UserInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tesoreria" EntityType="FoolStaffDataModel.Store.Tesoreria" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User_Tesoreria" EntityType="FoolStaffDataModel.Store.User_Tesoreria" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Task" EntityType="FoolStaffDataModel.Store.Task" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserInfoTask" EntityType="FoolStaffDataModel.Store.UserInfoTask" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="TesoreriaToUser_Tesoreria" Association="FoolStaffDataModel.Store.TesoreriaToUser_Tesoreria">
-      <End Role="Tesoreria" EntitySet="Tesoreria" />
-      <End Role="User_Tesoreria" EntitySet="User_Tesoreria" />
+      <End EntitySet="Tesoreria" Role="Tesoreria" />
+      <End EntitySet="User_Tesoreria" Role="User_Tesoreria" />
     </AssociationSet>
     <AssociationSet Name="UserInfoToUser_Tesoreria" Association="FoolStaffDataModel.Store.UserInfoToUser_Tesoreria">
-      <End Role="UserInfo" EntitySet="UserInfo" />
-      <End Role="User_Tesoreria" EntitySet="User_Tesoreria" />
+      <End EntitySet="UserInfo" Role="UserInfo" />
+      <End EntitySet="User_Tesoreria" Role="User_Tesoreria" />
     </AssociationSet>
     <AssociationSet Name="FK_UserInfoTask_UserInfo" Association="FoolStaffDataModel.Store.FK_UserInfoTask_UserInfo">
-      <End Role="UserInfo" EntitySet="UserInfo" />
-      <End Role="UserInfoTask" EntitySet="UserInfoTask" />
+      <End EntitySet="UserInfo" Role="UserInfo" />
+      <End EntitySet="UserInfoTask" Role="UserInfoTask" />
     </AssociationSet>
     <AssociationSet Name="FK_UserInfoTask_Task" Association="FoolStaffDataModel.Store.FK_UserInfoTask_Task">
-      <End Role="Task" EntitySet="Task" />
-      <End Role="UserInfoTask" EntitySet="UserInfoTask" />
+      <End EntitySet="Task" Role="Task" />
+      <End EntitySet="UserInfoTask" Role="UserInfoTask" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="UserInfo">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
-    <Property Name="Surname" Type="nvarchar" Nullable="false" MaxLength="50" />
-    <Property Name="Phone" Type="nvarchar" Nullable="false" MaxLength="20" />
-    <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="50" />
-    <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="20" />
-    <Property Name="Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="Name" Nullable="false" MaxLength="50" Type="nvarchar" />
+    <Property Name="Surname" Nullable="false" MaxLength="50" Type="nvarchar" />
+    <Property Name="Phone" Nullable="false" MaxLength="20" Type="nvarchar" />
+    <Property Name="Email" Nullable="false" MaxLength="50" Type="nvarchar" />
+    <Property Name="Password" Nullable="false" MaxLength="20" Type="nvarchar" />
+    <Property Name="Id" Nullable="false" MaxLength="128" Type="nvarchar" />
   </EntityType>
   <EntityType Name="Tesoreria">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="DataOperazione" Type="datetime" Nullable="false" />
-    <Property Name="Operazione" Type="nvarchar" Nullable="false" MaxLength="20" />
-    <Property Name="Totale" Type="decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="Note" Type="nvarchar" Nullable="false" MaxLength="250" />
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="DataOperazione" Nullable="false" Type="datetime" />
+    <Property Name="Operazione" Nullable="false" MaxLength="20" Type="nvarchar" />
+    <Property Name="Totale" Nullable="false" Precision="18" Scale="0" Type="decimal" />
+    <Property Name="Note" Nullable="false" MaxLength="250" Type="nvarchar" />
   </EntityType>
   <EntityType Name="User_Tesoreria">
     <Key>
       <PropertyRef Name="TesoreriaId" />
       <PropertyRef Name="UserInfoId" />
     </Key>
-    <Property Name="Versamento" Type="decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="TesoreriaId" Type="int" Nullable="false" />
-    <Property Name="UserInfoId" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="Versamento" Nullable="false" Precision="18" Scale="0" Type="decimal" />
+    <Property Name="TesoreriaId" Nullable="false" Type="int" />
+    <Property Name="UserInfoId" Nullable="false" MaxLength="128" Type="nvarchar" />
   </EntityType>
   <EntityType Name="Task">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="DataCreazione" Type="datetime" Nullable="false" />
-    <Property Name="DataOperazione" Type="datetime" Nullable="true" />
-    <Property Name="DataChiusura" Type="datetime" Nullable="true" />
-    <Property Name="Stato" Type="nvarchar" Nullable="false" MaxLength="15" />
-    <Property Name="Titolo" Type="nvarchar" Nullable="false" MaxLength="100" />
-    <Property Name="Descrizione" Type="nvarchar" Nullable="false" MaxLength="250" />
-    <Property Name="Priorita" Type="smallint" Nullable="false" />
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="DataCreazione" Nullable="false" Type="datetime" />
+    <Property Name="DataOperazione" Nullable="true" Type="datetime" />
+    <Property Name="DataChiusura" Nullable="true" Type="datetime" />
+    <Property Name="Stato" Nullable="false" MaxLength="15" Type="nvarchar" />
+    <Property Name="Titolo" Nullable="false" MaxLength="100" Type="nvarchar" />
+    <Property Name="Descrizione" Nullable="false" MaxLength="250" Type="nvarchar" />
+    <Property Name="Priorita" Nullable="false" Type="smallint" />
   </EntityType>
   <EntityType Name="UserInfoTask">
     <Key>
       <PropertyRef Name="UserInfo_Id" />
       <PropertyRef Name="Task_Id" />
     </Key>
-    <Property Name="UserInfo_Id" Type="nvarchar" Nullable="false" MaxLength="128" />
-    <Property Name="Task_Id" Type="int" Nullable="false" />
+    <Property Name="UserInfo_Id" Nullable="false" MaxLength="128" Type="nvarchar" />
+    <Property Name="Task_Id" Nullable="false" Type="int" />
   </EntityType>
   <Association Name="TesoreriaToUser_Tesoreria">
-    <End Role="Tesoreria" Type="FoolStaffDataModel.Store.Tesoreria" Multiplicity="1" />
-    <End Role="User_Tesoreria" Type="FoolStaffDataModel.Store.User_Tesoreria" Multiplicity="*" />
+    <End Type="FoolStaffDataModel.Store.Tesoreria" Multiplicity="1" Role="Tesoreria" />
+    <End Type="FoolStaffDataModel.Store.User_Tesoreria" Multiplicity="*" Role="User_Tesoreria" />
     <ReferentialConstraint>
       <Principal Role="Tesoreria">
         <PropertyRef Name="Id" />
@@ -92,8 +92,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="UserInfoToUser_Tesoreria">
-    <End Role="UserInfo" Type="FoolStaffDataModel.Store.UserInfo" Multiplicity="1" />
-    <End Role="User_Tesoreria" Type="FoolStaffDataModel.Store.User_Tesoreria" Multiplicity="*" />
+    <End Type="FoolStaffDataModel.Store.UserInfo" Multiplicity="1" Role="UserInfo" />
+    <End Type="FoolStaffDataModel.Store.User_Tesoreria" Multiplicity="*" Role="User_Tesoreria" />
     <ReferentialConstraint>
       <Principal Role="UserInfo">
         <PropertyRef Name="Id" />
@@ -104,8 +104,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_UserInfoTask_UserInfo">
-    <End Role="UserInfo" Type="FoolStaffDataModel.Store.UserInfo" Multiplicity="1" />
-    <End Role="UserInfoTask" Type="FoolStaffDataModel.Store.UserInfoTask" Multiplicity="*" />
+    <End Type="FoolStaffDataModel.Store.UserInfo" Multiplicity="1" Role="UserInfo" />
+    <End Type="FoolStaffDataModel.Store.UserInfoTask" Multiplicity="*" Role="UserInfoTask" />
     <ReferentialConstraint>
       <Principal Role="UserInfo">
         <PropertyRef Name="Id" />
@@ -116,8 +116,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_UserInfoTask_Task">
-    <End Role="UserInfoTask" Type="FoolStaffDataModel.Store.UserInfoTask" Multiplicity="*" />
-    <End Role="Task" Type="FoolStaffDataModel.Store.Task" Multiplicity="1" />
+    <End Type="FoolStaffDataModel.Store.UserInfoTask" Multiplicity="*" Role="UserInfoTask" />
+    <End Type="FoolStaffDataModel.Store.Task" Multiplicity="1" Role="Task" />
     <ReferentialConstraint>
       <Principal Role="Task">
         <PropertyRef Name="Id" />
@@ -145,8 +145,8 @@
           </AssociationSet>
           <EntitySet Name="Task" EntityType="FoolStaffDataModel.Task" />
           <AssociationSet Name="UserInfoTask" Association="FoolStaffDataModel.UserInfoTask">
-            <End Role="UserInfo" EntitySet="UserInfo" />
-            <End Role="Task" EntitySet="Task" />
+            <End EntitySet="UserInfo" Role="UserInfo" />
+            <End EntitySet="Task" Role="Task" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="UserInfo">
@@ -223,15 +223,15 @@
           <Property Name="Priorita" Type="Int16" Nullable="false" />
         </EntityType>
         <Association Name="UserInfoTask">
-          <End Type="FoolStaffDataModel.UserInfo" Role="UserInfo" Multiplicity="*" />
-          <End Type="FoolStaffDataModel.Task" Role="Task" Multiplicity="*" />
+          <End Type="FoolStaffDataModel.UserInfo" Multiplicity="*" Role="UserInfo" />
+          <End Type="FoolStaffDataModel.Task" Multiplicity="*" Role="Task" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="FoolStaffDataModelStoreContainer" CdmEntityContainer="FoolStaffDataModelContainer">
+  <EntityContainerMapping CdmEntityContainer="FoolStaffDataModelContainer" StorageEntityContainer="FoolStaffDataModelStoreContainer">
     <EntitySetMapping Name="UserInfo">
       <EntityTypeMapping TypeName="IsTypeOf(FoolStaffDataModel.UserInfo)">
         <MappingFragment StoreEntitySet="UserInfo">
