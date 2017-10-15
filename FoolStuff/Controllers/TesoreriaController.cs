@@ -8,7 +8,7 @@ using System.Web.Http;
 
 namespace FoolStuff.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin, FoolStackUser")]
     [RoutePrefix("api/tesoreria")]
     public class TesoreriaController : ApiController
     {

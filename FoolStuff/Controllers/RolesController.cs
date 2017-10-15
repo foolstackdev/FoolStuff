@@ -25,7 +25,7 @@ namespace FoolStuff.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, "I'm Alive, Hello!");
         }
 
-        [Authorize(Roles = "SuperAdmin")]
+        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
         [HttpGet]
         [Route("getallroles")]
         public IHttpActionResult getAllEntry()

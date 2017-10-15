@@ -8,6 +8,7 @@ using FoolStaffDataAccess;
 
 namespace FoolStuff.Controllers
 {
+    [Authorize]
     [RoutePrefix("api/useraccount")]
     public class UseraccountController : ApiController
     {
@@ -40,8 +41,8 @@ namespace FoolStuff.Controllers
         //    }
         //}
 
-        //[BasicAuthentication]
-        [Authorize]
+        //[BasicAuthentication]]
+        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
         [HttpGet]
         [Route("allusers")]
         public HttpResponseMessage allUsers()
@@ -62,7 +63,7 @@ namespace FoolStuff.Controllers
 
         }
 
-        [Authorize]
+        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
         [HttpPost]
         [Route("updateuserinfo/{id}")]
         public HttpResponseMessage updateUserInfo(string id, [FromBody]UserInfo user)
@@ -96,7 +97,7 @@ namespace FoolStuff.Controllers
 
         }
 
-        [Authorize]
+        [Authorize(Roles = "SuperAdmin, FoolStackUser, SimpleUser")]
         [HttpGet]
         [Route("getuserinfo/{email}")]
         public HttpResponseMessage getUserInfo(string email)

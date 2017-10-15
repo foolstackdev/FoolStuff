@@ -9,6 +9,7 @@ using System.Web.Http;
 
 namespace FoolStuff.Controllers
 {
+    [Authorize(Roles = "SuperAdmin, FoolStackUser")]
     [RoutePrefix("api/task")]
     public class TaskController : ApiController
     {

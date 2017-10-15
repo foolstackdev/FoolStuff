@@ -13,7 +13,7 @@ angular
                         deferred.resolve(result);
                     }, function (err) {
                         if (err.status == 401) {
-                            toastr.error('Not allowed, you should first login', 'Unauthorized');
+                            toastr.error('Not allowed, wait for your confirmation', 'Unauthorized');
                             $state.go("unlogged.login");
                         }
                         console.log(err);
@@ -29,7 +29,7 @@ angular
                         deferred.resolve(result);
                     }, function (err) {
                         if (err.status == 401) {
-                            toastr.error('Not allowed, you should first login', 'Unauthorized');
+                            toastr.error('Not allowed, wait for your confirmation', 'Unauthorized');
                             $state.go("unlogged.login");
                         }
                         console.log(err);
