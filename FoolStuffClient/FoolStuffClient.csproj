@@ -134,6 +134,8 @@
     <Content Include="app\view\assets\content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="app\view\assets\content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="app\view\assets\content\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="Properties\PublishProfiles\foolstaff.pubxml" />
+    <None Include="Properties\PublishProfiles\sss.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -165,7 +167,9 @@
     <Content Include="app\view\template\public\register.html" />
     <Content Include="app\view\template\public\login.html" />
     <Content Include="index.html" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

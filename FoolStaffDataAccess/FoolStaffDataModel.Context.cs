@@ -18,7 +18,6 @@ namespace FoolStaffDataAccess
         public FoolStaffDataModelContainer()
             : base("name=FoolStaffDataModelContainer")
         {
-            this.Configuration.LazyLoadingEnabled = false;
             this.Configuration.ProxyCreationEnabled = false;
         }
     

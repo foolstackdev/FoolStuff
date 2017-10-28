@@ -30,7 +30,7 @@ namespace FoolStuff.Controllers
                 using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
                 {
                     //entities.Configuration.ProxyCreationEnabled = false;
-                    var entity = entities.Task.Where(t => t.Stato == "OPEN").Include(t => t.UserInfo).OrderByDescending(t => t.Priorita).ToList();
+                    var entity = entities.Task.Where(t => t.Stato == "OPEN").Include(f => f.UserInfo).OrderByDescending(t => t.Priorita).ToList();
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
             }
@@ -58,7 +58,7 @@ namespace FoolStuff.Controllers
                     entities.Task.Add(oTask);
                     entities.SaveChanges();
 
-                    var entity = entities.Task.ToList().Where(t => t.Stato == "OPEN").OrderByDescending(t => t.Priorita);
+                    var entity = entities.Task.Where(t => t.Stato == "OPEN").OrderByDescending(t => t.Priorita).ToList();
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
             }
@@ -77,14 +77,17 @@ namespace FoolStuff.Controllers
                 using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
                 {
 
-                    var entityUser = entities.UserInfo.FirstOrDefault(u => u.Id == userId);
-                    var entityTask = entities.Task.Include(t => t.UserInfo).FirstOrDefault(t => t.Id == idTask);
+                    
 
-                    if (!entityTask.UserInfo.Contains(entityUser))
-                    {
-                        entityTask.UserInfo.Add(entityUser);
-                        entities.SaveChanges();
-                    }
+                    var entityUser = entities.UserInfo.FirstOrDefault(u => u.Id == userId);
+                    entities.Task.FirstOrDefault(t => t.Id == idTask).UserInfo.Add(entityUser);
+                    //var entityTask = entities.Task.Include(t => t.UserInfo).FirstOrDefault(t => t.Id == idTask);
+
+                    //if (!entityTask.UserInfo.Contains(entityUser))
+                    //{
+                    //    entityTask.UserInfo.Add(entityUser);
+                    //    entities.SaveChanges();
+                    //}
 
                     //var entity = entities.Task.ToList().Where(t => t.Stato == "OPEN").OrderByDescending(t => t.Priorita);
                     var entity = entities.Task.Where(t => t.Stato == "OPEN").Include(t => t.UserInfo).OrderByDescending(t => t.Priorita).ToList(); 
