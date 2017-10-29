@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/28/2017 12:32:51
+-- Date Created: 10/29/2017 11:41:35
 -- Generated from EDMX file: D:\GITREPO\FoolStuff\FoolStaffDataAccess\FoolStaffDataModel.edmx
 -- --------------------------------------------------
 
@@ -17,25 +17,25 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK__UserInfoT__TaskI__4AB81AF0]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserInfoTask] DROP CONSTRAINT [FK__UserInfoT__TaskI__4AB81AF0];
+GO
+IF OBJECT_ID(N'[dbo].[FK__UserInfoT__UserI__49C3F6B7]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserInfoTask] DROP CONSTRAINT [FK__UserInfoT__UserI__49C3F6B7];
+GO
 IF OBJECT_ID(N'[dbo].[FK_TesoreriaToUser_Tesoreria]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[User_Tesoreria] DROP CONSTRAINT [FK_TesoreriaToUser_Tesoreria];
 GO
 IF OBJECT_ID(N'[dbo].[FK_UserInfoToUser_Tesoreria]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[User_Tesoreria] DROP CONSTRAINT [FK_UserInfoToUser_Tesoreria];
 GO
-IF OBJECT_ID(N'[dbo].[FK_UserInfoTask_UserInfo]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[UserInfoTask] DROP CONSTRAINT [FK_UserInfoTask_UserInfo];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UserInfoTask_Task]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[UserInfoTask] DROP CONSTRAINT [FK_UserInfoTask_Task];
-GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[UserInfo]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[UserInfo];
+IF OBJECT_ID(N'[dbo].[Task]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Task];
 GO
 IF OBJECT_ID(N'[dbo].[Tesoreria]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Tesoreria];
@@ -43,8 +43,8 @@ GO
 IF OBJECT_ID(N'[dbo].[User_Tesoreria]', 'U') IS NOT NULL
     DROP TABLE [dbo].[User_Tesoreria];
 GO
-IF OBJECT_ID(N'[dbo].[Task]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Task];
+IF OBJECT_ID(N'[dbo].[UserInfo]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[UserInfo];
 GO
 IF OBJECT_ID(N'[dbo].[UserInfoTask]', 'U') IS NOT NULL
     DROP TABLE [dbo].[UserInfoTask];

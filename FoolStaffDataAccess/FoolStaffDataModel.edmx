@@ -48,25 +48,35 @@
           <Property Name="Password" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
-        <!--Errori trovati durante la generazione:
-avviso 6002: Nessuna chiave primaria definita per la tabella/visualizzazione 'FoolStaffDB.dbo.UserInfoTask'. La chiave è stata dedotta e la definizione è stata creata come tabella/visualizzazione di sola lettura.-->
         <EntityType Name="UserInfoTask">
           <Key>
             <PropertyRef Name="UserInfoId" />
             <PropertyRef Name="TaskId" />
           </Key>
-          <Property Name="UserInfoId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="TaskId" Type="int" Nullable="false" />
+          <Property Name="UserInfoId" Nullable="false" MaxLength="128" Type="nvarchar" />
+          <Property Name="TaskId" Nullable="false" Type="int" />
         </EntityType>
-        <Association Name="FK_TaskUserInfoTask">
-          <End Role="Task" Type="Self.Task" Multiplicity="1" />
-          <End Role="UserInfoTask" Type="Self.UserInfoTask" Multiplicity="*" />
+        <Association Name="FK__UserInfoT__TaskI__4AB81AF0">
+          <End Type="Self.Task" Multiplicity="1" Role="Task" />
+          <End Type="Self.UserInfoTask" Multiplicity="*" Role="UserInfoTask" />
           <ReferentialConstraint>
             <Principal Role="Task">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="UserInfoTask">
               <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserInfoT__UserI__49C3F6B7">
+          <End Type="Self.UserInfo" Multiplicity="1" Role="UserInfo" />
+          <End Type="Self.UserInfoTask" Multiplicity="*" Role="UserInfoTask" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserInfoTask">
+              <PropertyRef Name="UserInfoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -94,32 +104,19 @@ avviso 6002: Nessuna chiave primaria definita per la tabella/visualizzazione 'Fo
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserInfoUserInfoTask">
-          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="1" />
-          <End Role="UserInfoTask" Type="Self.UserInfoTask" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserInfo">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserInfoTask">
-              <PropertyRef Name="UserInfoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="FoolStaffDataModelStoreContainer">
           <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tesoreria" EntityType="Self.Tesoreria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Tesoreria" EntityType="Self.User_Tesoreria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserInfo" EntityType="Self.UserInfo" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserInfoTask" EntityType="Self.UserInfoTask" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserInfoTask].[UserInfoId] AS [UserInfoId], 
-    [UserInfoTask].[TaskId] AS [TaskId]
-    FROM [dbo].[UserInfoTask] AS [UserInfoTask]</DefiningQuery>
-          </EntitySet>
-          <AssociationSet Name="FK_TaskUserInfoTask" Association="Self.FK_TaskUserInfoTask">
-            <End Role="Task" EntitySet="Task" />
-            <End Role="UserInfoTask" EntitySet="UserInfoTask" />
+          <EntitySet Name="UserInfoTask" EntityType="Self.UserInfoTask" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__UserInfoT__TaskI__4AB81AF0" Association="Self.FK__UserInfoT__TaskI__4AB81AF0">
+            <End EntitySet="Task" Role="Task" />
+            <End EntitySet="UserInfoTask" Role="UserInfoTask" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserInfoT__UserI__49C3F6B7" Association="Self.FK__UserInfoT__UserI__49C3F6B7">
+            <End EntitySet="UserInfo" Role="UserInfo" />
+            <End EntitySet="UserInfoTask" Role="UserInfoTask" />
           </AssociationSet>
           <AssociationSet Name="FK_TesoreriaToUser_Tesoreria" Association="Self.FK_TesoreriaToUser_Tesoreria">
             <End Role="Tesoreria" EntitySet="Tesoreria" />
@@ -128,10 +125,6 @@ avviso 6002: Nessuna chiave primaria definita per la tabella/visualizzazione 'Fo
           <AssociationSet Name="FK_UserInfoToUser_Tesoreria" Association="Self.FK_UserInfoToUser_Tesoreria">
             <End Role="UserInfo" EntitySet="UserInfo" />
             <End Role="User_Tesoreria" EntitySet="User_Tesoreria" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserInfoUserInfoTask" Association="Self.FK_UserInfoUserInfoTask">
-            <End Role="UserInfo" EntitySet="UserInfo" />
-            <End Role="UserInfoTask" EntitySet="UserInfoTask" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>

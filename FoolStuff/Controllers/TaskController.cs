@@ -81,6 +81,7 @@ namespace FoolStuff.Controllers
 
                     var entityUser = entities.UserInfo.FirstOrDefault(u => u.Id == userId);
                     entities.Task.FirstOrDefault(t => t.Id == idTask).UserInfo.Add(entityUser);
+                    entities.SaveChanges();
                     //var entityTask = entities.Task.Include(t => t.UserInfo).FirstOrDefault(t => t.Id == idTask);
 
                     //if (!entityTask.UserInfo.Contains(entityUser))
