@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\controller\applications.controller.js" />
+    <Content Include="app\controller\testLoad.controller.js" />
     <Content Include="app\controller\roles.controller.js" />
     <Content Include="app\controller\profile.controller.js" />
     <Content Include="app\controller\signed.controller.js" />
@@ -115,10 +116,15 @@
     <Content Include="app\view\assets\lib\angular-toast\angular-toastr.min.css" />
     <Content Include="app\view\assets\lib\angular-toast\angular-toastr.tpls.min.js" />
     <Content Include="app\view\assets\lib\bootstrap\ui-bootstrap-tpls-2.5.0.min.js" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\css\font-awesome.css" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\css\font-awesome.min.css" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\HELP-US-OUT.txt" />
     <Content Include="app\view\template\common\contentSigned.html" />
     <Content Include="app\view\template\private\homepage.html" />
     <Content Include="app\view\template\private\myProfile.html" />
     <Content Include="app\view\template\private\task.html" />
+    <Content Include="app\view\template\private\testLoad.html" />
     <Content Include="app\view\template\private\updatePass.html" />
     <Content Include="app\view\template\private\applications.html" />
     <Content Include="app\view\template\private\roles.html" />
@@ -134,6 +140,39 @@
     <Content Include="app\view\assets\content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="app\view\assets\content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="app\view\assets\content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\fonts\FontAwesome.otf" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\less\animated.less" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\less\bordered-pulled.less" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\less\core.less" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\less\fixed-width.less" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\less\font-awesome.less" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\less\icons.less" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\less\larger.less" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\less\list.less" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\less\mixins.less" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\less\path.less" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\less\rotated-flipped.less" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\less\screen-reader.less" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\less\stacked.less" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\less\variables.less" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\scss\font-awesome.scss" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\scss\_animated.scss" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\scss\_bordered-pulled.scss" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\scss\_core.scss" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\scss\_fixed-width.scss" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\scss\_icons.scss" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\scss\_larger.scss" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\scss\_list.scss" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\scss\_mixins.scss" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\scss\_path.scss" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\scss\_rotated-flipped.scss" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\scss\_screen-reader.scss" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\scss\_stacked.scss" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\scss\_variables.scss" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

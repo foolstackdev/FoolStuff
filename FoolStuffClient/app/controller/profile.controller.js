@@ -12,7 +12,7 @@ angular
         init();
 
         function init() {
-            console.log("Inside Profile Controller")
+            console.log("Inside Profile Controller");
         }
         
 
