@@ -115,6 +115,9 @@
     <Content Include="app\view\assets\lib\angular-toast\angular-toastr.min.css" />
     <Content Include="app\view\assets\lib\angular-toast\angular-toastr.tpls.min.js" />
     <Content Include="app\view\assets\lib\bootstrap\ui-bootstrap-tpls-2.5.0.min.js" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\css\font-awesome.css" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\css\font-awesome.min.css" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <Content Include="app\view\template\common\contentSigned.html" />
     <Content Include="app\view\template\private\homepage.html" />
     <Content Include="app\view\template\private\myProfile.html" />
@@ -134,6 +137,11 @@
     <Content Include="app\view\assets\content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="app\view\assets\content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="app\view\assets\content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
+    <Content Include="app\view\assets\lib\font-awesome-4.7.0\fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\foolstaff.pubxml" />
     <None Include="Properties\PublishProfiles\sss.pubxml" />
     <None Include="Web.Debug.config">
