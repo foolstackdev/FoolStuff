@@ -132,7 +132,7 @@
         })
         .state('unlogged.testLoad', {
             url: "/testLoad",
-            templateUrl: "app/view/template/private/testLoad.html",
+            templateUrl: "app/view/template/public/testLoad.html",
             controller: "TestLoadController",
             controllerAs: "testLoadCtrl",
             data: { pageTitle: 'TestLoad view' }
