@@ -28,7 +28,7 @@ angular
             RestService.GetData(CostantUrl.urlUserAccount, "getuserinfo/" + vm.user.username + "/").then(function (responseUser) {
                 console.log(responseUser);
                 sessionStorage.setItem('userId', responseUser.data.id);
-                sessionStorage.setItem('user', responseUser.data);
+                sessionStorage.setItem('user', JSON.stringify(responseUser.data));
                 toastr.success('Cool, you\' re now logged', 'Confirmed');
                 $rootScope.$broadcast('stop-spin');
                 $state.go("signed.homepage");
