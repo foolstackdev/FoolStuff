@@ -240,5 +240,5 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
-*.config
-*.Config
+#*.config
+#*.Config
