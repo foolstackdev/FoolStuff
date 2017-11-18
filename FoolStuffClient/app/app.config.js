@@ -130,6 +130,13 @@
             controllerAs: "rolesCtrl",
             data: { pageTitle: 'Roles view' }
         })
+        .state('unlogged.testLoad', {
+            url: "/testLoad",
+            templateUrl: "app/view/template/public/testLoad.html",
+            controller: "TestLoadController",
+            controllerAs: "testLoadCtrl",
+            data: { pageTitle: 'TestLoad view' }
+        })
 
 }])
 .run([function () {
