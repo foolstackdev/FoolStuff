@@ -6,6 +6,9 @@ angular
     var vm = this;
     vm.logout = _logout;
 
+    vm.userName = JSON.parse(sessionStorage.getItem('user'));
+    var obj = this.userName;
+    
     init();
     function init() {
         console.log("Inside Signed controller");
@@ -22,5 +25,6 @@ angular
     $scope.$on('stop-spin', function (event, args) {
         usSpinnerService.stop('spinner-1');
     });
+
 
 }]);

@@ -5,14 +5,16 @@ angular
 
         var vm = this;
 
-        vm.user = {
-          
-        };
+        vm.user = {};
+
+        //vm.userProfile = JSON.parse(sessionStorage.getItem('user'));
+        //var obj1 = this.userProfile;
 
         init();
 
         function init() {
-            console.log("Inside Profile Controller")
+            console.log("Inside Profile Controller");
+
         }
         
 

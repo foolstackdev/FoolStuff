@@ -12,5 +12,6 @@ angular
         RestService.GetData(CostantUrl.urlUserAccount, "allusers").then(function (response) {
             vm.users = response.data;
         })
+
     }
 }]);
