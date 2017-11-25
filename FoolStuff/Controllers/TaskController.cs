@@ -1,4 +1,5 @@
 ﻿using FoolStaffDataAccess;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -13,7 +14,7 @@ namespace FoolStuff.Controllers
     [RoutePrefix("api/task")]
     public class TaskController : ApiController
     {
-
+        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         [HttpGet]
         [Route("isalive")]
         public HttpResponseMessage isAlive()
@@ -31,11 +32,13 @@ namespace FoolStuff.Controllers
                 {
                     //entities.Configuration.ProxyCreationEnabled = false;
                     var entity = entities.Task.Where(t => t.Stato == "OPEN").Include(f => f.UserInfo).OrderByDescending(t => t.Priorita).ToList();
+                    log.Debug("getAllTask - metodo eseguito con successo");
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
             }
             catch (Exception ex)
             {
+                log.Error("getAllTask - errore nell'esecuzione ", ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
@@ -59,11 +62,13 @@ namespace FoolStuff.Controllers
                     entities.SaveChanges();
 
                     var entity = entities.Task.Where(t => t.Stato == "OPEN").OrderByDescending(t => t.Priorita).ToList();
+                    log.Debug("insertNewTask - task inserito correttamente");
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
             }
             catch (Exception ex)
             {
+                log.Error("insertNewTask - errore nell'inserimento del task ", ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
@@ -91,12 +96,14 @@ namespace FoolStuff.Controllers
                     //}
 
                     //var entity = entities.Task.ToList().Where(t => t.Stato == "OPEN").OrderByDescending(t => t.Priorita);
-                    var entity = entities.Task.Where(t => t.Stato == "OPEN").Include(t => t.UserInfo).OrderByDescending(t => t.Priorita).ToList(); 
+                    var entity = entities.Task.Where(t => t.Stato == "OPEN").Include(t => t.UserInfo).OrderByDescending(t => t.Priorita).ToList();
+                    log.Debug("addUserToTask - utente id [" + entityUser.Id + "] correttamente associato al task");
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
             }
             catch (Exception ex)
             {
+                log.Error("addUserToTask - errore nell'associazione dell'utente al task ", ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
@@ -120,12 +127,14 @@ namespace FoolStuff.Controllers
                     }
 
                     //var entity = entities.Task.ToList().Where(t => t.Stato == "OPEN").OrderByDescending(t => t.Priorita);
-                    var entity = entities.Task.Where(t => t.Stato == "OPEN").Include(t => t.UserInfo).OrderByDescending(t => t.Priorita).ToList(); 
+                    var entity = entities.Task.Where(t => t.Stato == "OPEN").Include(t => t.UserInfo).OrderByDescending(t => t.Priorita).ToList();
+                    log.Debug("giveUpTask - rinuncia al task da parte dell'utente id [" + entityUser.Id + "] avvenuta con successo");
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
             }
             catch (Exception ex)
             {
+                log.Error("giveUpTask - errore nella rinuncia al task ", ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
@@ -146,12 +155,14 @@ namespace FoolStuff.Controllers
                         entityTask.Stato = "CLOSED";
                         entities.SaveChanges();
                     }
-                    var entity = entities.Task.Where(t => t.Stato == "OPEN").Include(t => t.UserInfo).OrderByDescending(t => t.Priorita).ToList(); 
+                    var entity = entities.Task.Where(t => t.Stato == "OPEN").Include(t => t.UserInfo).OrderByDescending(t => t.Priorita).ToList();
+                    log.Debug("closeTask - Task id [" + entityTask.Id + "] chiuso correttamente");
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
             }
             catch (Exception ex)
             {
+                log.Error("closeTask - errore nella chiusura al task ", ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
@@ -176,13 +187,14 @@ namespace FoolStuff.Controllers
                     //              };
 
                     var entityTask = entities.Task.Where(t => t.Stato == "CLOSED").Include(t => t.UserInfo).OrderByDescending(t => t.DataChiusura).ToList();
-
+                    log.Debug("getClosedTask - Lista Task chiusi correttamente recuperata");
                     //var entity = entities.Task.Where(t => t.Stato == "CLOSED").Include(t => t.UserInfo).OrderByDescending(t => t.DataChiusura).ToList(); 
                     return Ok(entityTask);
                 }
             }
             catch (Exception ex)
             {
+                log.Error("getClosedTask - errore nella visualizzazione dei task chiusi ", ex);
                 return InternalServerError(ex);
             }
         }

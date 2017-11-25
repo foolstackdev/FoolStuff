@@ -22,7 +22,7 @@ namespace FoolStuff
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
+            log4net.Config.XmlConfigurator.Configure();
             //WebApiConfig.Register(GlobalConfiguration.Configuration);
         }
     }
