@@ -13,6 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright © Hewlett-Packard 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+[assembly: log4net.Config.XmlConfigurator(Watch =true)]
 
 // Se si imposta il valore di ComVisible su falso, i tipi nell'assembly non sono più visibili
 // dai componenti COM. Se è necessario accedere al tipo nell'assembly da

@@ -1,4 +1,5 @@
 ﻿using FoolStaffDataAccess;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace FoolStuff.Controllers
     [RoutePrefix("api/tesoreria")]
     public class TesoreriaController : ApiController
     {
-
+        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         [HttpGet]
         [Route("isalive")]
         public HttpResponseMessage isAlive()
@@ -38,11 +39,13 @@ namespace FoolStuff.Controllers
 
                     //var entity = entities.Tesoreria.OrderByDescending(e => e.Operazione.Equals("VERSAMENTO")).ToList();
                     var entity = entities.Tesoreria.Where(x => x.Operazione == "VERSAMENTO").ToList().OrderByDescending(t => t.DataOperazione);
+                    log.Debug("getAllEntry - metodo eseguito con successo");
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
             }
             catch (Exception ex)
             {
+                log.Error("getAllEntry - errore nell'esecuzione ", ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
@@ -57,11 +60,13 @@ namespace FoolStuff.Controllers
                 {
                     entities.Configuration.ProxyCreationEnabled = false;
                     var entity = entities.Tesoreria.Where(x => x.Operazione == "PRELIEVO").ToList().OrderByDescending(t => t.DataOperazione);
+                    log.Debug("getAllExit - metodo eseguito con successo");
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
             }
             catch (Exception ex)
             {
+                log.Error("getAllExit - errore nell'esecuzione ", ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
@@ -99,11 +104,13 @@ namespace FoolStuff.Controllers
                     }
                     oTesoreria.Totale = sommaIncasso;
                     entities.SaveChanges();
+                    log.Debug("insertPayment - metodo eseguito con successo");
                     return Request.CreateResponse(HttpStatusCode.OK);
                 }
             }
             catch (Exception ex)
             {
+                log.Error("insertPayment - errore nell'esecuzione ", ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
@@ -126,11 +133,13 @@ namespace FoolStuff.Controllers
                     entities.Configuration.ProxyCreationEnabled = false;
                     //var entity = entities.Tesoreria.OrderByDescending(e => e.Operazione.Equals("VERSAMENTO")).ToList();
                     var entity = entities.Tesoreria.Where(x => x.Operazione == "VERSAMENTO").ToList().OrderByDescending(t => t.DataOperazione);
+                    log.Debug("insertPaymentDate - metodo eseguito con successo");
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
             }
             catch (Exception ex)
             {
+                log.Error("insertPaymentDate - errore nell'esecuzione ", ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
