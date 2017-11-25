@@ -139,7 +139,6 @@ namespace FoolStuff.Controllers
                     if (entity != null)
                     {
                         log.Debug("getuserinfo - L'utente con email "+ email + "loggato con successo");
-                        return Request.CreateResponse(HttpStatusCode.OK, entity);
                         UserInfoWithRoles oUserInfoWithRoles = new UserInfoWithRoles();
                         oUserInfoWithRoles.userInfo = entity;
                         oUserInfoWithRoles.userRolesList = sListaRuoli;
