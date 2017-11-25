@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using FoolStaffDataAccess;
+using System.Security.Claims;
 
 namespace FoolStuff.Controllers
 {
@@ -56,7 +57,7 @@ namespace FoolStuff.Controllers
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
@@ -79,8 +80,6 @@ namespace FoolStuff.Controllers
                         entity.Name = user.Name;
                         entity.Surname = user.Surname;
                         entity.Phone = user.Phone;
-                       
-
                         entities.SaveChanges();
                         return Request.CreateResponse(HttpStatusCode.OK, entity);
                     }
@@ -108,9 +107,35 @@ namespace FoolStuff.Controllers
                 {
                     entities.Configuration.ProxyCreationEnabled = false;
                     var entity = entities.UserInfo.FirstOrDefault(u => u.Email == email);
+
+
+                    ////////////////////////RUOLO
+                    //PRIMO SISTEMA LIST<string>
+                    var userIdentity = (ClaimsIdentity)User.Identity;
+                    var sListaRuoli = userIdentity.Claims
+                       .Where(c => c.Type == ClaimTypes.Role)
+                       .Select(c => c.Value)
+                       .ToList();
+                    //END PRIMO SISTEMA
+
+                    //SECONDO SISTEMA OGGETO PIU COMPLESSO
+                    //var userIdentity = (ClaimsIdentity)User.Identity;
+                    //var claims = userIdentity.Claims;
+                    //var roleClaimType = userIdentity.RoleClaimType;
+                    //var roles = claims.Where(c => c.Type == ClaimTypes.Role).ToList();
+
+                    //alternativamente
+                    //var roles = claims.Where(c => c.Type == roleClaimType).ToList();
+                    //END SECONDO SISTEMA
+                    ////////////////////////END RUOLO
+
                     if (entity != null)
                     {
-                        return Request.CreateResponse(HttpStatusCode.OK, entity);
+                        UserInfoWithRoles oUserInfoWithRoles = new UserInfoWithRoles();
+                        oUserInfoWithRoles.userInfo = entity;
+                        oUserInfoWithRoles.userRolesList = sListaRuoli;
+                        //return Request.CreateResponse(HttpStatusCode.OK, entity);
+                        return Request.CreateResponse(HttpStatusCode.OK, oUserInfoWithRoles);
                     }
                     else
                     {
@@ -123,6 +148,16 @@ namespace FoolStuff.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
 
+        }
+
+        private class UserInfoWithRoles
+        {
+            public List<string> userRolesList { get; set; }
+            public UserInfo userInfo { get; set; }
+            public UserInfoWithRoles()
+            {
+
+            }
         }
     }
 }
