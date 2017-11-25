@@ -32,6 +32,7 @@ angular
         RestService.PostData(CostantUrl.urlTask, "insertnewtask", vm.task).then(function (response) {
             vm.tasklist = response.data;
             toastr.success('Task inserted', 'Confirmed');
+            $state.reload();
         }, function (err) {
             console.log(err)
             toastr.error('Problems during task insert', 'Something went wrong [' + err.data.exceptionMessage + ']');
