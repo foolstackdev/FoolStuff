@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using FoolStaffDataAccess;
+using log4net;
 using System.Security.Claims;
 
 namespace FoolStuff.Controllers
@@ -13,6 +14,7 @@ namespace FoolStuff.Controllers
     [RoutePrefix("api/useraccount")]
     public class UseraccountController : ApiController
     {
+        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         [HttpGet]
         [Route("isalive")]
         public HttpResponseMessage isAlive()
@@ -54,6 +56,7 @@ namespace FoolStuff.Controllers
                 {
                     //entities.Configuration.ProxyCreationEnabled = false;
                     var entity = entities.UserInfo.ToList();
+
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
             }
@@ -81,16 +84,20 @@ namespace FoolStuff.Controllers
                         entity.Surname = user.Surname;
                         entity.Phone = user.Phone;
                         entities.SaveChanges();
+                        log.Debug("allUsers - eseguito con successo");
                         return Request.CreateResponse(HttpStatusCode.OK, entity);
+                       
                     }
                     else
                     {
+                        log.Error("allUsers - errore nell'esecuzione ");
                         return Request.CreateErrorResponse(HttpStatusCode.NotFound, "User with Id [" + user.Id + "] not found.");
                     }
                 }
             }
             catch (Exception ex)
             {
+                log.Error("allUsers - errore nell'esecuzione ");
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
 
@@ -131,6 +138,8 @@ namespace FoolStuff.Controllers
 
                     if (entity != null)
                     {
+                        log.Debug("getuserinfo - L'utente con email "+ email + "loggato con successo");
+                        return Request.CreateResponse(HttpStatusCode.OK, entity);
                         UserInfoWithRoles oUserInfoWithRoles = new UserInfoWithRoles();
                         oUserInfoWithRoles.userInfo = entity;
                         oUserInfoWithRoles.userRolesList = sListaRuoli;
@@ -139,12 +148,14 @@ namespace FoolStuff.Controllers
                     }
                     else
                     {
+                        log.Error("getuserinfo - errore nell'esecuzione ");
                         return Request.CreateErrorResponse(HttpStatusCode.NotFound, "User with Email [" + email + "] not found.");
                     }
                 }
             }
             catch (Exception ex)
             {
+                log.Error("getuserinfo - errore nell'esecuzione ");
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
 

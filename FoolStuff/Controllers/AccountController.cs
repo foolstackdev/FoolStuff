@@ -18,6 +18,7 @@ using FoolStuff.Providers;
 using FoolStuff.Results;
 using FoolStaffDataAccess;
 using System.Linq;
+using log4net;
 
 namespace FoolStuff.Controllers
 {
@@ -25,6 +26,7 @@ namespace FoolStuff.Controllers
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
+        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
 
@@ -333,6 +335,7 @@ namespace FoolStuff.Controllers
 
             if (!ModelState.IsValid)
             {
+                log.Error("register - errore nell'esecuzione");
                 return BadRequest(ModelState);
             }
 
@@ -342,6 +345,7 @@ namespace FoolStuff.Controllers
 
             if (!result.Succeeded)
             {
+                log.Error("register - errore nell'esecuzione");
                 return GetErrorResult(result);
             }
 
@@ -367,6 +371,7 @@ namespace FoolStuff.Controllers
 
                     if (entity == null)
                     {
+                        log.Debug("register - user con email [" + oUser.Email+ "] registrato con successo");
                         entities.UserInfo.Add(oUser);
                     }
                     else
@@ -380,6 +385,7 @@ namespace FoolStuff.Controllers
             {
                 //To DO
                 //Implementare un sistema di logger e avviso utente di modificare le proprie generalità dopo la login.
+                log.Error("register - errore nell'esecuzione");
                 return InternalServerError(ex);
             }
 

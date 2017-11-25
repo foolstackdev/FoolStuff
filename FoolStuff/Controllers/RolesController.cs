@@ -1,5 +1,6 @@
 ﻿using FoolStaffDataAccess;
 using FoolStuff.Models;
+using log4net;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -13,11 +14,12 @@ using System.Web.Http;
 
 namespace FoolStuff.Controllers
 {
+
     //[Authorize]
     [RoutePrefix("api/roles")]
     public class RolesController : BaseApiController
     {
-
+        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         [HttpGet]
         [Route("isalive")]
         public HttpResponseMessage isAlive()
@@ -28,7 +30,7 @@ namespace FoolStuff.Controllers
         [Authorize(Roles = "SuperAdmin, FoolStackUser")]
         [HttpGet]
         [Route("getallroles")]
-        public IHttpActionResult getAllEntry()
+        public IHttpActionResult getAllRoles()
         {
             try
             {
@@ -56,15 +58,16 @@ namespace FoolStuff.Controllers
                 var allUsers = userManager.Users.ToList();
                 var users = allUsers.Select(u => new UsersViewModel { User = u, Roles = String.Join(",", roleManager.Roles.Where(role => role.Users.Any(user => user.UserId == u.Id)).Select(r => r.Name)) }).ToList();
                 //var users = userManager.Users.Include(t => t.Roles).ToList();
-               // var roles = this.AppRoleManager.Roles.ToList();
+                // var roles = this.AppRoleManager.Roles.ToList();
 
 
-
+                log.Debug("getallroles - metodo eseguito con successo");
                 return Ok(users);
 
             }
             catch (Exception ex)
             {
+                log.Error("getallroles - errore nell'esecuzione");
                 return InternalServerError(ex);
             }
         }
@@ -84,15 +87,18 @@ namespace FoolStuff.Controllers
                 {
                     var role = new IdentityRole(newRole.Name);
                     roleManager.Create(role);
+                    log.Debug("addrole - ruolo + [" + newRole.Name + "] aggiunto con successo");
                     return Ok(role);
                 }
                 else
                 {
+                    log.Error("addrole - ruolo + [" + newRole.Name + "] già esistente");
                     return BadRequest("Role [" + newRole.Name + "] already profiled");
                 }
             }
             catch (Exception ex)
             {
+                log.Error("addrole - errore nell'esecuzione");
                 return InternalServerError(ex);
             }
         }
