@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoolStuff", "FoolStuff\Fool
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoolStuffClient", "FoolStuffClient\FoolStuffClient.csproj", "{D0C2FD16-05F4-48F4-BBDE-A965A03A5FA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoolStaff", "..\..\PROGETTI\EF_FOOLSTAFF\FoolStaff\FoolStaff\FoolStaff.csproj", "{243D2E0F-C015-43B5-989A-400A61A0A613}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoolStackDB", "FoolStackDB\FoolStackDB.csproj", "{148318F4-F169-40AB-ACBF-2983CD87995E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{D0C2FD16-05F4-48F4-BBDE-A965A03A5FA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0C2FD16-05F4-48F4-BBDE-A965A03A5FA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0C2FD16-05F4-48F4-BBDE-A965A03A5FA5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{243D2E0F-C015-43B5-989A-400A61A0A613}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{243D2E0F-C015-43B5-989A-400A61A0A613}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{243D2E0F-C015-43B5-989A-400A61A0A613}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{243D2E0F-C015-43B5-989A-400A61A0A613}.Release|Any CPU.Build.0 = Release|Any CPU
+		{148318F4-F169-40AB-ACBF-2983CD87995E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{148318F4-F169-40AB-ACBF-2983CD87995E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{148318F4-F169-40AB-ACBF-2983CD87995E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{148318F4-F169-40AB-ACBF-2983CD87995E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

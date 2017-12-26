@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>148318f4-f169-40ab-acbf-2983cd87995e</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FoolStackDB</RootNamespace>
+    <AssemblyName>FoolStackDB</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+<ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\Domain\Effort.cs" />
+    <Compile Include="Core\Domain\Tesoreria.cs" />
+    <Compile Include="Core\Domain\User.cs" />
+    <Compile Include="Core\IUnitOfWork.cs" />
+    <Compile Include="Core\Repositories\IEffortRepository.cs" />
+    <Compile Include="Core\Repositories\IRepository.cs" />
+    <Compile Include="Core\Repositories\ITesoreriaRepository.cs" />
+    <Compile Include="Core\Repositories\IUserRepository.cs" />
+    <Compile Include="FoolStaffContext.cs" />
+    <Compile Include="Migrations\201712092022298_CreateDB.cs" />
+    <Compile Include="Migrations\201712092022298_CreateDB.Designer.cs">
+      <DependentUpon>201712092022298_CreateDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712092037165_RefactorIdString.cs" />
+    <Compile Include="Migrations\201712092037165_RefactorIdString.Designer.cs">
+      <DependentUpon>201712092037165_RefactorIdString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712171707593_UpdateRelationManyToMany.cs" />
+    <Compile Include="Migrations\201712171707593_UpdateRelationManyToMany.Designer.cs">
+      <DependentUpon>201712171707593_UpdateRelationManyToMany.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712171729109_UpdateCascadeDeleteUserTesoreria.cs" />
+    <Compile Include="Migrations\201712171729109_UpdateCascadeDeleteUserTesoreria.Designer.cs">
+      <DependentUpon>201712171729109_UpdateCascadeDeleteUserTesoreria.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712171835044_UpdateproxyCreationEnabled.cs" />
+    <Compile Include="Migrations\201712171835044_UpdateproxyCreationEnabled.Designer.cs">
+      <DependentUpon>201712171835044_UpdateproxyCreationEnabled.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712261403299_GeneratingManyToManyUserTesoreria.cs" />
+    <Compile Include="Migrations\201712261403299_GeneratingManyToManyUserTesoreria.Designer.cs">
+      <DependentUpon>201712261403299_GeneratingManyToManyUserTesoreria.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\EffortConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\TesoreriaConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\UserConfiguration.cs" />
+    <Compile Include="Persistence\Repositories\EffortRepository.cs" />
+    <Compile Include="Persistence\Repositories\Repository.cs" />
+    <Compile Include="Persistence\Repositories\TesoreriaRepository.cs" />
+    <Compile Include="Persistence\Repositories\UserRepository.cs" />
+    <Compile Include="UnitOfWork.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201712092022298_CreateDB.resx">
+      <DependentUpon>201712092022298_CreateDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712092037165_RefactorIdString.resx">
+      <DependentUpon>201712092037165_RefactorIdString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712171707593_UpdateRelationManyToMany.resx">
+      <DependentUpon>201712171707593_UpdateRelationManyToMany.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712171729109_UpdateCascadeDeleteUserTesoreria.resx">
+      <DependentUpon>201712171729109_UpdateCascadeDeleteUserTesoreria.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712171835044_UpdateproxyCreationEnabled.resx">
+      <DependentUpon>201712171835044_UpdateproxyCreationEnabled.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712261403299_GeneratingManyToManyUserTesoreria.resx">
+      <DependentUpon>201712261403299_GeneratingManyToManyUserTesoreria.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+
+ </Project>
