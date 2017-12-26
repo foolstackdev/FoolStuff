@@ -17,7 +17,7 @@
                                 <h6 class="pull-right" style="font-size:medium; color:aqua" ng-switch-when="1">Tempo libero</h6>
                             </div>
                             <div class="col-sm-6">
-                                <h6 class="pull-right">{{item.dataCreazione}}</h6>
+                                <h6 class="pull-right">{{item.dataCreazione | timestampToHumanWithHours}}</h6>
                             </div>
                         </div>
                     </div>
@@ -113,7 +113,7 @@
                                 <h6 class="pull-right" style="font-size:medium; color:aqua" ng-switch-when="1">Tempo libero</h6>
                             </div>
                             <div class="col-sm-6">
-                                <h6 class="pull-right">{{item.dataCreazione}}</h6>
+                                <h6 class="pull-right">{{item.dataChiusura | timestampToHumanWithHours}}</h6>
                             </div>
                         </div>
                     </div>

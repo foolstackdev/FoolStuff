@@ -260,8 +260,6 @@
                             </select>
                         </div>-->
                     </div>
-
-
                     <div class="panel-body">
                         <form class="form" role="form">
                             <div class="col-lg-6 col-md-12 col-sm-12 col-sx-12">
@@ -272,7 +270,7 @@
                                                ng-model="tesoreriaCtrl.versamento.dataOperazione" is-open="tesoreriaCtrl.popupDPVersamento.opened"
                                                datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
                                         <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default" ng-click="tesoreriaCtrl.openDP()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                            <button type="button" class="btn btn-default" ng-click="tesoreriaCtrl.openDPVersamento()"><i class="glyphicon glyphicon-calendar"></i></button>
                                         </span>
                                     </p>
                                 </div>
@@ -405,7 +403,7 @@
                                                ng-model="tesoreriaCtrl.spesa.dataOperazione" is-open="tesoreriaCtrl.popupDPSpesa.opened"
                                                datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
                                         <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default" ng-click="tesoreriaCtrl.openDP()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                            <button type="button" class="btn btn-default" ng-click="tesoreriaCtrl.openDPSpesa()"><i class="glyphicon glyphicon-calendar"></i></button>
                                         </span>
                                     </p>
                                 </div>
@@ -439,7 +437,7 @@
         </div>
     </uib-tab>
 
-    <uib-tab index="3" select="">
+    <uib-tab index="3" select="tesoreriaCtrl.getContributoUtentiChart()">
         <uib-tab-heading>
             <!--<i class="glyphicon glyphicon-calendar"></i> Gestione Versamenti-->
             <i class="fa fa-line-chart" aria-hidden="true"></i> Grafici
@@ -451,10 +449,11 @@
                 <div class="panel panel-default">
 
                     <div class="panel-heading">
-
+                        Contributi per utente
                     </div>
                     <div class="panel-body">
-
+                        <canvas id="pie" class="chart chart-pie"
+                                chart-data="tesoreriaCtrl.contributoUtenti.data" chart-labels="tesoreriaCtrl.contributoUtenti.labels" chart-options="options"></canvas>
                     </div>
                     <div class="panel-footer">
 

@@ -1,8 +1,8 @@
 ﻿"use strict";
 angular
 .module('FoolStackApp')
-.controller('TesoreriaController', ["$scope", "RestService", "CostantUrl", "toastr", "UtilService", "$sce",
-    function ($scope, RestService, CostantUrl, toastr, UtilService, $sce) {
+.controller('TesoreriaController', ["$scope", "RestService", "CostantUrl", "toastr", "UtilService", "$sce", "$state",
+    function ($scope, RestService, CostantUrl, toastr, UtilService, $sce, $state) {
 
         var vm = this;
 
@@ -43,6 +43,12 @@ angular
         var formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate', 'dd/MM/yyyy'];
         vm.format = formats[4];
         vm.selectAllCheckBox = false;
+
+        //Chart Functions
+        vm.getContributoUtentiChart = _getContributoUtentiChart;
+
+
+
 
         init();
         function init() {
@@ -89,6 +95,7 @@ angular
             }
             RestService.PostData(CostantUrl.urlTesoreria, "insertversamento", itemToSend).then(function (response) {
                 toastr.success('Payments updated', 'Confirmed');
+                $state.reload();
             }, function (err) {
                 console.log(err)
                 toastr.error('Problems during payments', 'Something went wrong [' + err + ']');
@@ -113,6 +120,7 @@ angular
             }
             RestService.PostData(CostantUrl.urlTesoreria, "insertspesa", itemToSend).then(function (response) {
                 toastr.success('Payments updated', 'Confirmed');
+                $state.reload();
             }, function (err) {
                 console.log(err)
                 toastr.error('Problems during payments', 'Something went wrong [' + err + ']');
@@ -208,15 +216,50 @@ angular
         }
 
         $scope.htmlPopover = function (item) {
-            console.log(item);
             var ostring = "<ol>"
-            
             for (var i = 0; i < item.user.length; i++) {
                 ostring += "<li>" + item.user[i].name + " " + item.user[i].surname + "</li>";
             }
             ostring += "</ol>"
-
             return $sce.trustAsHtml(ostring);
         }
+        //////////////////////////////////////////Charts
+        function _getContributoUtentiChart() {
+            //Preparo Label utenti
+            RestService.GetData(CostantUrl.urlUserAccount, "allusers").then(function (response) {
+                vm.users = response.data;
+
+                vm.contributoUtenti = [];
+                //for (var i = 0; i < vm.users.length; i++) {
+                //    vm.contributoUtenti.push(vm.users);
+                //}
+                vm.contributoUtenti = vm.users;
+                for (var i = 0; i < vm.infoEntrate.length; i++) {
+                    for (var j = 0; j < vm.infoEntrate[i].user.length; j++) {
+                        for (var k = 0; k < vm.contributoUtenti.length; k++) {
+                            if (vm.infoEntrate[i].user[j].email == vm.contributoUtenti[k].email) {
+                                vm.contributoUtenti[k].contributoTotale != undefined ? vm.contributoUtenti[k].contributoTotale += vm.infoEntrate[i].quota : vm.contributoUtenti[k].contributoTotale = vm.infoEntrate[i].quota
+                            }
+                        }
+                    }
+                }
+
+                console.log(vm.contributoUtenti);
+                vm.contributoUtenti.labels = [];
+                vm.contributoUtenti.data = [];
+                for (var i = 0; i < vm.contributoUtenti.length; i++) {
+                    vm.contributoUtenti.labels.push(vm.contributoUtenti[i].name + " " + vm.contributoUtenti[i].surname);
+                    vm.contributoUtenti.data.push(vm.contributoUtenti[i].contributoTotale);
+                }
+
+            });
+
+            vm.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
+            vm.data = [300, 500, 100];
+        }
+
+        //////////////////////////////////////////Charts
+
+
 
     }]);
