@@ -358,9 +358,9 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FoolStackDB\FoolStackDB.csproj">
+    <ProjectReference Include="..\FoolStackDB\FoolStaffDB.csproj">
       <Project>{148318f4-f169-40ab-acbf-2983cd87995e}</Project>
-      <Name>FoolStackDB</Name>
+      <Name>FoolStaffDB</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
