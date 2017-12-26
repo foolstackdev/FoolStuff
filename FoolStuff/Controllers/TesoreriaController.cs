@@ -1,7 +1,12 @@
-﻿using FoolStaffDataAccess;
+﻿using FoolStaff;
+using FoolStaff.Core.Domain;
+using FoolStaff.Core.Repositories;
+using FoolStuff.Dto;
+using FoolStuff.Helpers;
 using log4net;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -13,6 +18,9 @@ namespace FoolStuff.Controllers
     [RoutePrefix("api/tesoreria")]
     public class TesoreriaController : ApiController
     {
+        private static readonly string SPESA = "SPESA";
+        private static readonly string VERSAMENTO = "VERSAMENTO";
+
         private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         [HttpGet]
         [Route("isalive")]
@@ -27,18 +35,9 @@ namespace FoolStuff.Controllers
         {
             try
             {
-                using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
+                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
                 {
-                    entities.Configuration.ProxyCreationEnabled = false;
-
-
-                    //var entriesTesoreria = from b in entities.Tesoreria
-                    //            where b.Operazione.Equals("VERSAMENTO")
-                    //            orderby b.DataOperazione descending
-                    //            select b;
-
-                    //var entity = entities.Tesoreria.OrderByDescending(e => e.Operazione.Equals("VERSAMENTO")).ToList();
-                    var entity = entities.Tesoreria.Where(x => x.Operazione == "VERSAMENTO").ToList().OrderByDescending(t => t.DataOperazione);
+                    var entity = unitOfWork.Tesoreria.Search(x => x.Operazione == VERSAMENTO).Include(u => u.user).ToList().OrderByDescending(t => t.DataOperazione);
                     log.Debug("getAllEntry - metodo eseguito con successo");
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
@@ -56,10 +55,9 @@ namespace FoolStuff.Controllers
         {
             try
             {
-                using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
+                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
                 {
-                    entities.Configuration.ProxyCreationEnabled = false;
-                    var entity = entities.Tesoreria.Where(x => x.Operazione == "PRELIEVO").ToList().OrderByDescending(t => t.DataOperazione);
+                    var entity = unitOfWork.Tesoreria.Find(x => x.Operazione == SPESA).ToList().OrderByDescending(t => t.DataOperazione);
                     log.Debug("getAllExit - metodo eseguito con successo");
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
@@ -71,77 +69,168 @@ namespace FoolStuff.Controllers
             }
         }
 
-
-        [HttpPost]
-        [Route("insertpayment/{id}")]
-        public HttpResponseMessage insertPayment(string id, [FromBody]UserInfo[] users)
+        [HttpGet]
+        [Route("getsaldo")]
+        public HttpResponseMessage getSaldo()
         {
             try
             {
-                using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
+                TesoreriaSaldo oTesoreriaSaldo = new TesoreriaSaldo();
+                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
                 {
-                    //Tesoreria oTesoreria = new Tesoreria();
-                    //oTesoreria.Operazione = "VERSAMENTO";
-                    //oTesoreria.DataOperazione = DateTime.Now;
-                    //oTesoreria.Note = "Versamento settimanale 5 Euro";
 
-                    //entities.Tesoreria.Add(oTesoreria);
-                    ////entities.SaveChanges();
-                    int oId = Convert.ToInt32(id);
-                    Tesoreria oTesoreria = entities.Tesoreria.FirstOrDefault(e => e.Id == oId);
+                    var entityTesoreriaEntrate = unitOfWork.Tesoreria.Search(x => x.Operazione == VERSAMENTO).Include(u => u.user);
+                    var entityTesoreriaUscite = unitOfWork.Tesoreria.Search(x => x.Operazione == SPESA);
 
-                    decimal sommaIncasso = 0;
-
-                    foreach (UserInfo u in users)
+                    foreach(Tesoreria oTesoreria in entityTesoreriaEntrate)
                     {
-                        User_Tesoreria pagamento = new User_Tesoreria();
-                        pagamento.UserInfoId = u.Id;
-                        pagamento.Tesoreria = oTesoreria;
-                        pagamento.Versamento = 5;
-                        sommaIncasso += pagamento.Versamento;
-                        entities.User_Tesoreria.Add(pagamento);
-
+                        foreach(User user in oTesoreria.user)
+                        {
+                            oTesoreriaSaldo.totaleEntrate += oTesoreria.Quota;
+                        }
                     }
-                    oTesoreria.Totale = sommaIncasso;
-                    entities.SaveChanges();
-                    log.Debug("insertPayment - metodo eseguito con successo");
+                    foreach(Tesoreria oTesoreria in entityTesoreriaUscite)
+                    {
+                        oTesoreriaSaldo.totaleUscite += oTesoreria.Quota;
+                    }
+                    oTesoreriaSaldo.saldo = (oTesoreriaSaldo.totaleEntrate - oTesoreriaSaldo.totaleUscite);
+                    log.Debug("getsaldo - metodo eseguito con successo");
+                    return Request.CreateResponse(HttpStatusCode.OK, oTesoreriaSaldo);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error("getsaldo - errore nell'esecuzione ", ex);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+        [HttpPost]
+        [Route("insertversamento")]
+        public HttpResponseMessage insertVersamento([FromBody]TesoreriaInsertVersamento payment)
+        {
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
+                {
+                    Tesoreria oTesoreria = new Tesoreria();
+                    oTesoreria.Operazione = VERSAMENTO;
+                    oTesoreria.DataOperazione = payment.dataOperazione;
+                    oTesoreria.Note = payment.note;
+                    oTesoreria.Quota = payment.quota;
+
+                    foreach (User usr in payment.users)
+                    {
+                        var user = unitOfWork.Users.Search(u => u.Id == usr.Id).Include(u => u.Tesoreria).FirstOrDefault();
+                        user.Tesoreria.Add(oTesoreria);
+                    }
+                    unitOfWork.Complete();
+
+                    log.Debug("insertVersamento - metodo eseguito con successo");
                     return Request.CreateResponse(HttpStatusCode.OK);
                 }
             }
             catch (Exception ex)
             {
-                log.Error("insertPayment - errore nell'esecuzione ", ex);
+                log.Error("insertVersamento - errore nell'esecuzione ", ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
 
         [HttpPost]
-        [Route("insertpaymentdate")]
-        public HttpResponseMessage insertPaymentDate([FromBody]Tesoreria tesoreria)
+        [Route("insertspesa")]
+        public HttpResponseMessage insertSpesa([FromBody]TesoreriaInsertSpesa payment)
         {
             try
             {
-                using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
+                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
                 {
                     Tesoreria oTesoreria = new Tesoreria();
-                    oTesoreria.Operazione = "VERSAMENTO";
-                    oTesoreria.DataOperazione = tesoreria.DataOperazione;
-                    oTesoreria.Note = tesoreria.Note;
+                    oTesoreria.Operazione = SPESA;
+                    oTesoreria.DataOperazione = payment.dataOperazione;
+                    oTesoreria.Note = payment.note;
+                    oTesoreria.Quota = payment.quota;
 
-                    entities.Tesoreria.Add(oTesoreria);
-                    entities.SaveChanges();
-                    entities.Configuration.ProxyCreationEnabled = false;
-                    //var entity = entities.Tesoreria.OrderByDescending(e => e.Operazione.Equals("VERSAMENTO")).ToList();
-                    var entity = entities.Tesoreria.Where(x => x.Operazione == "VERSAMENTO").ToList().OrderByDescending(t => t.DataOperazione);
-                    log.Debug("insertPaymentDate - metodo eseguito con successo");
-                    return Request.CreateResponse(HttpStatusCode.OK, entity);
+                    unitOfWork.Tesoreria.Add(oTesoreria);
+
+                    unitOfWork.Complete();
+
+                    log.Debug("insertSpesa - metodo eseguito con successo");
+                    return Request.CreateResponse(HttpStatusCode.OK);
                 }
             }
             catch (Exception ex)
             {
-                log.Error("insertPaymentDate - errore nell'esecuzione ", ex);
+                log.Error("insertSpesa - errore nell'esecuzione ", ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
+
+        //[HttpPost]
+        //[Route("insertpayment/{id}")]
+        //public HttpResponseMessage insertPayment(string id, [FromBody]User[] users)
+        //{
+        //    try
+        //    {
+        //        using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
+        //        {
+        //            //Tesoreria oTesoreria = new Tesoreria();
+        //            //oTesoreria.Operazione = "VERSAMENTO";
+        //            //oTesoreria.DataOperazione = DateTime.Now;
+        //            //oTesoreria.Note = "Versamento settimanale 5 Euro";
+
+        //            //entities.Tesoreria.Add(oTesoreria);
+        //            ////entities.SaveChanges();
+        //            int oId = Convert.ToInt32(id);
+        //            Tesoreria oTesoreria = unitOfWork.Tesoreria.SingleOrDefault(e => e.Id == oId);
+
+        //            foreach (User u in users)
+        //            {
+        //                Tesoreria pagamento = new Tesoreria();
+        //                pagamento.user = u;
+        //                pagamento.Quota = 5;
+        //                pagamento.DataOperazione = UtilDate.CurrentTimeMillis();
+        //                unitOfWork.Tesoreria.Add(pagamento);
+        //                unitOfWork.Complete();
+        //            }
+        //            log.Debug("insertPayment - metodo eseguito con successo");
+        //            return Request.CreateResponse(HttpStatusCode.OK);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        log.Error("insertPayment - errore nell'esecuzione ", ex);
+        //        return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+        //    }
+        //}
+
+        //[HttpPost]
+        //[Route("insertpaymentdate")]
+        //public HttpResponseMessage insertPaymentDate([FromBody]Tesoreria tesoreria)
+        //{
+        //    try
+        //    {
+        //        using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
+        //        {
+        //            Tesoreria oTesoreria = new Tesoreria();
+        //            oTesoreria.Operazione = "VERSAMENTO";
+        //            oTesoreria.DataOperazione = UtilDate.CurrentTimeMillis();
+        //            oTesoreria.Note = tesoreria.Note;
+
+        //            unitOfWork.Tesoreria.Add(oTesoreria);
+        //            unitOfWork.Complete();
+        //            //entities.Configuration.ProxyCreationEnabled = false;
+        //            //var entity = entities.Tesoreria.OrderByDescending(e => e.Operazione.Equals("VERSAMENTO")).ToList();
+        //            var entity = unitOfWork.Tesoreria.Find(x => x.Operazione == "VERSAMENTO").ToList().OrderByDescending(t => t.DataOperazione);
+        //            log.Debug("insertPaymentDate - metodo eseguito con successo");
+        //            return Request.CreateResponse(HttpStatusCode.OK, entity);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        log.Error("insertPaymentDate - errore nell'esecuzione ", ex);
+        //        return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+        //    }
+        //}
     }
 }

@@ -4,9 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using FoolStaffDataAccess;
 using log4net;
 using System.Security.Claims;
+using FoolStaff;
+using FoolStaff.Core.Domain;
 
 namespace FoolStuff.Controllers
 {
@@ -52,10 +53,10 @@ namespace FoolStuff.Controllers
         {
             try
             {
-                using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
+                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
                 {
                     //entities.Configuration.ProxyCreationEnabled = false;
-                    var entity = entities.UserInfo.ToList();
+                    var entity = unitOfWork.Users.GetAll().ToList();
 
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
@@ -70,20 +71,21 @@ namespace FoolStuff.Controllers
         [Authorize(Roles = "SuperAdmin, FoolStackUser")]
         [HttpPost]
         [Route("updateuserinfo/{id}")]
-        public HttpResponseMessage updateUserInfo(string id, [FromBody]UserInfo user)
+        public HttpResponseMessage updateUserInfo(string id, [FromBody]User user)
         {
             try
             {
-                using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
+                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
                 {
                     //entities.Configuration.ProxyCreationEnabled = false;
-                    var entity = entities.UserInfo.FirstOrDefault(u => u.Id == id);
+                    var entity = unitOfWork.Users.SingleOrDefault(u => u.Id == id);
                     if (entity != null)
                     {
                         entity.Name = user.Name;
                         entity.Surname = user.Surname;
                         entity.Phone = user.Phone;
-                        entities.SaveChanges();
+                        unitOfWork.Users.Add(entity);
+                        unitOfWork.Complete();
                         log.Debug("allUsers - eseguito con successo");
                         return Request.CreateResponse(HttpStatusCode.OK, entity);
                        
@@ -110,10 +112,10 @@ namespace FoolStuff.Controllers
         {
             try
             {
-                using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
+                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
                 {
-                    entities.Configuration.ProxyCreationEnabled = false;
-                    var entity = entities.UserInfo.FirstOrDefault(u => u.Email == email);
+                    //entities.Configuration.ProxyCreationEnabled = false;
+                    var entity = unitOfWork.Users.SingleOrDefault(u => u.Email == email);
 
 
                     ////////////////////////RUOLO
@@ -163,7 +165,7 @@ namespace FoolStuff.Controllers
         private class UserInfoWithRoles
         {
             public List<string> userRolesList { get; set; }
-            public UserInfo userInfo { get; set; }
+            public User userInfo { get; set; }
             public UserInfoWithRoles()
             {
 

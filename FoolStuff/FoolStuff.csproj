@@ -45,8 +45,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FoolStaff">
+      <HintPath>..\..\..\PROGETTI\EF_FOOLSTAFF\FoolStaff\FoolStaff\bin\Debug\FoolStaff.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.0.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
@@ -253,16 +257,19 @@
     <Compile Include="BasicAuthenticationAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
-    <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\TesoreriaController.cs" />
     <Compile Include="Controllers\UseraccountController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Dto\TesoreriaInsertVersamento.cs" />
+    <Compile Include="Dto\TesoreriaInsertSpesa.cs" />
+    <Compile Include="Dto\TesoreriaSaldo.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\UtilDate.cs" />
     <Compile Include="Infrastructure\ApplicationRoleManager.cs" />
     <Compile Include="Logger\Logger.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -357,10 +364,6 @@
     <ProjectReference Include="..\EmployeeDataAccess\EmployeeDataAccess.csproj">
       <Project>{8f02c96c-4c5f-402c-a728-2096db118a47}</Project>
       <Name>EmployeeDataAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FoolStaffDataAccess\FoolStaffDataAccess.csproj">
-      <Project>{315b5817-4074-43d1-b746-970fade71811}</Project>
-      <Name>FoolStaffDataAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

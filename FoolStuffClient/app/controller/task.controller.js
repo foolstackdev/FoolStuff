@@ -82,9 +82,9 @@ angular
 
 
     function _userIsAlreadyAssigned(taskIndex) {
-        if (vm.tasklist[taskIndex].userInfo.length > 0) {
-            for (var i = 0; i < vm.tasklist[taskIndex].userInfo.length; i++) {
-                if (vm.tasklist[taskIndex].userInfo[i].id == sessionStorage.getItem('userId')) {
+        if (vm.tasklist[taskIndex].users != null && vm.tasklist[taskIndex].users.length > 0) {
+            for (var i = 0; i < vm.tasklist[taskIndex].users.length; i++) {
+                if (vm.tasklist[taskIndex].users[i].id == sessionStorage.getItem('userId')) {
                     return true;
                 }
             }

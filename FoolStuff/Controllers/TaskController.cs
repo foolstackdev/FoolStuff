@@ -1,4 +1,6 @@
-﻿using FoolStaffDataAccess;
+﻿using FoolStaff;
+using FoolStaff.Core.Domain;
+using FoolStuff.Helpers;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -28,10 +30,10 @@ namespace FoolStuff.Controllers
         {
             try
             {
-                using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
+                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
                 {
                     //entities.Configuration.ProxyCreationEnabled = false;
-                    var entity = entities.Task.Where(t => t.Stato == "OPEN").Include(f => f.UserInfo).OrderByDescending(t => t.Priorita).ToList();
+                    var entity = unitOfWork.Efforts.Search(t => t.Stato == "OPEN").Include(c => c.Users).OrderByDescending(t => t.Priorita).ToList();
                     log.Debug("getAllTask - metodo eseguito con successo");
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
@@ -45,23 +47,23 @@ namespace FoolStuff.Controllers
 
         [HttpPost]
         [Route("insertnewtask")]
-        public HttpResponseMessage insertNewTask([FromBody]Task task)
+        public HttpResponseMessage insertNewTask([FromBody]Effort effort)
         {
             try
             {
-                using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
+                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
                 {
-                    Task oTask = new Task();
-                    oTask.Titolo = task.Titolo;
-                    oTask.Descrizione = task.Descrizione;
-                    oTask.Priorita = task.Priorita;
-                    oTask.DataCreazione = DateTime.Now;
-                    oTask.Stato = "OPEN";
+                    Effort oEffort = new Effort();
+                    oEffort.Titolo = effort.Titolo;
+                    oEffort.Descrizione = effort.Descrizione;
+                    oEffort.Priorita = effort.Priorita;
+                    oEffort.DataCreazione = UtilDate.CurrentTimeMillis();
+                    oEffort.Stato = "OPEN";
 
-                    entities.Task.Add(oTask);
-                    entities.SaveChanges();
+                    unitOfWork.Efforts.Add(oEffort);
+                    unitOfWork.Complete();
 
-                    var entity = entities.Task.Where(t => t.Stato == "OPEN").OrderByDescending(t => t.Priorita).ToList();
+                    var entity = unitOfWork.Efforts.Find(t => t.Stato == "OPEN").OrderByDescending(t => t.Priorita).ToList();
                     log.Debug("insertNewTask - task inserito correttamente");
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
@@ -75,29 +77,26 @@ namespace FoolStuff.Controllers
 
         [HttpPost]
         [Route("addusertotask/{userid}")]
-        public HttpResponseMessage insertNewTask(string userId, [FromBody]int idTask)
+        public HttpResponseMessage addUserToTask(string userId, [FromBody]int idEffort)
         {
             try
             {
-                using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
+                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
                 {
 
-                    
+                    //var uuu = unitOfWork.Users.Search(u => u.Id == userId).Include(e => e.Efforts).FirstOrDefault();
+                    //var uuua = unitOfWork.Users.Find(u => u.Id == userId);
 
-                    var entityUser = entities.UserInfo.FirstOrDefault(u => u.Id == userId);
-                    entities.Task.FirstOrDefault(t => t.Id == idTask).UserInfo.Add(entityUser);
-                    entities.SaveChanges();
-                    //var entityTask = entities.Task.Include(t => t.UserInfo).FirstOrDefault(t => t.Id == idTask);
+                    User user = unitOfWork.Users.Search(u => u.Id == userId).Include(e => e.Efforts).FirstOrDefault();
+                    Effort entityEffort = unitOfWork.Efforts.SingleOrDefault(t => t.Id == idEffort);
+                    user.Efforts.Add(entityEffort);
+                    //unitOfWork.Users.SingleOrDefault(u => u.Id == userId).Efforts.Add(unitOfWork.Efforts.SingleOrDefault(t => t.Id == idEffort));
+                    //unitOfWork.Efforts.SingleOrDefault(t => t.Id == idEffort).Users.Add(entityUser);
+                    unitOfWork.Complete();
 
-                    //if (!entityTask.UserInfo.Contains(entityUser))
-                    //{
-                    //    entityTask.UserInfo.Add(entityUser);
-                    //    entities.SaveChanges();
-                    //}
-
-                    //var entity = entities.Task.ToList().Where(t => t.Stato == "OPEN").OrderByDescending(t => t.Priorita);
-                    var entity = entities.Task.Where(t => t.Stato == "OPEN").Include(t => t.UserInfo).OrderByDescending(t => t.Priorita).ToList();
-                    log.Debug("addUserToTask - utente id [" + entityUser.Id + "] correttamente associato al task");
+                    //var entity = unitOfWork.Efforts.Find(t => t.Stato == "OPEN").OrderByDescending(t => t.Priorita).ToList();
+                    var entity = unitOfWork.Efforts.Search(t => t.Stato == "OPEN").Include(c => c.Users).OrderByDescending(t => t.Priorita).ToList();
+                    log.Debug("addUserToTask - utente id [" + unitOfWork.Users.SingleOrDefault(u => u.Id == userId).Id + "] correttamente associato al task");
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
             }
@@ -110,24 +109,24 @@ namespace FoolStuff.Controllers
 
         [HttpPost]
         [Route("giveuptask/{userid}")]
-        public HttpResponseMessage giveUpTask(string userId, [FromBody]int idTask)
+        public HttpResponseMessage giveUpTask(string userId, [FromBody]int idEffort)
         {
             try
             {
-                using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
+                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
                 {
 
-                    var entityUser = entities.UserInfo.FirstOrDefault(u => u.Id == userId);
-                    var entityTask = entities.Task.Include(t => t.UserInfo).FirstOrDefault(t => t.Id == idTask);
+                    User entityUser = unitOfWork.Users.Search(u => u.Id == userId).SingleOrDefault();
+                    Effort entityTask = unitOfWork.Efforts.Search(t => t.Id == idEffort).Include(c => c.Users).SingleOrDefault();
 
-                    if (entityTask.UserInfo.Contains(entityUser))
+                    if (entityTask.Users.Contains(entityUser))
                     {
-                        entityTask.UserInfo.Remove(entityUser);
-                        entities.SaveChanges();
+                        entityTask.Users.Remove(entityUser);
+                        unitOfWork.Complete();
                     }
 
                     //var entity = entities.Task.ToList().Where(t => t.Stato == "OPEN").OrderByDescending(t => t.Priorita);
-                    var entity = entities.Task.Where(t => t.Stato == "OPEN").Include(t => t.UserInfo).OrderByDescending(t => t.Priorita).ToList();
+                    var entity = unitOfWork.Efforts.Find(t => t.Stato == "OPEN").OrderByDescending(t => t.Priorita).ToList();
                     log.Debug("giveUpTask - rinuncia al task da parte dell'utente id [" + entityUser.Id + "] avvenuta con successo");
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
@@ -141,21 +140,21 @@ namespace FoolStuff.Controllers
 
         [HttpPost]
         [Route("closetask")]
-        public HttpResponseMessage closeTask([FromBody]int idTask)
+        public HttpResponseMessage closeTask([FromBody]int idEffort)
         {
             try
             {
-                using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
+                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
                 {
-                    var entityTask = entities.Task.FirstOrDefault(t => t.Id == idTask);
+                    var entityTask = unitOfWork.Efforts.SingleOrDefault(t => t.Id == idEffort);
 
                     if (entityTask != null)
                     {
-                        entityTask.DataChiusura = DateTime.Today; 
+                        entityTask.DataChiusura = UtilDate.CurrentTimeMillis();
                         entityTask.Stato = "CLOSED";
-                        entities.SaveChanges();
+                        unitOfWork.Complete();
                     }
-                    var entity = entities.Task.Where(t => t.Stato == "OPEN").Include(t => t.UserInfo).OrderByDescending(t => t.Priorita).ToList();
+                    var entity = unitOfWork.Efforts.Find(t => t.Stato == "OPEN").OrderByDescending(t => t.Priorita).ToList();
                     log.Debug("closeTask - Task id [" + entityTask.Id + "] chiuso correttamente");
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
@@ -173,7 +172,7 @@ namespace FoolStuff.Controllers
         {
             try
             {
-                using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
+                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
                 {
                     //entities.Configuration.LazyLoadingEnabled = false;
                     //entities.Configuration.ProxyCreationEnabled = false;
@@ -186,7 +185,7 @@ namespace FoolStuff.Controllers
                     //                  tasks = tasks
                     //              };
 
-                    var entityTask = entities.Task.Where(t => t.Stato == "CLOSED").Include(t => t.UserInfo).OrderByDescending(t => t.DataChiusura).ToList();
+                    var entityTask = unitOfWork.Efforts.Search(t => t.Stato == "CLOSED").Include(u => u.Users).OrderByDescending(t => t.DataChiusura).ToList();
                     log.Debug("getClosedTask - Lista Task chiusi correttamente recuperata");
                     //var entity = entities.Task.Where(t => t.Stato == "CLOSED").Include(t => t.UserInfo).OrderByDescending(t => t.DataChiusura).ToList(); 
                     return Ok(entityTask);

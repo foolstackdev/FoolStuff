@@ -6,8 +6,9 @@ using Owin;
 using FoolStuff.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using FoolStaffDataAccess;
 using System.Web.Http;
+using FoolStaff.Core.Domain;
+using FoolStaff;
 
 [assembly: OwinStartup(typeof(FoolStuff.Startup))]
 
@@ -18,16 +19,16 @@ namespace FoolStuff
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-            CreateUserAndRoles();
-
             HttpConfiguration config = new HttpConfiguration();
             WebApiConfig.Register(config);
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             app.UseWebApi(config);
+            CreateUserAndRoles();
         }
 
         public void CreateUserAndRoles()
         {
+            
             ApplicationDbContext context = new ApplicationDbContext();
 
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
@@ -52,7 +53,7 @@ namespace FoolStuff
                     userManager.AddToRole(user.Id, "SuperAdmin");
                 }
 
-                UserInfo oUser = new UserInfo();
+                User oUser = new User();
                 oUser.Name = "Admin";
                 oUser.Surname = "Admin";
                 oUser.Phone = "555";
@@ -60,19 +61,20 @@ namespace FoolStuff
                 oUser.Password = pwd;
                 oUser.Id = user.Id;
 
-                using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
+                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
                 {
-                    var entity = entities.UserInfo.FirstOrDefault(u => u.Email == user.Email);
+                    var entity = unitOfWork.Users.SingleOrDefault(u => u.Email == user.Email);
 
                     if (entity != null)
                     {
-                        entities.UserInfo.Add(oUser);
+                        unitOfWork.Users.Add(oUser);
                     }
                     else
                     {
                         entity.Id = user.Id;
+                        unitOfWork.Users.Add(entity);
                     }
-                    entities.SaveChanges();
+                    unitOfWork.Complete();
                 }
 
             }
@@ -88,7 +90,7 @@ namespace FoolStuff
                 var role = new IdentityRole("FoolStackUser");
                 roleManager.Create(role);
             }
-
+            
         }
 
     }

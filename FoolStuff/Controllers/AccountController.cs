@@ -16,9 +16,11 @@ using Microsoft.Owin.Security.OAuth;
 using FoolStuff.Models;
 using FoolStuff.Providers;
 using FoolStuff.Results;
-using FoolStaffDataAccess;
+//using FoolStaffDataAccess;
 using System.Linq;
 using log4net;
+using FoolStaff;
+using FoolStaff.Core.Domain;
 
 namespace FoolStuff.Controllers
 {
@@ -129,7 +131,7 @@ namespace FoolStuff.Controllers
 
             IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
                 model.NewPassword);
-            
+
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
@@ -262,9 +264,9 @@ namespace FoolStuff.Controllers
             if (hasRegistered)
             {
                 Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                
-                 ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
-                    OAuthDefaults.AuthenticationType);
+
+                ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
+                   OAuthDefaults.AuthenticationType);
                 ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     CookieAuthenticationDefaults.AuthenticationType);
 
@@ -327,7 +329,7 @@ namespace FoolStuff.Controllers
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModelCustomUser oAuthModel)
         {
-           RegisterBindingModel model = new RegisterBindingModel();
+            RegisterBindingModel model = new RegisterBindingModel();
             model.Email = oAuthModel.Email;
             model.Password = oAuthModel.Password;
             model.ConfirmPassword = oAuthModel.Password;
@@ -356,36 +358,31 @@ namespace FoolStuff.Controllers
                 var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
                 userManager.AddToRole(user.Id, "SimpleUser");
 
-                UserInfo oUser = new UserInfo();
-                oUser.Name = oAuthModel.Name;
-                oUser.Surname = oAuthModel.Surname;
-                oUser.Phone = oAuthModel.Phone;
-                oUser.Email = oAuthModel.Email;
-                oUser.Password = oAuthModel.Password;
-                oUser.Id = user.Id;
 
-                using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
+                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
                 {
+                    User oUser = new User();
+                    oUser.Name = oAuthModel.Name;
+                    oUser.Surname = oAuthModel.Surname;
+                    oUser.Phone = oAuthModel.Phone;
+                    oUser.Email = oAuthModel.Email;
+                    oUser.Password = oAuthModel.Password;
+                    oUser.Id = user.Id;
 
-                    var entity = entities.UserInfo.FirstOrDefault(u => u.Email == oUser.Email);
-
-                    if (entity == null)
+                    //Controllo se l'utente già esiste
+                    if (unitOfWork.Users.Find(a => a.Email == oUser.Email).Count() == 0)
                     {
-                        log.Debug("register - user con email [" + oUser.Email+ "] registrato con successo");
-                        entities.UserInfo.Add(oUser);
-                    }
-                    else
-                    {
-                        entity.Id = user.Id;
-                    }
-                    entities.SaveChanges();
+                        unitOfWork.Users.Add(oUser);
+                        unitOfWork.Complete();
+                        log.Debug("register - user con email [" + oUser.Email + "] registrato con successo");
+                    }                 
                 }
             }
             catch (Exception ex)
             {
                 //To DO
                 //Implementare un sistema di logger e avviso utente di modificare le proprie generalità dopo la login.
-                log.Error("register - errore nell'esecuzione");
+                log.Error("register - errore nell'esecuzione [" + ex.Message + "]");
                 return InternalServerError(ex);
             }
 
@@ -421,7 +418,7 @@ namespace FoolStuff.Controllers
             result = await UserManager.AddLoginAsync(user.Id, info.Login);
             if (!result.Succeeded)
             {
-                return GetErrorResult(result); 
+                return GetErrorResult(result);
             }
             return Ok();
         }

@@ -104,6 +104,8 @@
     <Content Include="app\controller\userpage.controller.js" />
     <Content Include="app\controller\users.controller.js" />
     <Content Include="app\model\constants\constants.js" />
+    <Content Include="app\model\filters\filters.filter.js" />
+    <Content Include="app\model\services\utils.service.js" />
     <Content Include="app\view\assets\content\css\bootrap-override.css" />
     <Content Include="app\view\assets\img\FoolStackers.jpg" />
     <Content Include="app\view\assets\img\Logo.png" />

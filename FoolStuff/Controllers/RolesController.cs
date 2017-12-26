@@ -1,5 +1,4 @@
-﻿using FoolStaffDataAccess;
-using FoolStuff.Models;
+﻿using FoolStuff.Models;
 using log4net;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;

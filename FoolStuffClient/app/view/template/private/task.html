@@ -27,9 +27,9 @@
                         <pre>{{item.descrizione}}</pre>
                     </div>
                     <div class="col-sm-4">
-                        <div ng-if="item.userInfo.length > 0" class="pull-right">
+                        <div ng-if="item.users.length > 0" class="pull-right">
                             <h6>Utenti coinvolti</h6>
-                            <ul data-ng-repeat="user in item.userInfo">
+                            <ul data-ng-repeat="user in item.users">
                                 <li>
                                     {{user.name}}
                                 </li>
@@ -123,9 +123,9 @@
                         <p>{{item.descrizione}}</p>
                     </div>
                     <div class="col-sm-4">
-                        <div ng-if="item.userInfo.length > 0" class="pull-right">
+                        <div ng-if="item.users.length > 0" class="pull-right">
                             <h6>Utenti coinvolti</h6>
-                            <ul data-ng-repeat="user in item.userInfo">
+                            <ul data-ng-repeat="user in item.users">
                                 <li>
                                     {{user.name}}
                                 </li>

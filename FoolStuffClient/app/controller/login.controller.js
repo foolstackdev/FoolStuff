@@ -27,7 +27,7 @@ angular
             sessionStorage.setItem('accessToken', response.data.access_token);
             RestService.GetData(CostantUrl.urlUserAccount, "getuserinfo/" + vm.user.username + "/").then(function (responseUser) {
                 console.log(responseUser);
-                sessionStorage.setItem('userId', responseUser.data.id);
+                sessionStorage.setItem('userId', responseUser.data.userInfo.id);
                 sessionStorage.setItem('user', JSON.stringify(responseUser.data));
                 toastr.success('Cool, you\' re now logged', 'Confirmed');
                 $rootScope.$broadcast('stop-spin');
