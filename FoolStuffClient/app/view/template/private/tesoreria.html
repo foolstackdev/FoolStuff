@@ -176,7 +176,7 @@
                                                         {{info.note}}
                                                     </td>
                                                     <td>
-                                                        {{info.user.length}} &nbsp; <i class="fa fa-users cursorPointer colorGreen" aria-hidden="true" uib-popover-html="'<b>HTML</b>, <i>inline</i>'"  popover-trigger="'mouseenter'"></i>
+                                                        {{info.user.length}} &nbsp; <i class="fa fa-users cursorPointer colorGreen" aria-hidden="true" uib-popover-html="htmlPopover(info)" popover-trigger="'mouseenter'"></i>
                                                         <!--<ol>
                                                             <li data-ng-repeat="user in info.user">
                                                                 <span> {{user.name}} &nbsp; {{user.surname}}</span>
@@ -200,7 +200,7 @@
                                                         Operazione
                                                     </th>
                                                     <th>
-                                                        Totale
+                                                        Spesa
                                                     </th>
                                                     <th>
                                                         Note
@@ -208,13 +208,13 @@
                                                 </tr>
                                                 <tr data-ng-repeat="info in tesoreriaCtrl.infoUscite">
                                                     <td>
-                                                        {{info.dataOperazione}}
+                                                        {{info.dataOperazione | timestampToHumanWithHours}}
                                                     </td>
                                                     <td>
                                                         {{info.operazione}}
                                                     </td>
                                                     <td>
-                                                        {{info.totale}}
+                                                        {{info.quota}} €
                                                     </td>
                                                     <td>
                                                         {{info.note}}
@@ -260,9 +260,8 @@
                             </select>
                         </div>-->
                     </div>
-                </div>
-                v>
-                <div class="
+
+
                     <div class="panel-body">
                         <form class="form" role="form">
                             <div class="col-lg-6 col-md-12 col-sm-12 col-sx-12">
@@ -371,7 +370,7 @@
                 </div>
             </div>-->
         </div>
-        </div>
+
     </uib-tab>
     <uib-tab index="2" select="tesoreriaCtrl.prepareSpesa()">
         <uib-tab-heading>
@@ -394,9 +393,8 @@
                             </select>
                         </div>-->
                     </div>
-                </div>
-                v>
-                <div class="
+
+
                     <div class="panel-body">
                         <form class="form" role="form">
                             <div class="col-lg-6 col-md-12 col-sm-12 col-sx-12">
@@ -450,7 +448,19 @@
         <div class="row" style="margin-top:10px">
 
             <div class="col-lg-12">
+                <div class="panel panel-default">
 
+                    <div class="panel-heading">
+
+                    </div>
+                    <div class="panel-body">
+
+                    </div>
+                    <div class="panel-footer">
+
+                    </div>
+
+                </div>
             </div>
 
         </div>
