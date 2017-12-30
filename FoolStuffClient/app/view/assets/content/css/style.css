@@ -63,8 +63,19 @@
     color: red;
 }
 
+.colorYellow {
+    color:yellow;
+}
+
+.colorAzure {
+    color:#06b8ff;
+}
 .textAlignRight {
     text-align: right;
+}
+
+.colorOrange {
+    color:#ff8606;
 }
 
 .textAlignCenter {
@@ -90,4 +101,10 @@
 .borderless > thead > tr > td,
 .borderless > thead > tr > th {
     border: none;
+}
+.trOrange {
+    background-color:#ff96001f;
+}
+.hoverWhite:hover {
+    background-color: white !important;
 }

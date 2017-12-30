@@ -4,27 +4,61 @@
 <table class="table table-hover">
     <tr>
         <th>
-            Id
+            Name
+        </th>
+        <th>
+            Surname
         </th>
         <th>
             Email
         </th>
         <th>
+            Phone
+        </th>
+        <th>
             Role
         </th>
+        <th>
+            Change Role
+        </th>
+        <th>
+            Info
+        </th>
     </tr>
-    <tr data-ng-repeat="role in rolesCtrl.roles">
+    <tr data-ng-repeat="role in rolesCtrl.roles track by $index">
         <td>
-            {{role.user.id}}
+            {{role.userInfo.name}}
+        </td>
+        <td>
+            {{role.userInfo.surname}}
         </td>
         <td>
             {{role.user.email}}
         </td>
         <td>
+            {{role.userInfo.phone}}
+        </td>
+        <td>
             {{role.roles}}
         </td>
+        <td>
+            <div class="input-group">
+                <select class="form-control reducedSelect" data-ng-model="role.roleId" data-ng-change="rolesCtrl.changeRole(role)">
+                    <option ng-repeat="option in rolesCtrl.rolesList" value="{{option.id}}">{{option.name}}</option>
+                </select>
+                <span class="input-group-btn">
+                    <button class="btn btn-success btn-sm" data-ng-click="rolesCtrl.changeRoleToUser(role)" data-ng-disabled="!role.roleChanged">Conferma</button>
+                </span>
+            </div>
+        </td>
+        <td data-ng-switch on="role.roles">
+            <i ng-switch-when="SuperAdmin" style="padding-top:9px;" class="fa fa-id-card-o cursorPointer colorGreen" aria-hidden="true" uib-popover-html="popoverSingleItem(role.user.id)" popover-trigger="'mouseenter'"></i>
+            <i ng-switch-when="FoolStackUser" style="padding-top:9px;" class="fa fa-id-card-o cursorPointer colorAzure" aria-hidden="true" uib-popover-html="popoverSingleItem(role.user.id)" popover-trigger="'mouseenter'"></i>
+            <i ng-switch-when="SimpleUser" style="padding-top:9px;" class="fa fa-id-card-o cursorPointer colorRed" aria-hidden="true" uib-popover-html="popoverSingleItem(role.user.id)" popover-trigger="'mouseenter'"></i>
+            <!--<i style="padding-top:9px;" class="fa fa-id-card-o cursorPointer colorBlue" aria-hidden="true" uib-popover-html="popoverSingleItem(role.user.id)" popover-trigger="'mouseenter'"></i>-->
+        </td>
     </tr>
-    <tr>
+    <!--<tr>
         <td>
             <div class="form-group">
                 <input type="text" data-ng-model="rolesCtrl.newRole.Name" class="form-control" placeholder="Inserisci nuovo ruolo" />
@@ -36,5 +70,5 @@
         <td>
             <button class="btn btn-primary pull-right" data-ng-disabled="rolesCtrl.newRole.Name == ''" data-ng-click="rolesCtrl.addRole()">Aggiungi Ruolo</button>
         </td>
-    </tr>
+    </tr>-->
 </table>

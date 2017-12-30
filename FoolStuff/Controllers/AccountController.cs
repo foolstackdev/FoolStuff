@@ -356,7 +356,18 @@ namespace FoolStuff.Controllers
                 //Add user to a simpleuser foolstack role.
                 ApplicationDbContext context = new ApplicationDbContext();
                 var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-                userManager.AddToRole(user.Id, "SimpleUser");
+
+                //Se l'utente appena registrato è anche il primo allora sarà SuperAdmin altrimenti SimpleUser da abilitare
+                if(userManager.Users.Count() > 1 )
+                {
+                    userManager.AddToRole(user.Id, "SimpleUser");
+                }
+                else
+                {
+                    userManager.AddToRole(user.Id, "SuperAdmin");
+                }
+
+               
 
 
                 using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))

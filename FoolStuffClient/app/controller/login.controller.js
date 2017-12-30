@@ -27,8 +27,13 @@ angular
             sessionStorage.setItem('accessToken', response.data.access_token);
             RestService.GetData(CostantUrl.urlUserAccount, "getuserinfo/" + vm.user.username + "/").then(function (responseUser) {
                 console.log(responseUser);
+                if (responseUser.data.userRolesList.indexOf("SimpleUser") != -1) {
+                    toastr.warning('Wait for your confirmation', 'Be patient..');
+                    return;
+                }
                 sessionStorage.setItem('userId', responseUser.data.userInfo.id);
                 sessionStorage.setItem('user', JSON.stringify(responseUser.data));
+                sessionStorage.setItem('userRolesList', JSON.stringify(responseUser.data.userRolesList));
                 toastr.success('Cool, you\' re now logged', 'Confirmed');
                 $rootScope.$broadcast('stop-spin');
                 $state.go("signed.homepage");
