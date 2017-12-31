@@ -29,9 +29,9 @@
                     <div class="col-sm-4">
                         <div ng-if="item.users.length > 0" class="pull-right">
                             <h6>Utenti coinvolti</h6>
-                            <ul data-ng-repeat="user in item.users">
+                            <ul data-ng-repeat="user in item.users" style="list-style-type: none;">
                                 <li>
-                                    {{user.name}}
+                                    <img src="{{user.avatar}}" /> {{user.name}}
                                 </li>
                             </ul>
                         </div>
@@ -125,9 +125,9 @@
                     <div class="col-sm-4">
                         <div ng-if="item.users.length > 0" class="pull-right">
                             <h6>Utenti coinvolti</h6>
-                            <ul data-ng-repeat="user in item.users">
+                            <ul data-ng-repeat="user in item.users" style="list-style-type: none;">
                                 <li>
-                                    {{user.name}}
+                                    <img src="{{user.avatar}}" /> {{user.name}}
                                 </li>
                             </ul>
                         </div>

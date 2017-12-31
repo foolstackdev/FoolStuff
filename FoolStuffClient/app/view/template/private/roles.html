@@ -4,6 +4,9 @@
 <table class="table table-hover">
     <tr>
         <th>
+
+        </th>
+        <th>
             Name
         </th>
         <th>
@@ -26,6 +29,9 @@
         </th>
     </tr>
     <tr data-ng-repeat="role in rolesCtrl.roles track by $index">
+        <td>
+            <img src="{{role.avatar}}"/>
+        </td>
         <td>
             {{role.userInfo.name}}
         </td>

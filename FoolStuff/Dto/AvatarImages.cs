@@ -6,11 +6,6 @@ using System.Web;
 
 namespace FoolStuff.Dto
 {
-    public class UploadAvatar
-    {
-        public List<AvatarImages> avatarImages { get; set; }
-
-    }
     public class AvatarImages
     {
         public string size { get; set; }
@@ -18,10 +13,5 @@ namespace FoolStuff.Dto
         public string name { get; set; }
         public string type { get; set; }
 
-        public AvatarImages getUserAvatar(string id)
-        {
-
-            return this;
-        }
     }
 }

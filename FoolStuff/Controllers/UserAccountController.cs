@@ -71,6 +71,36 @@ namespace FoolStuff.Controllers
         }
 
         [Authorize(Roles = "SuperAdmin, FoolStackUser")]
+        [HttpGet]
+        [Route("allusersavatar/{filesize}")]
+        public HttpResponseMessage allUsersAvatar(string filesize)
+        {
+            try
+            {
+                filesize = filesize == "0" ? null : filesize;
+                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
+                {
+                    var entity = unitOfWork.Users.GetAll().ToList();
+                    List<AvatarImagesUsers> oAvatarUsersList = new List<AvatarImagesUsers>();
+                    foreach (User u in entity)
+                    {
+                        AvatarImagesUsers oAvatarUser = new AvatarImagesUsers();
+                        oAvatarUser.userId = u.Id;
+                        oAvatarUser.avatars = new Avatar().getAvatarByUser(u.Id, filesize);
+                        oAvatarUsersList.Add(oAvatarUser);
+                    }
+
+                    return Request.CreateResponse(HttpStatusCode.OK, oAvatarUsersList);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+
+        }
+
+        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
         [HttpPost]
         [Route("updateuserinfo/{id}")]
         public HttpResponseMessage updateUserInfo(string id, [FromBody]User user)

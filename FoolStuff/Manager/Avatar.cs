@@ -15,6 +15,10 @@ namespace FoolStuff.Manager
         //PathSpecifico per le immagini in base alla dimensione: PathGenerico/LG || PathGenerico/MD || PathGenerico/SM || PathGenerico/XS
 
         private readonly string AVATAR_PATH = ConfigurationManager.AppSettings["AvatarPath"];
+        private readonly string LG = "LG";
+        private readonly string MD = "MD";
+        private readonly string SM = "SM";
+        private readonly string XS = "XS";
 
         public Avatar() : base()
         {
@@ -60,36 +64,55 @@ namespace FoolStuff.Manager
             }
         }
 
-        public List<AvatarImages> getAvatarByUser(string id)
+        public List<AvatarImages> getAvatarByUser(string id, string fileSize)
         {
-            this.userId = id;
-            string avatarDirectory = WORKING_DIRECTORY + Path.DirectorySeparatorChar + userId + Path.DirectorySeparatorChar + AVATAR_PATH;
             List<AvatarImages> oAvatarList = new List<AvatarImages>();
-            if (Directory.Exists(avatarDirectory))
+            try
             {
-                string[] subdirectoryEntries = Directory.GetDirectories(avatarDirectory);
-                foreach (string subdirectory in subdirectoryEntries)
-                {
-                    AvatarImages oAvatar = new AvatarImages();
-                    oAvatar.size = new DirectoryInfo(subdirectory).Name;
-                    string[] fileEntries = Directory.GetFiles(subdirectory);
-                    foreach (string fileName in fileEntries)
-                    {
-                        oAvatar.name = Path.GetFileName(fileName);
-                        //oAvatar.size = new FileInfo(fileName).Length.ToString();
-                        oAvatar.type = MimeMapping.GetMimeMapping(fileName);
-                        oAvatar.data = Convert.ToBase64String(File.ReadAllBytes(fileName));
+                this.userId = id;
+                string avatarDirectory = WORKING_DIRECTORY + Path.DirectorySeparatorChar + userId + Path.DirectorySeparatorChar + AVATAR_PATH;
 
-                        oAvatarList.Add(oAvatar);
+                if (Directory.Exists(avatarDirectory))
+                {
+                    string[] subdirectoryEntries = Directory.GetDirectories(avatarDirectory);
+                    foreach (string subdirectory in subdirectoryEntries)
+                    {
+                        AvatarImages oAvatar = new AvatarImages();
+                        oAvatar.size = new DirectoryInfo(subdirectory).Name;
+                        if (fileSize != null && (fileSize == LG || fileSize == MD || fileSize == SM || fileSize == XS))
+                        {
+                            if (fileSize != oAvatar.size)
+                            {
+                                continue;
+                            }
+                        }
+
+                        string[] fileEntries = Directory.GetFiles(subdirectory);
+                        foreach (string fileName in fileEntries)
+                        {
+                            oAvatar.name = Path.GetFileName(fileName);
+                            //oAvatar.size = new FileInfo(fileName).Length.ToString();
+                            oAvatar.type = MimeMapping.GetMimeMapping(fileName);
+                            oAvatar.data = Convert.ToBase64String(File.ReadAllBytes(fileName));
+
+                            oAvatarList.Add(oAvatar);
+                        }
                     }
                 }
+                else
+                {
+                    return null;
+                }
             }
-            else
+            catch (Exception e)
             {
-                return null;
+                throw e;
             }
             return oAvatarList;
         }
-
+        public List<AvatarImages> getAvatarByUser(string id)
+        {
+            return getAvatarByUser(id, null);
+        }
     }
 }

@@ -1,8 +1,8 @@
 ﻿"use strict";
 angular
     .module('FoolStackApp')
-    .controller('RolesController', ["$scope", "RestService", "CostantUrl", "$state", "toastr", "$sce",
-        function ($scope, RestService, CostantUrl, $state, toastr, $sce) {
+    .controller('RolesController', ["$scope", "RestService", "CostantUrl", "$state", "toastr", "$sce", "ApplicationService",
+        function ($scope, RestService, CostantUrl, $state, toastr, $sce, ApplicationService) {
 
             var vm = this;
 
@@ -31,7 +31,23 @@ angular
             function _getAllUsersWithRoles() {
                 RestService.GetData(CostantUrl.urlRoles, "getalluserswithroles").then(function (response) {
                     vm.roles = response.data;
-                    console.log(response);
+                    var avatars = ApplicationService.getAllAvatars();
+                    if (avatars != undefined && avatars != null) {
+                        for (var i = 0; i < vm.roles.length; i++) {
+                            vm.roles[i].avatar = null;
+                            for (var j = 0; j < avatars.length; j++) {
+                                if (vm.roles[i].user.id == avatars[j].userId) {
+                                    vm.roles[i].avatar = avatars[j].dataHtml;
+                                    break;
+                                }
+                            }
+                            if (vm.roles[i].avatar == null) {
+                                vm.roles[i].avatar = ApplicationService.getDefaultImageSrc();
+                            }
+                        }
+                    }
+
+                    console.log(vm.roles);
                     _getRolesList();
                 });
             }

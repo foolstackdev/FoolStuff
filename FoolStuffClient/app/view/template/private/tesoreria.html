@@ -310,6 +310,9 @@
                                                 <!--<div class="animate-switch" ng-switch-default>default</div>-->
                                             </div>
                                         </th>
+                                        <td>
+
+                                        </td>
                                         <th>
                                             Nome
                                         </th>
@@ -329,6 +332,9 @@
                                         <!--<input type="checkbox" ng-checked="item.isRowSelected" data-ng-click="toggleSelection(item)">-->
                                         <input type="checkbox" data-ng-model="tesoreriaCtrl.userSelected[$index].check" required>
                                         <!--<input type="checkbox" data-ng-change="tesoreriaCtrl.userSelected[$index].check = !tesoreriaCtrl.userSelected[$index].check" data-ng-model="tesoreriaCtrl.userSelected[$index].check">-->
+                                    </td>
+                                    <td>
+                                        <img src="{{user.avatar}}" />
                                     </td>
                                     <td>
                                         {{user.name}}

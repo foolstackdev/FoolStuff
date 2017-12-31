@@ -18,7 +18,6 @@ angular
         }
 
         function _login() {
-            $rootScope.$broadcast('start-spin');
             sessionStorage.clear();
             var JsonObj = "userName=" + vm.user.username + "&password=" + vm.user.password + "&grant_type=password";
 
@@ -37,6 +36,7 @@ angular
                     sessionStorage.setItem('userId', responseUser.data.userInfo.id);
                     sessionStorage.setItem('user', JSON.stringify(responseUser.data));
                     sessionStorage.setItem('userRolesList', JSON.stringify(responseUser.data.userRolesList));
+                    ApplicationService.loadUsersAvatar("XS");
                     toastr.success('Cool, you\' re now logged', 'Confirmed');
                     $rootScope.$broadcast('stop-spin');
                     $state.go("signed.homepage");
