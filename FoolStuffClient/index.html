@@ -13,7 +13,7 @@
     <link href="app/view/assets/lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <link href="app/view/assets/lib/angular-toast/angular-toastr.min.css" rel="stylesheet" />
     <link href="app/view/assets/content/css/style.css" rel="stylesheet" />
-    <link href="app/view/assets/lib/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" />
+    <link href="app/view/assets/lib/angular-cropper/cropper.min.css" rel="stylesheet" />
     <!--Main scripts-->
     <script src="app/view/assets/lib/jquery/jquery-3.2.1.min.js"></script>
     <script src="app/view/assets/lib/bootstrap/bootstrap.min.js"></script>
@@ -23,9 +23,9 @@
     <script src="app/view/assets/lib/bootstrap/ui-bootstrap-tpls-2.5.0.min.js"></script>
     <script src="app/view/assets/lib/Ui-Router/angular-ui-router.min.js"></script>
     <script src="app/view/assets/lib/angular-toast/angular-toastr.tpls.min.js"></script>
-    <script src="app/view/assets/lib/angular-spinner/angular-spinner.min.js"></script>
     <script src="app/view/assets/lib/angular-charts/chart.min.js"></script>
     <script src="app/view/assets/lib/angular-charts/angular-chart.js"></script>
+    <script src="app/view/assets/lib/angular-cropper/cropper.js"></script>
     <script src="app/app.js"></script>
     <script src="app/app.config.js"></script>    
      <!--Controllers-->
@@ -37,13 +37,13 @@
     <script src="app/controller/update.controller.js"></script>
     <script src="app/controller/task.controller.js"></script>
     <script src="app/controller/updatePass.controller.js"></script>
-    <script src="app/controller/userpage.controller.js"></script>
     <script src="app/controller/profile.controller.js"></script>
     <script src="app/controller/applications.controller.js"></script>
     <script src="app/controller/roles.controller.js"></script>
     <!--Services-->
     <script src="app/model/services/rest.service.js"></script>
     <script src="app/model/services/utils.service.js"></script>
+    <script src="app/model/services/application.service.js"></script>
     <!--Constants-->
     <script src="app/model/constants/constants.js"></script>
     <!-- Filters -->
@@ -56,6 +56,5 @@
 </head>
 <body>
     <div ui-view></div>
-    <!--ADD IMAGE-->
 </body>
 </html>

@@ -1,0 +1,150 @@
+﻿
+<div class="panel panel-default" data-ng-show="profileCtrl.show == 1">
+    <form class="form-horizontal" role="form">
+        <div class="panel-heading">
+            <h2>{{profileCtrl.user.name}}'s Profile Page</h2>
+        </div>
+        <div class="panel-body">
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <button class="btn btn-success btn-sm" data-ng-click="profileCtrl.changeAvatar()"><i class="fa fa-camera-retro" aria-hidden="true"></i> Cambia avatar</button>
+                    <input type="file" id="file" name="file" style="visibility: hidden;" />
+
+                </div>
+                <div class="col-lg-3">
+                    <div>
+                        <img data-ng-src="{{profileCtrl.imageAvatar}}" style="max-height:200px; max-width:100%">
+                    </div>
+
+                </div>
+                <div class="col-lg-9 col-md-9">
+
+                    <div class="form-group">
+                        <label for="email" class="col-sm-3">User Name : </label>
+                        <div class="col-sm-9">
+                            {{profileCtrl.user.name}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-sm-3">User Surname : </label>
+                        <div class="col-sm-9">
+                            {{profileCtrl.user.surname}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-sm-3">User Phone Number : </label>
+                        <div class="col-sm-9">
+                            {{profileCtrl.user.phone}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-sm-3">User E-mail : </label>
+                        <div class="col-sm-9">
+                            {{profileCtrl.user.email}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form> <!-- /form -->
+</div>
+<div class="panel panel-default positionRelative" data-ng-show="profileCtrl.show == 2">
+    <div class="waiter">
+        <div class="waiterBody">
+            <h4>Loading..</h4>
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>Seleziona l'area di interesse</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <button class="btn btn-warning btn-sm colorBlack" data-ng-click="profileCtrl.back()"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="img-container">
+                    <img id="imageAvatartoCrop" src="" style="max-width:100%">
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <h4>
+                    Preview
+                </h4>
+                <div class="docs-preview clearfix">
+                    <div class="img-preview preview-lg" style="width: 256px; height: 144px;"><img src="" id="imageAvatartoCrop-lg" style="display: block; width: 320px; height: 180px; min-width: 0px !important; min-height: 0px !important; max-width: none !important; max-height: none !important; transform: translateX(-32px) translateY(-18px);"></div>
+                    <div class="img-preview preview-md" style="width: 128px; height: 72px;"><img src="" id="imageAvatartoCrop-md" style="display: block; width: 160px; height: 90px; min-width: 0px !important; min-height: 0px !important; max-width: none !important; max-height: none !important; transform: translateX(-16px) translateY(-9px);"></div>
+                    <div class="img-preview preview-sm" style="width: 64px; height: 36px;"><img src="" id="imageAvatartoCrop-sm" style="display: block; width: 80px; height: 45px; min-width: 0px !important; min-height: 0px !important; max-width: none !important; max-height: none !important; transform: translateX(-8px) translateY(-4.5px);"></div>
+                    <div class="img-preview preview-xs" style="width: 32px; height: 18px;"><img src="" id="imageAvatartoCrop-xs" style="display: block; width: 40px; height: 22.5px; min-width: 0px !important; min-height: 0px !important; max-width: none !important; max-height: none !important; transform: translateX(-4px) translateY(-2.25px);"></div>
+                </div>
+                <div class="docs-data">
+                    <h4>Properties</h4>
+                    <div class="input-group input-group-sm">
+                        <label class="input-group-addon" for="dataX">X</label>
+                        <input type="text" class="form-control" id="dataX" placeholder="x">
+                        <span class="input-group-addon">px</span>
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <label class="input-group-addon" for="dataY">Y</label>
+                        <input type="text" class="form-control" id="dataY" placeholder="y">
+                        <span class="input-group-addon">px</span>
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <label class="input-group-addon" for="dataWidth">Width</label>
+                        <input type="text" class="form-control" id="dataWidth" placeholder="width">
+                        <span class="input-group-addon">px</span>
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <label class="input-group-addon" for="dataHeight">Height</label>
+                        <input type="text" class="form-control" id="dataHeight" placeholder="height">
+                        <span class="input-group-addon">px</span>
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <label class="input-group-addon" for="dataRotate">Rotate</label>
+                        <input type="text" class="form-control" id="dataRotate" placeholder="rotate">
+                        <span class="input-group-addon">deg</span>
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <label class="input-group-addon" for="dataScaleX">ScaleX</label>
+                        <input type="text" class="form-control" id="dataScaleX" placeholder="scaleX">
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <label class="input-group-addon" for="dataScaleY">ScaleY</label>
+                        <input type="text" class="form-control" id="dataScaleY" placeholder="scaleY">
+                    </div>
+                </div>
+                <div class="row" style="margin-top:10px;">
+                    <div class="col-lg-12">
+                        <span class="btn-group">
+                            <button class="btn btn-success btn-sm" data-ng-click="profileCtrl.upload()">Upload</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--<div data-ng-show="profileCtrl.show == 2">
+    <div>
+        <button class="btn btn-warning btn-sm" data-ng-click="profileCtrl.show = 1"> Back</button>
+    </div>
+    <div>
+        <img id="imageAvatartoCrop" src="" style="max-height:200px; max-width:100%">
+    </div>
+
+
+</div>-->

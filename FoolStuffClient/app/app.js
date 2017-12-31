@@ -4,7 +4,6 @@
         'ui.router',
         'toastr',
         'ui.bootstrap',
-        'angularSpinner',
         'chart.js'
     ]);
 })();

@@ -258,18 +258,22 @@
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\TesoreriaController.cs" />
+    <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\UseraccountController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Dto\RolesUpdateRuolo.cs" />
     <Compile Include="Dto\TesoreriaInsertVersamento.cs" />
     <Compile Include="Dto\TesoreriaInsertSpesa.cs" />
     <Compile Include="Dto\TesoreriaSaldo.cs" />
+    <Compile Include="Dto\UploadAvatar.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\UtilDate.cs" />
+    <Compile Include="Helpers\UtilIO.cs" />
     <Compile Include="Infrastructure\ApplicationRoleManager.cs" />
     <Compile Include="Logger\Logger.cs" />
+    <Compile Include="Manager\Avatar.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />

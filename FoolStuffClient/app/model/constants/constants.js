@@ -6,5 +6,6 @@ angular.module("FoolStackApp")
     urlAccount: "http://localhost:51989/api/account/",
     urlTask: "http://localhost:51989/api/task/",
     urlRoles: "http://localhost:51989/api/roles/",
-    urlToken: "http://localhost:51989/"
+    urlToken: "http://localhost:51989/",
+    urlUpload: "http://localhost:51989/api/upload/"
 });

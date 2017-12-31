@@ -8,6 +8,8 @@ using log4net;
 using System.Security.Claims;
 using FoolStaff;
 using FoolStaff.Core.Domain;
+using FoolStuff.Dto;
+using FoolStuff.Manager;
 
 namespace FoolStuff.Controllers
 {
@@ -88,7 +90,7 @@ namespace FoolStuff.Controllers
                         unitOfWork.Complete();
                         log.Debug("allUsers - eseguito con successo");
                         return Request.CreateResponse(HttpStatusCode.OK, entity);
-                       
+
                     }
                     else
                     {
@@ -117,7 +119,6 @@ namespace FoolStuff.Controllers
                     //entities.Configuration.ProxyCreationEnabled = false;
                     var entity = unitOfWork.Users.SingleOrDefault(u => u.Email == email);
 
-
                     ////////////////////////RUOLO
                     //PRIMO SISTEMA LIST<string>
                     var userIdentity = (ClaimsIdentity)User.Identity;
@@ -140,10 +141,11 @@ namespace FoolStuff.Controllers
 
                     if (entity != null)
                     {
-                        log.Debug("getuserinfo - L'utente con email "+ email + "loggato con successo");
+                        log.Debug("getuserinfo - L'utente con email " + email + "loggato con successo");
                         UserInfoWithRoles oUserInfoWithRoles = new UserInfoWithRoles();
                         oUserInfoWithRoles.userInfo = entity;
                         oUserInfoWithRoles.userRolesList = sListaRuoli;
+                        oUserInfoWithRoles.userAvatar = new Avatar().getAvatarByUser(entity.Id);
                         //return Request.CreateResponse(HttpStatusCode.OK, entity);
                         return Request.CreateResponse(HttpStatusCode.OK, oUserInfoWithRoles);
                     }
@@ -166,6 +168,7 @@ namespace FoolStuff.Controllers
         {
             public List<string> userRolesList { get; set; }
             public User userInfo { get; set; }
+            public List<AvatarImages> userAvatar { get; set; }
             public UserInfoWithRoles()
             {
 

@@ -64,19 +64,25 @@
 }
 
 .colorYellow {
-    color:yellow;
+    color: yellow;
 }
 
 .colorAzure {
-    color:#06b8ff;
+    color: #06b8ff;
 }
+
+.colorOrange {
+    color: #ff8606;
+}
+
+.colorBlack {
+    color: black;
+}
+
 .textAlignRight {
     text-align: right;
 }
 
-.colorOrange {
-    color:#ff8606;
-}
 
 .textAlignCenter {
     text-align: center;
@@ -102,9 +108,61 @@
 .borderless > thead > tr > th {
     border: none;
 }
+
 .trOrange {
-    background-color:#ff96001f;
+    background-color: #ff96001f;
 }
+
 .hoverWhite:hover {
     background-color: white !important;
+}
+
+#menuImage > img {
+    cursor: pointer;
+    border-radius: 100%;
+    height: 24px;
+    position: relative;
+    top: -2px;
+    border: solid 1px #868e96;
+}
+
+.img-preview {
+    float: left;
+    margin-bottom: .5rem;
+    margin-right: .5rem;
+    overflow: hidden;
+}
+
+.docs-data > .input-group > label {
+    justify-content: center;
+    min-width: 10rem;
+}
+
+.docs-data > .input-group > span {
+    justify-content: center;
+    min-width: 6rem;
+}
+
+.positionRelative {
+    position: relative;
+}
+
+.waiter {
+    width: 100%;
+    height: 100%;
+    background-color: #80808066;
+    position: absolute;
+    z-index: 10;
+}
+
+.waiterBody {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 50%;
+    height: 12%;
+    text-align: center;
+    border-radius: 16px;
 }

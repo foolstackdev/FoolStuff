@@ -17,12 +17,12 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                           {{signedCtrl.userName.name}}
+                    <a class="dropdown-toggle" data-toggle="dropdown" id="menuImage" href="#">
+                        <img data-ng-src="{{signedCtrl.userAvatar}}"> {{signedCtrl.userName.userInfo.name}} {{signedCtrl.userName.userInfo.surname}}
                     <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a ui-sref="signed.myProfile">{{signedCtrl.userName.name}} page</a></li>
+                        <li><a ui-sref="signed.profile">Profile page</a></li>
                         <li><a ui-sref="signed.update">Modifica Dati</a></li>
                         <li><a ui-sref="signed.updatePass">Cambia Password</a></li>
                    <!--     <li><a ui-sref="signed.userPage">User Page</a></li>  -->

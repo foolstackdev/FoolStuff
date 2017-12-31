@@ -1,7 +1,7 @@
 ﻿angular
 .module('FoolStackApp')
-.config(["$locationProvider", "$urlRouterProvider", "$stateProvider", "$httpProvider", "usSpinnerConfigProvider", "ChartJsProvider", "$sceProvider",
-    function config($locationProvider, $urlRouterProvider, $stateProvider, $httpProvider, usSpinnerConfigProvider, ChartJsProvider, $sceProvider) {
+.config(["$locationProvider", "$urlRouterProvider", "$stateProvider", "$httpProvider", "ChartJsProvider", "$sceProvider",
+    function config($locationProvider, $urlRouterProvider, $stateProvider, $httpProvider, ChartJsProvider, $sceProvider) {
 
         $sceProvider.enabled(false);
 
@@ -23,8 +23,6 @@
         $urlRouterProvider.otherwise('/index/home');
 
         $httpProvider.interceptors.push('httpRequestInterceptor');
-
-        usSpinnerConfigProvider.setDefaults({ color: 'blue' });
 
         $stateProvider
             .state('unlogged', {
@@ -96,13 +94,6 @@
                  controllerAs: "taskCtrl",
                  data: { pageTitle: 'Users view' }
              })
-            .state('signed.userPage', {
-                url: "/userPage",
-                templateUrl: "app/view/template/private/userPage.html",
-                controller: "UserPageController",
-                controllerAs: "userPageCtrl",
-                data: { pageTitle: 'Users Page view' }
-            })
              .state('signed.updatePass', {
                  url: "/updatePass",
                  templateUrl: "app/view/template/private/updatePass.html",
@@ -110,9 +101,9 @@
                  controllerAs: "updatePassCtrl",
                  data: { pageTitle: 'Users view' }
              })
-            .state('signed.myProfile', {
-                url: "/myProfile",
-                templateUrl: "app/view/template/private/myProfile.html",
+            .state('signed.profile', {
+                url: "/profile",
+                templateUrl: "app/view/template/private/profile.html",
                 controller: "ProfileController",
                 controllerAs: "profileCtrl",
                 data: { pageTitle: 'Users view' }
@@ -143,6 +134,8 @@
     service.request = function (config) {
         if (sessionStorage.getItem('accessToken') != null)
             config.headers.Authorization = 'Bearer ' + sessionStorage.getItem('accessToken');
+        if (sessionStorage.getItem('userId') != null)
+            config.headers.userid = sessionStorage.getItem('userId');
         return config;
     };
 
