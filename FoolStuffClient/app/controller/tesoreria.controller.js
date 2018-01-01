@@ -131,6 +131,28 @@ function ($scope, RestService, CostantUrl, toastr, UtilService, $sce, $state, Ap
         RestService.GetData(CostantUrl.urlTesoreria, "getallentry").then(function (response) {
             console.log(response);
             vm.infoEntrate = response.data;
+            for (var i = 0; i < vm.infoEntrate.length; i++) {
+                vm.infoEntrate[i] = ApplicationService.addAvatarToUsers(vm.infoEntrate[i]);
+            }
+            //var avatars = ApplicationService.getAllAvatars();
+            //if (avatars != undefined && avatars != null) {
+            //    for (var i = 0; i < vm.infoEntrate.length; i++) {
+            //        for (var k = 0; k < vm.infoEntrate[i].user.length; k++) {
+            //            vm.infoEntrate[i].user[k].avatar = null;
+            //            for (var j = 0; j < avatars.length; j++) {
+            //                if (vm.infoEntrate[i].user[k].id == avatars[j].userId) {
+            //                    vm.infoEntrate[i].user[k].avatar = avatars[j].dataHtml;
+            //                    break;
+            //                }
+            //            }
+            //            if (vm.infoEntrate[i].user[k].avatar == null) {
+            //                vm.infoEntrate[i].user[k].avatar = ApplicationService.getDefaultImageSrc();
+            //            }
+            //        }
+            //    }
+            //}
+
+
             //vm.infoEntrate = _manageRiepilogoentrate(response.data);
             console.log(vm.infoEntrate);
             //vm.infoEntrate = response.data;
@@ -175,22 +197,7 @@ function ($scope, RestService, CostantUrl, toastr, UtilService, $sce, $state, Ap
             vm.userSelected = [];
             vm.users = response.data;
 
-            var avatars = ApplicationService.getAllAvatars();
-            if (avatars != undefined && avatars != null) {
-                for (var i = 0; i < vm.users.length; i++) {
-                    vm.users[i].avatar = null;
-                    for (var j = 0; j < avatars.length; j++) {
-                        if (vm.users[i].id == avatars[j].userId) {
-                            vm.users[i].avatar = avatars[j].dataHtml;
-                            break;
-                        }
-                    }
-                    if (vm.users[i].avatar == null) {
-                        vm.users[i].avatar = ApplicationService.getDefaultImageSrc();
-                    }
-                }
-            }
-
+            vm.users = ApplicationService.addAvatarToUsers(vm.users);
 
             angular.forEach(vm.users, function (value) {
                 var item = {
@@ -234,11 +241,11 @@ function ($scope, RestService, CostantUrl, toastr, UtilService, $sce, $state, Ap
     }
 
     $scope.htmlPopover = function (item) {
-        var ostring = "<ol>"
+        var ostring = "<ul style='list-style-type: none;'>"
         for (var i = 0; i < item.user.length; i++) {
-            ostring += "<li>" + item.user[i].name + " " + item.user[i].surname + "</li>";
+            ostring += "<li><img src='" + item.user[i].avatar + "' \> " + item.user[i].name + " " + item.user[i].surname + "</li>";
         }
-        ostring += "</ol>"
+        ostring += "</ul>"
         return $sce.trustAsHtml(ostring);
     }
     //////////////////////////////////////////Charts

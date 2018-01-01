@@ -26,24 +26,9 @@ angular
             RestService.GetData(CostantUrl.urlTask, "getalltask").then(function (response) {
                 vm.tasklist = response.data;
 
-                var avatars = ApplicationService.getAllAvatars();
-                if (avatars != undefined && avatars != null) {
-                    for (var i = 0; i < vm.tasklist.length; i++) {
-                        for (var k = 0; k < vm.tasklist[i].users.length; k++) {
-                            vm.tasklist[i].users[k].avatar = null;
-                            for (var j = 0; j < avatars.length; j++) {
-                                if (vm.tasklist[i].users[k].id == avatars[j].userId) {
-                                    vm.tasklist[i].users[k].avatar = avatars[j].dataHtml;
-                                    break;
-                                }
-                            }
-                            if (vm.tasklist[i].users[k].avatar == null) {
-                                vm.tasklist[i].users[k].avatar = ApplicationService.getDefaultImageSrc();
-                            }
-                        }
-                    }
+                for (var i = 0; i < vm.tasklist.length; i++) {
+                    vm.tasklist[i] = ApplicationService.addAvatarToUsers(vm.tasklist[i]);
                 }
-
                 console.log(response);
             });
         }
@@ -96,27 +81,9 @@ angular
         function _riepilogoTaskChiusi() {
             RestService.GetData(CostantUrl.urlTask, "getclosedtask").then(function (response) {
                 vm.taskClosedList = response.data;
-
-
-                var avatars = ApplicationService.getAllAvatars();
-                if (avatars != undefined && avatars != null) {
-                    for (var i = 0; i < vm.taskClosedList.length; i++) {
-                        for (var k = 0; k < vm.taskClosedList[i].users.length; k++) {
-                            vm.taskClosedList[i].users[k].avatar = null;
-                            for (var j = 0; j < avatars.length; j++) {
-                                if (vm.taskClosedList[i].users[k].id == avatars[j].userId) {
-                                    vm.taskClosedList[i].users[k].avatar = avatars[j].dataHtml;
-                                    break;
-                                }
-                            }
-                            if (vm.taskClosedList[i].users[k].avatar == null) {
-                                vm.taskClosedList[i].users[k].avatar = ApplicationService.getDefaultImageSrc();
-                            }
-                        }
-                    }
+                for (var i = 0; i < vm.taskClosedList.length; i++) {
+                    vm.taskClosedList[i] = ApplicationService.addAvatarToUsers(vm.taskClosedList[i]);
                 }
-
-
                 console.log(response);
             });
         }

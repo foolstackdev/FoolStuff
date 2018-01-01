@@ -210,6 +210,7 @@ angular
                     toastr.success('Avatar correctly loaded', 'Confirmed');
                     sessionStorage.setItem("userAvatar", JSON.stringify(avatars))
                     ApplicationService.setUserAvatar();
+                    ApplicationService.loadUsersAvatar("XS");
                     $rootScope.$broadcast("SignedControllerTriggerAvatarReload");
                     _back();
                     //$state.reload();

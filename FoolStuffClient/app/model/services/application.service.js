@@ -5,7 +5,10 @@ angular
 
         var application = {}
         var entities = {};
-
+        var defaultAvatarLG = "app/view/assets/img/DEFAULTAVATAR/LG/user.png";
+        var defaultAvatarMD = "app/view/assets/img/DEFAULTAVATAR/MD/user.png";
+        var defaultAvatarSM = "app/view/assets/img/DEFAULTAVATAR/SM/user.png";
+        var defaultAvatarXS = "app/view/assets/img/DEFAULTAVATAR/XS/user.png";
         application.getUserAvatar = function () {
             return entities.userAvatar;
         }
@@ -19,8 +22,9 @@ angular
             }
         }
         application.getDefaultImageSrc = function () {
-            return "app/view/assets/img/XS/user.png";
+            return defaultAvatarXS;
         }
+
         application.getSpecificAvatar = function (value) {
             entities.userAvatar = JSON.parse(sessionStorage.getItem("userAvatar"));
             var avatar = entities.userAvatar;
@@ -31,12 +35,295 @@ angular
                     }
                 }
             }
-            return "app/view/assets/img/XS/user.png";
+            switch (value) {
+                case "LG":
+                    return defaultAvatarLG;
+                case "MD":
+                    return defaultAvatarMD;
+                case "SM":
+                    return defaultAvatarSM;
+                case "XS":
+                    return defaultAvatarXS;
+                default:
+                    return defaultAvatarXS;
+            }
         }
 
         application.getAllAvatars = function () {
             var avatars = JSON.parse(sessionStorage.getItem("usersAvatar"));
             return avatars;
+        }
+
+        application.addAvatarToUsers = function (collection) {
+            var avatars = JSON.parse(sessionStorage.getItem("usersAvatar"));
+
+            if (collection.length != undefined) {
+                if (avatars != undefined && avatars != null) {
+                    for (var i = 0; i < collection.length; i++) {
+                        collection[i].avatar = null;
+                        for (var j = 0; j < avatars.length; j++) {
+                            if (collection[i].hasOwnProperty("user")) {
+                                if (collection[i].user.hasOwnProperty("id")) {
+                                    if (collection[i].user.id == avatars[j].userId) {
+                                        collection[i].avatar = avatars[j].dataHtml;
+                                        break;
+                                    }
+                                }
+                                else if (collection[i].user.hasOwnProperty("Id")) {
+                                    if (collection[i].user.Id == avatars[j].userId) {
+                                        collection[i].avatar = avatars[j].dataHtml;
+                                        break;
+                                    }
+                                }
+                            } else {
+                                if (collection[i].hasOwnProperty("users")) {
+                                    if (collection[i].users.hasOwnProperty("id")) {
+                                        if (collection[i].users.id == avatars[j].userId) {
+                                            collection[i].avatar = avatars[j].dataHtml;
+                                            break;
+                                        }
+                                    }
+                                    else if (collection[i].users.hasOwnProperty("Id")) {
+                                        if (collection[i].users.Id == avatars[j].userId) {
+                                            collection[i].avatar = avatars[j].dataHtml;
+                                            break;
+                                        }
+                                    }
+                                }
+                                else {
+                                    if (collection[i].hasOwnProperty("id")) {
+                                        if (collection[i].id == avatars[j].userId) {
+                                            collection[i].avatar = avatars[j].dataHtml;
+                                            break;
+                                        }
+                                    }
+                                    else if (collection[i].hasOwnProperty("Id")) {
+                                        if (collection[i].Id == avatars[j].userId) {
+                                            collection[i].avatar = avatars[j].dataHtml;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if (collection[i].avatar == null) {
+                            collection[i].avatar = defaultAvatarXS;
+                        }
+                    }
+                }
+                else {
+                    for (var i = 0; i < collection.length; i++) {
+                        collection[i].avatar = defaultAvatarXS;
+                    }
+                }
+            }
+            else {
+                if (avatars != undefined && avatars != null) {
+                    for (var j = 0; j < avatars.length; j++) {
+                        if (collection.hasOwnProperty("user")) {
+                            if (collection.user.length != undefined) {
+                                for (var i = 0; i < collection.user.length; i++) {
+                                    if (collection.user[i].avatar == undefined) {
+                                        collection.user[i].avatar = defaultAvatarXS;
+                                    }
+                                    if (collection.user[i].hasOwnProperty("id")) {
+                                        if (collection.user[i].id == avatars[j].userId) {
+                                            collection.user[i].avatar = avatars[j].dataHtml;
+                                            break;
+                                        }
+                                    }
+                                    else if (collection[i].hasOwnProperty("Id")) {
+                                        if (collection.user[i].Id == avatars[j].userId) {
+                                            collection.user[i].avatar = avatars[j].dataHtml;
+                                            break;
+                                        }
+                                    }
+                                }
+                            } else {
+                                collection.user.avatar = defaultAvatarXS;
+                                if (collection.user.hasOwnProperty("id")) {
+                                    if (collection.user.id == avatars[j].userId) {
+                                        collection.user.avatar = avatars[j].dataHtml;
+                                        break;
+                                    }
+                                }
+                                else if (collection.user.hasOwnProperty("Id")) {
+                                    if (collection.user.Id == avatars[j].userId) {
+                                        collection.user.avatar = avatars[j].dataHtml;
+                                        break;
+                                    }
+                                }
+                            }
+                        } else {
+                            if (collection.hasOwnProperty("users")) {
+                                if (collection.users.length != undefined) {
+                                    for (var i = 0; i < collection.users.length; i++) {
+                                        if (collection.users[i].avatar == undefined) {
+                                            collection.users[i].avatar = defaultAvatarXS;
+                                        }
+                                        if (collection.users[i].hasOwnProperty("id")) {
+                                            if (collection.users[i].id == avatars[j].userId) {
+                                                collection.users[i].avatar = avatars[j].dataHtml;
+                                                break;
+                                            }
+                                        }
+                                        else if (collection[i].hasOwnProperty("Id")) {
+                                            if (collection.users[i].Id == avatars[j].userId) {
+                                                collection.users[i].avatar = avatars[j].dataHtml;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    collection.users.avatar = defaultAvatarXS;
+                                    if (collection.users.hasOwnProperty("id")) {
+                                        if (collection.users.id == avatars[j].userId) {
+                                            collection.users.avatar = avatars[j].dataHtml;
+                                            break;
+                                        }
+                                    }
+                                    else if (collection.users.hasOwnProperty("Id")) {
+                                        if (collection.users.Id == avatars[j].userId) {
+                                            collection.users.avatar = avatars[j].dataHtml;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return collection;
+        }
+
+        application.addAvatarToUsersWithPromise = function (collection) {
+            return new Promise(function (resolve, reject) {
+                try {
+                    if (collection.length != undefined) {
+                        if (avatars != undefined && avatars != null) {
+                            for (var i = 0; i < collection.length; i++) {
+                                collection[i].avatar = null;
+                                for (var j = 0; j < avatars.length; j++) {
+                                    if (collection[i].hasOwnProperty("user")) {
+                                        if (collection[i].user.hasOwnProperty("id")) {
+                                            if (collection[i].user.id == avatars[j].userId) {
+                                                collection[i].avatar = avatars[j].dataHtml;
+                                                break;
+                                            }
+                                        }
+                                        else if (collection[i].hasOwnProperty("Id")) {
+                                            if (collection[i].user.Id == avatars[j].userId) {
+                                                collection[i].avatar = avatars[j].dataHtml;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if (collection[i].hasOwnProperty("users")) {
+                                        if (collection[i].user.hasOwnProperty("id")) {
+                                            if (collection[i].users.id == avatars[j].userId) {
+                                                collection[i].avatar = avatars[j].dataHtml;
+                                                break;
+                                            }
+                                        }
+                                        else if (collection[i].hasOwnProperty("Id")) {
+                                            if (collection[i].users.Id == avatars[j].userId) {
+                                                collection[i].avatar = avatars[j].dataHtml;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                                if (collection[i].avatar == null) {
+                                    collection[i].avatar = defaultAvatarXS;
+                                }
+                            }
+                        }
+                        else {
+                            for (var i = 0; i < collection.length; i++) {
+                                collection[i].avatar = defaultAvatarXS;
+                            }
+                        }
+                    }
+                    else {
+                        if (avatars != undefined && avatars != null) {
+                            for (var j = 0; j < avatars.length; j++) {
+                                if (collection.hasOwnProperty("user")) {
+                                    if (collection.user.length != undefined) {
+                                        for (var i = 0; i < collection.user.length; i++) {
+                                            collection.user[i].avatar = defaultAvatarXS;
+                                            if (collection.user[i].hasOwnProperty("id")) {
+                                                if (collection.user[i].id == avatars[j].userId) {
+                                                    collection.user[i].avatar = avatars[j].dataHtml;
+                                                    break;
+                                                }
+                                            }
+                                            else if (collection[i].hasOwnProperty("Id")) {
+                                                if (collection.user[i].Id == avatars[j].userId) {
+                                                    collection.user[i].avatar = avatars[j].dataHtml;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        collection.user.avatar = defaultAvatarXS;
+                                        if (collection.user.hasOwnProperty("id")) {
+                                            if (collection.user.id == avatars[j].userId) {
+                                                collection.user.avatar = avatars[j].dataHtml;
+                                                break;
+                                            }
+                                        }
+                                        else if (collection.user.hasOwnProperty("Id")) {
+                                            if (collection.user.Id == avatars[j].userId) {
+                                                collection.user.avatar = avatars[j].dataHtml;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    if (collection.hasOwnProperty("users")) {
+                                        if (collection.users.length != undefined) {
+                                            for (var i = 0; i < collection.users.length; i++) {
+                                                collection.users[i].avatar = defaultAvatarXS;
+                                                if (collection.users[i].hasOwnProperty("id")) {
+                                                    if (collection.users[i].id == avatars[j].userId) {
+                                                        collection.users[i].avatar = avatars[j].dataHtml;
+                                                        break;
+                                                    }
+                                                }
+                                                else if (collection[i].hasOwnProperty("Id")) {
+                                                    if (collection.users[i].Id == avatars[j].userId) {
+                                                        collection.users[i].avatar = avatars[j].dataHtml;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            collection.users.avatar = defaultAvatarXS;
+                                            if (collection.users.hasOwnProperty("id")) {
+                                                if (collection.users.id == avatars[j].userId) {
+                                                    collection.users.avatar = avatars[j].dataHtml;
+                                                    break;
+                                                }
+                                            }
+                                            else if (collection.users.hasOwnProperty("Id")) {
+                                                if (collection.users.Id == avatars[j].userId) {
+                                                    collection.users.avatar = avatars[j].dataHtml;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    resolve(collection);
+                }
+                catch (err) {
+                    reject(Error(err));
+                }
+            });
         }
 
         application.loadUsersAvatar = function (size) {
@@ -50,12 +337,13 @@ angular
                         if (resp[i].avatars == null) {
                             resp[i].avatars = [
                                 {
-                                    data: "app/view/assets/img/XS/user.png",
+                                    data: defaultAvatarXS,
                                     name: "default.png",
                                     size: "XS",
                                     type: "image/png"
                                 }
                             ];
+                            resp[i].dataHtml = defaultAvatarXS;
 
                         }
                         else {
