@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>148318f4-f169-40ab-acbf-2983cd87995e</ProjectGuid>
+    <ProjectGuid>{148318F4-F169-40AB-ACBF-2983CD87995E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FoolStackDB</RootNamespace>
@@ -29,7 +29,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-<ItemGroup>
+  <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -50,10 +50,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Domain\Effort.cs" />
+    <Compile Include="Core\Domain\Evento.cs" />
     <Compile Include="Core\Domain\Tesoreria.cs" />
     <Compile Include="Core\Domain\User.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Core\Repositories\IEffortRepository.cs" />
+    <Compile Include="Core\Repositories\IEventoRepository.cs" />
     <Compile Include="Core\Repositories\IRepository.cs" />
     <Compile Include="Core\Repositories\ITesoreriaRepository.cs" />
     <Compile Include="Core\Repositories\IUserRepository.cs" />
@@ -74,18 +76,20 @@
     <Compile Include="Migrations\201712171729109_UpdateCascadeDeleteUserTesoreria.Designer.cs">
       <DependentUpon>201712171729109_UpdateCascadeDeleteUserTesoreria.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201712171835044_UpdateproxyCreationEnabled.cs" />
-    <Compile Include="Migrations\201712171835044_UpdateproxyCreationEnabled.Designer.cs">
-      <DependentUpon>201712171835044_UpdateproxyCreationEnabled.cs</DependentUpon>
+    <Compile Include="Migrations\201801041919029_EventoDBEntity.cs" />
+    <Compile Include="Migrations\201801041919029_EventoDBEntity.Designer.cs">
+      <DependentUpon>201801041919029_EventoDBEntity.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201712261403299_GeneratingManyToManyUserTesoreria.cs" />
-    <Compile Include="Migrations\201712261403299_GeneratingManyToManyUserTesoreria.Designer.cs">
-      <DependentUpon>201712261403299_GeneratingManyToManyUserTesoreria.cs</DependentUpon>
+    <Compile Include="Migrations\201801061350109_AddingPresenzeAndPrenotazioni.cs" />
+    <Compile Include="Migrations\201801061350109_AddingPresenzeAndPrenotazioni.Designer.cs">
+      <DependentUpon>201801061350109_AddingPresenzeAndPrenotazioni.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\EntityConfigurations\EffortConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\EventoConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\TesoreriaConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\UserConfiguration.cs" />
+    <Compile Include="Persistence\Repositories\EventoRepository.cs" />
     <Compile Include="Persistence\Repositories\EffortRepository.cs" />
     <Compile Include="Persistence\Repositories\Repository.cs" />
     <Compile Include="Persistence\Repositories\TesoreriaRepository.cs" />
@@ -112,11 +116,11 @@
     <EmbeddedResource Include="Migrations\201712171729109_UpdateCascadeDeleteUserTesoreria.resx">
       <DependentUpon>201712171729109_UpdateCascadeDeleteUserTesoreria.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712171835044_UpdateproxyCreationEnabled.resx">
-      <DependentUpon>201712171835044_UpdateproxyCreationEnabled.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201801041919029_EventoDBEntity.resx">
+      <DependentUpon>201801041919029_EventoDBEntity.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712261403299_GeneratingManyToManyUserTesoreria.resx">
-      <DependentUpon>201712261403299_GeneratingManyToManyUserTesoreria.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201801061350109_AddingPresenzeAndPrenotazioni.resx">
+      <DependentUpon>201801061350109_AddingPresenzeAndPrenotazioni.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -127,5 +131,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-
- </Project>
+</Project>

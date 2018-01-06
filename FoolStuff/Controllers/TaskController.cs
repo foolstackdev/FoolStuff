@@ -83,18 +83,11 @@ namespace FoolStuff.Controllers
             {
                 using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
                 {
-
-                    //var uuu = unitOfWork.Users.Search(u => u.Id == userId).Include(e => e.Efforts).FirstOrDefault();
-                    //var uuua = unitOfWork.Users.Find(u => u.Id == userId);
-
                     User user = unitOfWork.Users.Search(u => u.Id == userId).Include(e => e.Efforts).FirstOrDefault();
                     Effort entityEffort = unitOfWork.Efforts.SingleOrDefault(t => t.Id == idEffort);
                     user.Efforts.Add(entityEffort);
-                    //unitOfWork.Users.SingleOrDefault(u => u.Id == userId).Efforts.Add(unitOfWork.Efforts.SingleOrDefault(t => t.Id == idEffort));
-                    //unitOfWork.Efforts.SingleOrDefault(t => t.Id == idEffort).Users.Add(entityUser);
                     unitOfWork.Complete();
 
-                    //var entity = unitOfWork.Efforts.Find(t => t.Stato == "OPEN").OrderByDescending(t => t.Priorita).ToList();
                     var entity = unitOfWork.Efforts.Search(t => t.Stato == "OPEN").Include(c => c.Users).OrderByDescending(t => t.Priorita).ToList();
                     log.Debug("addUserToTask - utente id [" + unitOfWork.Users.SingleOrDefault(u => u.Id == userId).Id + "] correttamente associato al task");
                     return Request.CreateResponse(HttpStatusCode.OK, entity);

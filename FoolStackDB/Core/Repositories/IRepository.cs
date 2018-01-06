@@ -14,10 +14,13 @@ namespace FoolStaff.Core.Repositories
         IEnumerable<TEntity> GetAll();
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
         TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate);
-        IQueryable<TEntity> Search(Expression<Func<TEntity, bool>> predicate);
         void Add(TEntity entity);
         void AddRange(IEnumerable<TEntity> entities);
         void Remove(TEntity entity);
         void RemoveRange(IEnumerable<TEntity> entities);
+        //custom
+        IQueryable<TEntity> Search(Expression<Func<TEntity, bool>> predicate);
+        IEnumerable<TEntity> GetAllWithInclude(Expression<Func<TEntity, object>> predicate);
+        IQueryable<TEntity> GetAllIncluding();
     }
 }

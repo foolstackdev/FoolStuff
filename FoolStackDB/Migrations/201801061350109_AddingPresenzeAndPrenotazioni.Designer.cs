@@ -7,13 +7,13 @@ namespace FoolStaff.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class GeneratingManyToManyUserTesoreria : IMigrationMetadata
+    public sealed partial class AddingPresenzeAndPrenotazioni : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(GeneratingManyToManyUserTesoreria));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddingPresenzeAndPrenotazioni));
         
         string IMigrationMetadata.Id
         {
-            get { return "201712261403299_GeneratingManyToManyUserTesoreria"; }
+            get { return "201801061350109_AddingPresenzeAndPrenotazioni"; }
         }
         
         string IMigrationMetadata.Source

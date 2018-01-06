@@ -121,6 +121,13 @@
                 controller: "RolesController",
                 controllerAs: "rolesCtrl",
                 data: { pageTitle: 'Roles view' }
+            })
+            .state('signed.events', {
+                url: "/events",
+                templateUrl: "app/view/template/private/events.html",
+                controller: "EventsController",
+                controllerAs: "eventsCtrl",
+                data: { pageTitle: 'Events view' }
             });
 
     }])

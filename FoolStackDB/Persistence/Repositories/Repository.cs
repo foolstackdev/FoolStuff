@@ -67,5 +67,14 @@ namespace FoolStaff.Persistence.Repositories
         {
             return _entities.Where(predicate);
         }
+
+        public IEnumerable<TEntity> GetAllWithInclude(Expression<Func<TEntity, object>> predicate)
+        {
+            return _entities.Include(predicate).ToList();
+        }
+        public IQueryable<TEntity> GetAllIncluding()
+        {
+            return _entities;
+        }
     }
 }

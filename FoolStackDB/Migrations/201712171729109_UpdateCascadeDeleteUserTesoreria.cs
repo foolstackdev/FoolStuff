@@ -14,7 +14,7 @@ namespace FoolStaff.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.Tesorerias", "user_Id", "dbo.Users");
-            AddForeignKey("dbo.Tesorerias", "user_Id", "dbo.Users", "Id", cascadeDelete: true);
+            AddForeignKey("dbo.Tesorerias", "user_Id", "dbo.Users", "Id", cascadeDelete: false);
         }
     }
 }

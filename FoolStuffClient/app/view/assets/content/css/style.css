@@ -52,7 +52,7 @@
 }
 
 .colorBlue {
-    color: blue;
+    color: blue !important;
 }
 
 .colorGreen {
@@ -68,15 +68,29 @@
 }
 
 .colorAzure {
-    color: #06b8ff;
+    color: #06b8ff !important;
 }
 
 .colorOrange {
-    color: #ff8606;
+    color: #ff8606 !important;
 }
 
 .colorBlack {
     color: black;
+}
+
+.bgColorAzure {
+    background-color: #06b8ff !important;
+}
+
+.bgColorOrange {
+    background-color: #ff8606 !important;
+}
+.bgColorBlue {
+    background-color: blue !important;
+}
+.bgColorGreen {
+    background-color: green !important;
 }
 
 .textAlignRight {
@@ -165,4 +179,42 @@
     height: 12%;
     text-align: center;
     border-radius: 16px;
+}
+.limitTextLines5 {
+  overflow:hidden;
+
+
+   /*overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   line-height: 16px;    
+   max-height: 32px;      
+   -webkit-line-clamp: 2;
+   -webkit-box-orient: vertical;*/
+}
+.fadeText {
+  position: relative;
+  height: 3.6em; /* exactly three lines */
+}
+.fadeText:after {
+  content: "";
+  text-align: right;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 70%;
+  height: 1.2em;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%);
+}
+
+.isButton {
+    cursor:pointer;
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+}
+.isButton:hover {
+    color: #fff;
+    background-color: #286090;
+    border-color: #204d74;
 }

@@ -279,8 +279,8 @@ function ($scope, RestService, CostantUrl, toastr, UtilService, $sce, $state, Ap
 
         });
 
-        vm.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
-        vm.data = [300, 500, 100];
+        //vm.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
+        //vm.data = [300, 500, 100];
     }
 
     //////////////////////////////////////////Charts

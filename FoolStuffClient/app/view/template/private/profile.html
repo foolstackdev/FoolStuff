@@ -1,11 +1,10 @@
 ﻿
 <div class="panel panel-default" data-ng-show="profileCtrl.show == 1">
-    <form class="form-horizontal" role="form">
-        <div class="panel-heading">
-            <h2>{{profileCtrl.user.name}}'s Profile Page</h2>
-        </div>
-        <div class="panel-body">
-
+    <div class="panel-heading">
+        <h2>{{profileCtrl.user.name}}'s Profile Page</h2>
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal" role="form">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
                     <button class="btn btn-success btn-sm" data-ng-click="profileCtrl.changeAvatar()"><i class="fa fa-camera-retro" aria-hidden="true"></i> Cambia avatar</button>
@@ -18,7 +17,7 @@
                     </div>
 
                 </div>
-                <div class="col-lg-9 col-md-9">
+                <div class="col-lg-9 col-md-12">
 
                     <div class="form-group">
                         <label for="email" class="col-sm-3">User Name : </label>
@@ -45,10 +44,71 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-    </form> <!-- /form -->
+                <!-- Sezione gestione Eventi -->
+                <div class="col-lg-12">
+                    <h4>
+                        Prossimi Eventi in programma
+                    </h4>
+                    <div class="row">
+
+                        <!--<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" data-ng-repeat="event in profileCtrl.events">
+                            <div class="panel {{event.dataEvento  | timestampIsTodayReturningClasses }}">
+                                <div class="panel-heading">
+                                    <div class="pull-left" style="margin-top:-5px;">
+                                        <i class="fa fa-clock-o" aria-hidden="true"></i> {{event.titolo}}
+                                    </div>
+                                    <div class="pull-right" style="margin-top:-5px;">
+                                        {{event.dataEvento | timestampToHuman}}
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <textarea rows="4" cols="50" style="resize: none; overflow:hidden; border: none;">{{event.note}}</textarea>
+                                </div>
+                                <div class="panel-footer">
+                                    <i class="fa fa-book colorGreen cursorPointer" uib-popover-html="eventsCtrl.notePopover(event)" popover-trigger="'mouseenter'" aria-hidden="true" title="read all"></i>
+                                </div>
+                            </div>
+                        </div>-->
+
+
+                        <table class="table borderless">
+                            <tr  data-ng-repeat="event in profileCtrl.events track by $index">
+                                <td style="width:500px">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>
+                                        <input type="text" class="form-control" disabled placeholder="{{event.dataEvento | timestampToHuman}} - Giorni restanti: {{event.dataEvento | remainingDays}}" />
+                                        <span class="input-group-addon isButton" data-ng-click="profileCtrl.prenota(event)"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Prenota</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <i class="fa fa-book colorBlue cursorPointer" uib-popover-html="profileCtrl.descriptionPopover(event)" popover-trigger="'mouseenter'" aria-hidden="true"></i>&nbsp;&nbsp;
+                                    {{event.prenotazioni.length}}&nbsp;<i class="fa fa-users colorGreen" aria-hidden="true" title="Utenti Prenotati"></i>&nbsp;
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!--<div class="col-lg-12" data-ng-repeat="event in profileCtrl.events track by $index" style="margin-bottom:15px;">
+                            <div class="col-lg-4 col-md-4 col-lg-12 sm-12 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>
+                                    <input type="text" class="form-control" disabled placeholder="{{event.dataEvento | timestampToHuman}}" />
+                                    <span class="input-group-addon isButton" data-ng-click="profileCtrl.prenota()"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Prenota</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-lg-12 sm-12 col-xs-12" style="max-height: 34px; overflow:hidden">
+                                <i class="fa fa-book colorGreen cursorPointer" uib-popover-html="profileCtrl.descriptionPopover(event)" popover-trigger="'mouseenter'" aria-hidden="true"></i>
+                            </div>
+                        </div>-->
+
+
+
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
 </div>
 <div class="panel panel-default positionRelative" data-ng-show="profileCtrl.show == 2">
     <div class="waiter">
@@ -136,7 +196,6 @@
             </div>
         </div>
     </div>
-
 </div>
 <!--<div data-ng-show="profileCtrl.show == 2">
     <div>

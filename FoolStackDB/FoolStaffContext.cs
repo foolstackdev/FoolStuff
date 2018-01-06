@@ -1,4 +1,6 @@
-﻿using FoolStaff.Core.Domain;
+﻿using FoolStackDB.Core.Domain;
+using FoolStackDB.Persistence.EntityConfigurations;
+using FoolStaff.Core.Domain;
 using FoolStaff.Persistence.EntityConfigurations;
 using System;
 using System.Collections.Generic;
@@ -22,12 +24,14 @@ namespace FoolStaff
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Tesoreria> Tesoreria{ get; set; }
         public virtual DbSet<Effort> Efforts { get; set; }
+        public virtual DbSet<Evento> Eventi { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new UserConfiguration());
             modelBuilder.Configurations.Add(new TesoreriaConfiguration());
             modelBuilder.Configurations.Add(new EffortConfiguration());
+            modelBuilder.Configurations.Add(new EventoConfiguration());
         }
     }
 }

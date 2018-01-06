@@ -16,6 +16,6 @@ namespace FoolStaff.Core.Domain
         public string Descrizione { get; set; }
         public int Priorita { get; set; }
 
-        public List<User> Users { get; set; }
+        public IList<User> Users { get; set; }
     }
 }

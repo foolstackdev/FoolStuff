@@ -1,4 +1,5 @@
-﻿using FoolStaff.Core.Repositories;
+﻿using FoolStackDB.Core.Repositories;
+using FoolStaff.Core.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace FoolStaff.Core
         IUserRepository Users { get; }
         ITesoreriaRepository Tesoreria { get; }
         IEffortRepository Efforts { get; }
+        IEventoRepository Eventi { get; }
         int Complete();
     }
 }

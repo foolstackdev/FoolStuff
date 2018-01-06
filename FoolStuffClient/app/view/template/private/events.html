@@ -1,0 +1,229 @@
+﻿<uib-tabset active="active">
+    <uib-tab index="0">
+        <uib-tab-heading>
+            <!--<i class="glyphicon glyphicon-calendar"></i> Gestione Versamenti-->
+            <i class="fa fa-calendar" aria-hidden="true"></i> Lista eventi
+        </uib-tab-heading>
+
+
+        <div class="row" style="margin-top:10px">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <form class="form-horizontal" role="form">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <div class="pull-left"><h4 class="marginTop0">Ultimi Eventi</h4></div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+                                    <div class="pull-right">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">Eventi</div>
+                                            <input type="number" min="1" class="form-control textAlignRight" id="exampleInputAmount" placeholder="Eventi visualizzati" data-ng-model="eventsCtrl.numberOfEventToShow">
+                                            <div class="input-group-addon"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></div>
+                                        </div>
+                                    </div>
+                                </div><div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
+                                    <button type="button" class="btn btn-primary btn-block btn-sm" data-ng-click="eventsCtrl.refreshEventView()"><i class="fa fa-refresh" aria-hidden="true"></i> Refresh</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" data-ng-repeat="event in eventsCtrl.events">
+                                    <div class="panel {{event.dataEvento  | timestampIsTodayReturningClasses }}">
+                                        <div class="panel-heading" style="overflow: hidden; max-height: 21px;">
+                                            <div class="pull-left" style="margin-top:-5px;">
+                                                <i class="fa fa-clock-o" aria-hidden="true"></i> {{event.titolo}}
+                                            </div>
+                                            <div class="pull-right" style="margin-top:-5px;">
+                                                {{event.dataEvento | timestampToHuman}}
+                                            </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <textarea rows="4" cols="50" style="resize: none; overflow:hidden; border: none;">{{event.note}}</textarea>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <i class="fa fa-book colorGreen cursorPointer" uib-popover-html="eventsCtrl.notePopover(event)" popover-trigger="'mouseenter'" aria-hidden="true" title="read all"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+
+                        </div>
+                    </form> <!-- /form -->
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row" style="margin-top:10px">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <form class="form" name="eventsForm" role="form" ng-submit="eventsCtrl.inserisciEvento(eventsForm.$valid)" novalidate>
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <h4 class="marginTop0">Aggiungi evento</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-sx-12">
+                                    <div class="form-group">
+                                        <!--<label for="note" class="col-sm-3 control-label">Data</label>-->
+                                        <p class="input-group">
+                                            <input type="text" name="eventDate" class="form-control" placeholder="Inserire data" uib-datepicker-popup="{{eventsCtrl.format}}"
+                                                   ng-model="eventsCtrl.evento.dataEvento" is-open="eventsCtrl.popupDPEvento.opened"
+                                                   datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" required />
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default" ng-click="eventsCtrl.openDPEvento()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-sx-12">
+                                    <div class="form-group">
+                                        <label for="form">Titolo</label>
+                                        <input type="text" class="form-control" placeholder="Note" name="eventTitle" data-ng-model="eventsCtrl.evento.titolo" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-sx-12">
+                                    <div class="form-group">
+                                        <label for="form">Note</label>
+                                        <input type="text" class="form-control" placeholder="Note" name="eventNote" data-ng-model="eventsCtrl.evento.note" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <button type="submit" class="btn btn-primary btn-block" data-ng-disabled="!eventsForm.$valid">Inserisci evento</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </uib-tab>
+
+    <uib-tab index="1">
+        <uib-tab-heading>
+            <i class="fa fa-users colorGreen" aria-hidden="true"></i> Gestione Presenze
+        </uib-tab-heading>
+        <div class="row" style="margin-top:10px">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <form class="form" name="presenceForm" role="form" ng-submit="eventsCtrl.aggiornaPresenza(presenceForm.$valid)" novalidate>
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="pull-left"><h4 class="marginTop0">Inserisci Presenze</h4></div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="pull-right">
+
+                                        <div class="input-group">
+                                            <div class="input-group-addon">Data</div>
+                                            <select class="form-control" name="mySelect" id="mySelect"
+                                                    ng-model="eventsCtrl.eventToManage" data-ng-change="eventsCtrl.changeEventToManage(eventsCtrl.eventToManage)" required>
+                                                <option ng-repeat="option in eventsCtrl.events | humanReadableDate track by option.id" value="{{option}}" class="{{option.dataEvento  | timestampIsInTimeRetourningCustom:'colorOrange':'colorGreen':'colorAzure' }}">{{option.dataEventoHumanReadable}} {{option.dataEvento  | timestampIsInTimeRetourningCustom:"Past":"Today":"Future" }}</option>
+                                            </select>
+                                            <div class="input-group-addon"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel-body" data-ng-show="eventsCtrl.presence != null">
+
+                            <div class="row">
+                                <table class="table borderless">
+                                    <tr>
+                                        <td style="width:20px;">
+                                            <i class="fa fa-handshake-o" aria-hidden="true"></i>
+                                        </td>
+                                        <td>
+                                            <h5 style="margin: 0px;"><b>{{eventsCtrl.presence.titolo}}</b></h5>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20px;">
+                                            <i class="fa fa-comments-o" aria-hidden="true"></i>
+                                        </td>
+                                        <td>
+                                            {{eventsCtrl.presence.note}}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <h5>Tabella Utenti</h5>
+                            <table class="table table-hover">
+                                <tr>
+                                    <theader>
+                                        <th>
+                                            <div class="animate-switch-container" ng-switch on="eventsCtrl.selectAllCheckBox">
+                                                <div class="animate-switch" ng-switch-when="false">
+                                                    <i class="fa fa-square-o cursorPointer" aria-hidden="true" data-ng-click="eventsCtrl.checkAllUsers()"></i>
+                                                </div>
+                                                <div class="animate-switch" ng-switch-when="true">
+                                                    <i class="fa fa-check-square-o cursorPointer colorBlue" aria-hidden="true" data-ng-click="eventsCtrl.checkAllUsers()"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <td></td>
+                                        <th>
+                                            Nome
+                                        </th>
+                                        <th>
+                                            Cognome
+                                        </th>
+                                        <th>
+                                            Telefono
+                                        </th>
+                                        <th>
+                                            Email
+                                        </th>
+                                    </theader>
+                                </tr>
+                                <tr data-ng-repeat="user in eventsCtrl.users track by $index">
+                                    <td>
+                                        <input type="checkbox" data-ng-model="eventsCtrl.userSelected[$index].check" required>
+                                    </td>
+                                    <td>
+                                        <img src="{{user.avatar}}" />
+                                    </td>
+                                    <td>
+                                        {{user.name}}
+                                    </td>
+                                    <td>
+                                        {{user.surname}}
+                                    </td>
+                                    <td>
+                                        {{user.phone}}
+                                    </td>
+                                    <td>
+                                        {{user.email}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="panel-footer" data-ng-show="eventsCtrl.presence != null">
+                            <button type="submit" class="btn btn-primary btn-block" data-ng-click="eventsCtrl.insertisciPresenza()">Aggiorna Versamenti</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </uib-tab>
+</uib-tabset>
+
+
+<!--<uib-tabset active="activePill" vertical="true" type="pills">
+    <uib-tab index="0" heading="Vertical 1">Vertical content 1</uib-tab>
+    <uib-tab index="1" heading="Vertical 2">Vertical content 2</uib-tab>
+</uib-tabset>-->

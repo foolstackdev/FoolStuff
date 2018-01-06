@@ -7,13 +7,13 @@ namespace FoolStaff.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class UpdateproxyCreationEnabled : IMigrationMetadata
+    public sealed partial class EventoDBEntity : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateproxyCreationEnabled));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(EventoDBEntity));
         
         string IMigrationMetadata.Id
         {
-            get { return "201712171835044_UpdateproxyCreationEnabled"; }
+            get { return "201801041919029_EventoDBEntity"; }
         }
         
         string IMigrationMetadata.Source

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FoolStackDB.Core.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,6 @@ namespace FoolStaff.Core.Domain
 {
     public class User
     {
-        //public int Id { get; set; }
         public string Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
@@ -17,5 +17,7 @@ namespace FoolStaff.Core.Domain
         public string Password { get; set; }
         public IList<Tesoreria> Tesoreria { get; set; }
         public IList<Effort> Efforts { get; set; }
+        public IList<Evento> Prenotazioni { get; set; }
+        public IList<Evento> Presenze { get; set; }
     }
 }

@@ -101,6 +101,7 @@
     <Content Include="app\controller\task.controller.js" />
     <Content Include="app\controller\update.controller.js" />
     <Content Include="app\controller\updatePass.controller.js" />
+    <Content Include="app\controller\events.controller.js" />
     <Content Include="app\controller\users.controller.js" />
     <Content Include="app\model\constants\constants.js" />
     <Content Include="app\model\filters\filters.filter.js" />
@@ -125,6 +126,7 @@
     <Content Include="app\view\assets\lib\font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="app\view\assets\lib\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <Content Include="app\view\template\common\contentSigned.html" />
+    <Content Include="app\view\template\private\events.html" />
     <Content Include="app\view\template\private\homepage.html" />
     <Content Include="app\view\template\private\profile.html" />
     <Content Include="app\view\template\private\task.html" />

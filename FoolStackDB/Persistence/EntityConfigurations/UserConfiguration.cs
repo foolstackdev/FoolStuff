@@ -23,10 +23,20 @@ namespace FoolStaff.Persistence.EntityConfigurations
             HasMany(e => e.Efforts)
                 .WithMany(u => u.Users);
 
+            HasMany(e => e.Prenotazioni)
+                .WithMany(u => u.Prenotazioni)
+                .Map(c => {
+                    c.ToTable("Prenotazioni");
+                });
+
+            HasMany(e => e.Presenze)
+                .WithMany(u => u.Presenze)
+                .Map(c => {
+                    c.ToTable("Presenze");
+                });
 
             HasMany(t => t.Tesoreria)
                 .WithMany(u => u.user);
-                //.WillCascadeOnDelete(false);
             
         }
     }
