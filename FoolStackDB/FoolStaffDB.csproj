@@ -60,29 +60,9 @@
     <Compile Include="Core\Repositories\ITesoreriaRepository.cs" />
     <Compile Include="Core\Repositories\IUserRepository.cs" />
     <Compile Include="FoolStaffContext.cs" />
-    <Compile Include="Migrations\201712092022298_CreateDB.cs" />
-    <Compile Include="Migrations\201712092022298_CreateDB.Designer.cs">
-      <DependentUpon>201712092022298_CreateDB.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712092037165_RefactorIdString.cs" />
-    <Compile Include="Migrations\201712092037165_RefactorIdString.Designer.cs">
-      <DependentUpon>201712092037165_RefactorIdString.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712171707593_UpdateRelationManyToMany.cs" />
-    <Compile Include="Migrations\201712171707593_UpdateRelationManyToMany.Designer.cs">
-      <DependentUpon>201712171707593_UpdateRelationManyToMany.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712171729109_UpdateCascadeDeleteUserTesoreria.cs" />
-    <Compile Include="Migrations\201712171729109_UpdateCascadeDeleteUserTesoreria.Designer.cs">
-      <DependentUpon>201712171729109_UpdateCascadeDeleteUserTesoreria.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801041919029_EventoDBEntity.cs" />
-    <Compile Include="Migrations\201801041919029_EventoDBEntity.Designer.cs">
-      <DependentUpon>201801041919029_EventoDBEntity.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801061350109_AddingPresenzeAndPrenotazioni.cs" />
-    <Compile Include="Migrations\201801061350109_AddingPresenzeAndPrenotazioni.Designer.cs">
-      <DependentUpon>201801061350109_AddingPresenzeAndPrenotazioni.cs</DependentUpon>
+    <Compile Include="Migrations\201801072258052_Creation.cs" />
+    <Compile Include="Migrations\201801072258052_Creation.Designer.cs">
+      <DependentUpon>201801072258052_Creation.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\EntityConfigurations\EffortConfiguration.cs" />
@@ -104,23 +84,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201712092022298_CreateDB.resx">
-      <DependentUpon>201712092022298_CreateDB.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712092037165_RefactorIdString.resx">
-      <DependentUpon>201712092037165_RefactorIdString.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712171707593_UpdateRelationManyToMany.resx">
-      <DependentUpon>201712171707593_UpdateRelationManyToMany.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712171729109_UpdateCascadeDeleteUserTesoreria.resx">
-      <DependentUpon>201712171729109_UpdateCascadeDeleteUserTesoreria.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801041919029_EventoDBEntity.resx">
-      <DependentUpon>201801041919029_EventoDBEntity.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801061350109_AddingPresenzeAndPrenotazioni.resx">
-      <DependentUpon>201801061350109_AddingPresenzeAndPrenotazioni.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201801072258052_Creation.resx">
+      <DependentUpon>201801072258052_Creation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -181,14 +181,14 @@ namespace FoolStuff.Controllers
                     }
                     else
                     {
-                        log.Error("getuserinfo - errore nell'esecuzione ");
+                        log.Error("getuserinfo - errore nell'esecuzione, user not found");
                         return Request.CreateErrorResponse(HttpStatusCode.NotFound, "User with Email [" + email + "] not found.");
                     }
                 }
             }
             catch (Exception ex)
             {
-                log.Error("getuserinfo - errore nell'esecuzione ");
+                log.Error("getuserinfo - errore nell'esecuzione ", ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
 

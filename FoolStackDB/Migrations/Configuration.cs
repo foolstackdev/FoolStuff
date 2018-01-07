@@ -1,4 +1,4 @@
-namespace FoolStaff.Migrations
+namespace FoolStackDB.Migrations
 {
     using System;
     using System.Data.Entity;
