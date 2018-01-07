@@ -11,10 +11,11 @@ namespace FoolStuff.Manager
 {
     public class Avatar : UtilIO
     {
-        //PathGenerico : WORKING_DIRECTORY/USERID/AVATAR
+        //PathGenerico : WORKING_DIRECTORY/USERS/USERID/AVATAR
         //PathSpecifico per le immagini in base alla dimensione: PathGenerico/LG || PathGenerico/MD || PathGenerico/SM || PathGenerico/XS
 
         private readonly string AVATAR_PATH = ConfigurationManager.AppSettings["AvatarPath"];
+        private readonly string USERS_PATH = "USERS";
         private readonly string LG = "LG";
         private readonly string MD = "MD";
         private readonly string SM = "SM";
@@ -40,7 +41,7 @@ namespace FoolStuff.Manager
         {
             try
             {
-                string sizeDirectory = WORKING_DIRECTORY + Path.DirectorySeparatorChar + userId + Path.DirectorySeparatorChar + AVATAR_PATH + Path.DirectorySeparatorChar + avatarImage.size;
+                string sizeDirectory = WORKING_DIRECTORY + Path.DirectorySeparatorChar + USERS_PATH + Path.DirectorySeparatorChar + userId + Path.DirectorySeparatorChar + AVATAR_PATH + Path.DirectorySeparatorChar + avatarImage.size;
                 Directory.CreateDirectory(sizeDirectory);
                 File.WriteAllBytes(sizeDirectory + Path.DirectorySeparatorChar + avatarImage.name, Convert.FromBase64String(avatarImage.data));
             }
@@ -53,7 +54,7 @@ namespace FoolStuff.Manager
         {
             try
             {
-                string avatarDirectory = WORKING_DIRECTORY + Path.DirectorySeparatorChar + userId + Path.DirectorySeparatorChar + AVATAR_PATH;
+                string avatarDirectory = WORKING_DIRECTORY + Path.DirectorySeparatorChar + USERS_PATH + Path.DirectorySeparatorChar + userId + Path.DirectorySeparatorChar + AVATAR_PATH;
                 if (Directory.Exists(avatarDirectory))
                     Directory.Delete(avatarDirectory, true);
                 Directory.CreateDirectory(avatarDirectory);
@@ -70,7 +71,7 @@ namespace FoolStuff.Manager
             try
             {
                 this.userId = id;
-                string avatarDirectory = WORKING_DIRECTORY + Path.DirectorySeparatorChar + userId + Path.DirectorySeparatorChar + AVATAR_PATH;
+                string avatarDirectory = WORKING_DIRECTORY + Path.DirectorySeparatorChar + USERS_PATH + Path.DirectorySeparatorChar + userId + Path.DirectorySeparatorChar + AVATAR_PATH;
 
                 if (Directory.Exists(avatarDirectory))
                 {
