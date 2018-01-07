@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\controller\applications.controller.js" />
+    <Content Include="app\controller\logs.controller.js" />
     <Content Include="app\controller\roles.controller.js" />
     <Content Include="app\controller\profile.controller.js" />
     <Content Include="app\controller\signed.controller.js" />
@@ -128,6 +129,7 @@
     <Content Include="app\view\template\common\contentSigned.html" />
     <Content Include="app\view\template\private\events.html" />
     <Content Include="app\view\template\private\homepage.html" />
+    <Content Include="app\view\template\private\logs.html" />
     <Content Include="app\view\template\private\profile.html" />
     <Content Include="app\view\template\private\task.html" />
     <Content Include="app\view\template\private\updatePass.html" />

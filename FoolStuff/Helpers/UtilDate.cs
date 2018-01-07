@@ -14,5 +14,9 @@ namespace FoolStuff.Helpers
         {
             return (long)(DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
         }
+        public static long CurrentTimeMillis(DateTime oTime)
+        {
+            return (long)(oTime - Jan1st1970).TotalMilliseconds;
+        }
     }
 }

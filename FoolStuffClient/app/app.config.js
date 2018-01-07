@@ -128,6 +128,13 @@
                 controller: "EventsController",
                 controllerAs: "eventsCtrl",
                 data: { pageTitle: 'Events view' }
+            })
+            .state('signed.logs', {
+                url: "/logs",
+                templateUrl: "app/view/template/private/logs.html",
+                controller: "LogsController",
+                controllerAs: "logsCtrl",
+                data: { pageTitle: 'Logs view' }
             });
 
     }])

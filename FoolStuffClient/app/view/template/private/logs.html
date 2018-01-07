@@ -1,0 +1,20 @@
+﻿<div class="row">   
+    <div class="panel panel-default">
+        <div class="panel-heading"><h4>Monitoraggio</h4></div>
+        <div class="panel-body">
+            <div class="col-lg-3 col-md-3">
+                <p data-ng-repeat="log in logsCtrl.logs">{{log.fileName}} - <span class="colorBlue">{{log.dateLastUpdate | timestampToHumanWithHours}}</span></p>
+            </div>
+            <div class="col-lg-9 col-md-9">
+             <pre>{{logsCtrl.fileContent}}</pre>
+            </div>
+        </div>
+        <div class="panel-footer"></div>
+    </div>
+</div>
+
+<!--<div class="panel panel-default">
+    <div class="panel-heading">Panel Heading</div>
+    <div class="panel-body">Panel Content</div>
+    <div class="panel-footer">Panel Footer</div>
+</div>-->

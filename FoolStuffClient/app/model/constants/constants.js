@@ -8,5 +8,6 @@ angular.module("FoolStackApp")
     urlRoles: "http://localhost:51989/api/roles/",
     urlUpload: "http://localhost:51989/api/upload/",
     urlEvents: "http://localhost:51989/api/events/",
+    urlFile: "http://localhost:51989/api/file/",
     urlToken: "http://localhost:51989/"
 });

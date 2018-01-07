@@ -71,6 +71,9 @@ angular
                     vm.userSelected.push(item);
                 });
                 console.log(vm.users);
+            }, function (err) {
+                console.log(err);
+                toastr.error("Problems retrieving data [" + err.data.message + "]", "Error");
             })
             _refreshEventView();
         }

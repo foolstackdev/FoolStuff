@@ -255,6 +255,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
+    <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
@@ -265,6 +266,7 @@
     <Compile Include="Dto\AvatarImagesUsers.cs" />
     <Compile Include="Dto\EventsPrenotazione.cs" />
     <Compile Include="Dto\EventsPresence.cs" />
+    <Compile Include="Dto\FileLog.cs" />
     <Compile Include="Dto\RolesUpdateRuolo.cs" />
     <Compile Include="Dto\TesoreriaInsertVersamento.cs" />
     <Compile Include="Dto\TesoreriaInsertSpesa.cs" />
