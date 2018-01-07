@@ -50,7 +50,7 @@ namespace FoolStuff.Controllers
                 using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
                 {
                     long dataOdierna = UtilDate.CurrentTimeMillis();
-                    var entity = unitOfWork.Eventi.Search(e => e.DataEvento > dataOdierna).Include(u => u.Prenotazioni).OrderByDescending(t => t.DataEvento).ToList();
+                    var entity = unitOfWork.Eventi.Search(e => e.DataEvento > dataOdierna).Include(u => u.Prenotazioni).OrderBy(t => t.DataEvento).ToList();
                     log.Debug("getnextevents - metodo eseguito con successo");
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
@@ -79,7 +79,7 @@ namespace FoolStuff.Controllers
             {
                 using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
                 {
-                    
+
                     var entity = unitOfWork.Eventi.GetAllIncluding().OrderByDescending(t => t.DataEvento).Take(numbersOfRows).Include(e => e.Prenotazioni).Include(e => e.Presenze).ToList();
                     log.Debug("getfirstnumeventswithusers - metodo eseguito con successo");
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
@@ -114,8 +114,8 @@ namespace FoolStuff.Controllers
         }
 
         [HttpPost]
-        [Route("addusertoevent")]
-        public HttpResponseMessage addUsertoEvent([FromBody]EventsPrenotazione evento)
+        [Route("addusertoeventprenotation")]
+        public HttpResponseMessage addUsertoEventPrenotation([FromBody]EventsPrenotazione evento)
         {
             try
             {
@@ -125,13 +125,58 @@ namespace FoolStuff.Controllers
                     Evento entityEvent = unitOfWork.Eventi.SingleOrDefault(t => t.Id == evento.eventId);
                     user.Prenotazioni.Add(entityEvent);
                     unitOfWork.Complete();
-                    log.Debug("addusertoevent - evento inserito correttamente");
+                    log.Debug("addusertoeventprenotation - evento inserito correttamente");
                     return Request.CreateResponse(HttpStatusCode.OK);
                 }
             }
             catch (Exception ex)
             {
-                log.Error("addusertoevent - errore nell'inserimento del evento ", ex);
+                log.Error("addusertoeventprenotation - errore nell'inserimento del evento ", ex);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+        [HttpPost]
+        [Route("adduserstoeventpresence")]
+        public HttpResponseMessage addUsertoEventPresence([FromBody]Evento evento)
+        {
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
+                {
+                    Evento entityEvent = unitOfWork.Eventi.Search(t => t.Id == evento.Id).Include(p => p.Presenze).FirstOrDefault();
+
+                    if (entityEvent.Presenze.Count > 0)
+                    {
+                        string oUpdatePresence = "Modifica delle presenze evento con ID [" + evento.Id + "] da parte dell'utente [" + RequestContext.Principal.Identity.Name + "] \n ";
+                        oUpdatePresence += "ID Utenti Precedentemente presenti [";
+
+                        User ultimo = entityEvent.Presenze.Last();
+                        foreach (User u in entityEvent.Presenze)
+                        {
+                            if (!u.Equals(ultimo))
+                                oUpdatePresence += u.Id + ", ";
+                            else
+                                oUpdatePresence += u.Id + "]";
+                        }
+                        log.Info(oUpdatePresence);
+                    }
+
+
+                    entityEvent.Presenze.Clear();
+                    foreach(User u in evento.Presenze)
+                    {
+                        User entityUser = unitOfWork.Users.Find(us => us.Id == u.Id).FirstOrDefault();
+                        entityEvent.Presenze.Add(entityUser);
+                    }
+                    unitOfWork.Complete();
+                    log.Debug("adduserstoeventpresence - evento inserito correttamente");
+                    return Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error("adduserstoeventpresence - errore nell'inserimento del evento ", ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }

@@ -86,9 +86,11 @@
 .bgColorOrange {
     background-color: #ff8606 !important;
 }
+
 .bgColorBlue {
     background-color: blue !important;
 }
+
 .bgColorGreen {
     background-color: green !important;
 }
@@ -180,11 +182,10 @@
     text-align: center;
     border-radius: 16px;
 }
+
 .limitTextLines5 {
-  overflow:hidden;
-
-
-   /*overflow: hidden;
+    overflow: hidden;
+    /*overflow: hidden;
    text-overflow: ellipsis;
    display: -webkit-box;
    line-height: 16px;    
@@ -192,29 +193,47 @@
    -webkit-line-clamp: 2;
    -webkit-box-orient: vertical;*/
 }
+
 .fadeText {
-  position: relative;
-  height: 3.6em; /* exactly three lines */
-}
-.fadeText:after {
-  content: "";
-  text-align: right;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 70%;
-  height: 1.2em;
-  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%);
+    position: relative;
+    height: 3.6em; /* exactly three lines */
 }
 
+    .fadeText:after {
+        content: "";
+        text-align: right;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 70%;
+        height: 1.2em;
+        background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%);
+    }
+
 .isButton {
-    cursor:pointer;
+    cursor: pointer;
     color: #fff;
     background-color: #337ab7;
     border-color: #2e6da4;
 }
-.isButton:hover {
-    color: #fff;
-    background-color: #286090;
-    border-color: #204d74;
+
+    .isButton:hover {
+        color: #fff;
+        background-color: #286090;
+        border-color: #204d74;
+    }
+
+.listWell {
+    border: 1px solid #c3c2c2;
+    border-radius: 10px;
+    padding-bottom: 9px;
+    background-color: #f7f7f7;
+    margin: 0px;
+    margin-top:10px;
+}
+.listWell:hover {
+    background-color:#e6e6e6;
+}
+.cursorNormal {
+    cursor:context-menu !important;
 }

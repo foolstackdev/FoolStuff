@@ -264,6 +264,7 @@
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Dto\AvatarImagesUsers.cs" />
     <Compile Include="Dto\EventsPrenotazione.cs" />
+    <Compile Include="Dto\EventsPresence.cs" />
     <Compile Include="Dto\RolesUpdateRuolo.cs" />
     <Compile Include="Dto\TesoreriaInsertVersamento.cs" />
     <Compile Include="Dto\TesoreriaInsertSpesa.cs" />

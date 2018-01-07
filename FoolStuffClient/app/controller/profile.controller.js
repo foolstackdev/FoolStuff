@@ -177,7 +177,7 @@ angular
                     eventId: item.id,
                     userId: sessionStorage.getItem('userId')
                 }
-                RestService.PostData(CostantUrl.urlEvents, "addusertoevent", eventsPrenotazione).then(function (response) {
+                RestService.PostData(CostantUrl.urlEvents, "addusertoeventprenotation", eventsPrenotazione).then(function (response) {
                     console.log(response);
                     toastr.success('Event booked successfully', 'Confirmed');
                     $state.reload();
@@ -192,6 +192,12 @@ angular
                 RestService.GetData(CostantUrl.urlEvents, "getnextevents").then(function (response) {
                     console.log(response);
                     vm.events = response.data;
+                    for (var i = 0; i < vm.events.length; i++) {
+                        vm.events[i].isBooked = ApplicationService.isUserInList(vm.events[i].prenotazioni);
+                        vm.events[i].prenotazioni = ApplicationService.addAvatarToUsers(vm.events[i].prenotazioni);
+                        console.log(vm.events[i].isBooked);
+                    }
+                    
                 }, function (err) {
                     console.log(err)
                     toastr.error('Problems during Upload', 'Something went wrong [' + err.data.exceptionMessage + ']');

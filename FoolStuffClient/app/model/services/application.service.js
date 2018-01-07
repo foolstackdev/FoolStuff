@@ -359,6 +359,21 @@ angular
             });
         }
 
+        
+        application.getUserId = function() {
+            return sessionStorage.getItem("userId");
+        };
+        application.isUserInList = function(coll) {
+            var isInList = false;
+            var _id = application.getUserId();
+            for (var i = 0; i < coll.length; i++) {
+                if (coll[i].id == _id) {
+                    isInList = true;
+                }
+            }
+            return isInList;
+        }
+
         return application;
 
     }]);
