@@ -13,22 +13,12 @@ using FoolStuff.Manager;
 
 namespace FoolStuff.Controllers
 {
-    [Authorize(Roles = "SuperAdmin, FoolStackUser")]
     [RoutePrefix("api/upload")]
     public class UploadController : ApiController
     {
         private readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        //private readonly string WORKING_DIRECTORY = ConfigurationManager.AppSettings["WorkingDirectory"];
-        //private readonly string AVATAR_PATH = ConfigurationManager.AppSettings["AvatarPath"];
-
-        ////Di seguito vanno inseriti i controlli di generazione di tutte le cartelle sopra descritte -> WORKING_DIRECTORY + SUBDIRECTORY
-        //public UploadController()
-        //{
-        //    Directory.CreateDirectory(WORKING_DIRECTORY + AVATAR_PATH);
-        //}
-
-
+        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
         [HttpPost]
         [Route("addavatar")]
         public HttpResponseMessage addAvatar(AvatarImages[] avatar)

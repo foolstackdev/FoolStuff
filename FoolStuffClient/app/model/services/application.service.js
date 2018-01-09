@@ -5,10 +5,14 @@ angular
 
         var application = {}
         var entities = {};
+        var userAdministrator = false;
         var defaultAvatarLG = "app/view/assets/img/DEFAULTAVATAR/LG/user.png";
         var defaultAvatarMD = "app/view/assets/img/DEFAULTAVATAR/MD/user.png";
         var defaultAvatarSM = "app/view/assets/img/DEFAULTAVATAR/SM/user.png";
         var defaultAvatarXS = "app/view/assets/img/DEFAULTAVATAR/XS/user.png";
+
+
+
         application.getUserAvatar = function () {
             return entities.userAvatar;
         }
@@ -357,13 +361,9 @@ angular
                 console.log(err);
 
             });
-        }
-
-        
-        application.getUserId = function() {
-            return sessionStorage.getItem("userId");
         };
-        application.isUserInList = function(coll) {
+
+        application.isUserInList = function (coll) {
             var isInList = false;
             var _id = application.getUserId();
             for (var i = 0; i < coll.length; i++) {
@@ -372,7 +372,50 @@ angular
                 }
             }
             return isInList;
+        };
+
+        application.setUserId = function (item) {
+            _setItemInSession("userId", item);
         }
+        application.getUserId = function () {
+            return _getItemInSession("userId");
+        };
+        application.setUser = function (item) {
+            _setItemInSession("user", item);
+        }
+        application.getUser = function () {
+            return _getItemInSession("user");
+        };
+        application.setUserRoleList = function (item) {
+            userAdministrator = item.indexOf("SuperAdmin") != -1 ? true : false;
+            _setItemInSession("userRolesList", item);
+        };
+        application.getUserRoleList = function () {
+            return _getItemInSession("userRolesList");
+        };
+
+        application.isAdmin = function () {
+            return userAdministrator;
+        }
+
+        //local functions
+        function _getItemInSession(item) {
+            return JSON.parse(sessionStorage.getItem(item))
+        }
+
+        function _setItemInSession(itemName, item) {
+            if (typeof itemName != "string") {
+                return Error("Insert a correct Type Of String");
+            }
+            if (typeof item != "string") {
+                item = JSON.stringify(item);
+            }
+            sessionStorage.setItem(itemName, item);
+        }
+
+
+
+
 
         return application;
 

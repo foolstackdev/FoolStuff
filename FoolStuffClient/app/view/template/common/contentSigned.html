@@ -8,26 +8,21 @@
         </div>
         <div class="collapse navbar-collapse" id="js-navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a ui-sref="signed.homepage">HomePage</a></li>
-                <li><a ui-sref="signed.users">Users</a></li>
-                <li><a ui-sref="signed.tesoreria">Tesoreria</a></li>
-                <li><a ui-sref="signed.task">Task</a></li>
-                <li><a ui-sref="signed.applications">Applications</a></li>
-                <li><a ui-sref="signed.roles">Ruoli</a></li>
-                <li><a ui-sref="signed.events">Eventi</a></li>
-                <li><a ui-sref="signed.logs">Logs</a></li>
+                <li data-ng-repeat="menu in signedCtrl.menu" data-ng-class="menu.active ? 'active' : ''">
+                    <a ui-sref="{{menu.url}}">{{menu.title}}</a>
+                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" id="menuImage" href="#">
                         <img data-ng-src="{{signedCtrl.userAvatar}}"> {{signedCtrl.userName.userInfo.name}} {{signedCtrl.userName.userInfo.surname}}
-                    <span class="caret"></span>
+                        <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li><a ui-sref="signed.profile">Profile page</a></li>
                         <li><a ui-sref="signed.update">Modifica Dati</a></li>
                         <li><a ui-sref="signed.updatePass">Cambia Password</a></li>
-                   <!--     <li><a ui-sref="signed.userPage">User Page</a></li>  -->
+                        <!--     <li><a ui-sref="signed.userPage">User Page</a></li>  -->
                     </ul>
                 </li>
                 <li data-ng-click="signedCtrl.logout()"><a href=""><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>

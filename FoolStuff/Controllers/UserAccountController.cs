@@ -18,36 +18,7 @@ namespace FoolStuff.Controllers
     public class UseraccountController : ApiController
     {
         private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        [HttpGet]
-        [Route("isalive")]
-        public HttpResponseMessage isAlive()
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, "I'm Alive, Hello!");
-        }
-
-        //20171008 Old Method to delete if unused
-        //[HttpPost]
-        //[Route("register")]
-        //public HttpResponseMessage Register([FromBody]UserInfo user)
-        //{
-        //    try
-        //    {
-        //        using (FoolStaffDataModelContainer entities = new FoolStaffDataModelContainer())
-        //        {
-        //            entities.UserInfo.Add(user);
-        //            entities.SaveChanges();
-
-        //            var message = Request.CreateResponse(HttpStatusCode.Created, user);
-        //            return message;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
-        //    }
-        //}
-
-        //[BasicAuthentication]]
+       
         [Authorize(Roles = "SuperAdmin, FoolStackUser")]
         [HttpGet]
         [Route("allusers")]
@@ -137,7 +108,7 @@ namespace FoolStuff.Controllers
 
         }
 
-        [Authorize(Roles = "SuperAdmin, FoolStackUser, SimpleUser")]
+        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
         [HttpGet]
         [Route("getuserinfo/{email}")]
         public HttpResponseMessage getUserInfo(string email)

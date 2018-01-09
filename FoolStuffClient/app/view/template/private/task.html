@@ -40,14 +40,14 @@
                 <div class="panel-footer" ng-switch="taskCtrl.userIsAlreadyAssigned($index)">
                     <button ng-switch-when="false" class="btn btn-primary pull-right" data-ng-click="taskCtrl.takeTask($index)">Take care of this</button>
                     <button ng-switch-when="true" class="btn btn-warning" data-ng-click="taskCtrl.giveUpTask($index)">Give up</button>
-                    <button ng-switch-when="true" class="btn btn-success pull-right" data-ng-click="taskCtrl.closeTask($index)">Task Completed</button>
+                    <button ng-switch-when="true" data-ng-show="taskCtrl.isAdmin" class="btn btn-success pull-right" data-ng-click="taskCtrl.closeTask($index)">Task Completed</button>
                     <div class="clearfix"></div>
                 </div>
             </div>
         </div>
 
     </uib-tab>
-    <uib-tab index="1" heading="Inserisci Task">
+    <uib-tab index="1" data-ng-show="taskCtrl.isAdmin" heading="Inserisci Task">
         <div class="panel panel-default">
             <form class="form-horizontal" role="form">
                 <div class="panel-heading">

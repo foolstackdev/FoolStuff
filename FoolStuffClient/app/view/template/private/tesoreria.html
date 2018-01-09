@@ -161,7 +161,7 @@
     </uib-tab>
 
     <!--<uib-tab index="1" select="alertMe()">-->
-    <uib-tab index="1" select="tesoreriaCtrl.getUsers()">
+    <uib-tab index="1" data-ng-show="tesoreriaCtrl.isAdmin" select="tesoreriaCtrl.getUsers()">
         <uib-tab-heading>
             <!--<i class="glyphicon glyphicon-calendar"></i> Gestione Versamenti-->
             <i class="fa fa-arrow-up colorGreen" aria-hidden="true"></i> Entrate
@@ -296,7 +296,7 @@
         </div>
 
     </uib-tab>
-    <uib-tab index="2" select="tesoreriaCtrl.prepareSpesa()">
+    <uib-tab index="2" data-ng-show="tesoreriaCtrl.isAdmin" select="tesoreriaCtrl.prepareSpesa()">
         <uib-tab-heading>
             <!--<i class="glyphicon glyphicon-calendar"></i> Gestione Versamenti-->
             <i class="fa fa-arrow-down colorRed" aria-hidden="true"></i> Uscite

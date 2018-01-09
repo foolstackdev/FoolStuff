@@ -5,6 +5,7 @@ angular
     function ($scope, RestService, CostantUrl, $state, toastr, ApplicationService) {
 
         var vm = this;
+        vm.isAdmin = ApplicationService.isAdmin();
         vm.task;
         vm.tasklist = [];
         vm.taskClosedList = [];

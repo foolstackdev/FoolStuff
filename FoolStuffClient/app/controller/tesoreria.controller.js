@@ -6,6 +6,7 @@ function ($scope, RestService, CostantUrl, toastr, UtilService, $sce, $state, Ap
 
     var vm = this;
 
+    vm.isAdmin = ApplicationService.isAdmin();
     vm.dateSelected;
 
     vm.users = [];

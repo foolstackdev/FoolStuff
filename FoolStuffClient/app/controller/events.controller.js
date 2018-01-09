@@ -5,6 +5,7 @@ angular
     function ($scope, RestService, CostantUrl, toastr, ApplicationService, $sce, $state) {
 
         var vm = this;
+        vm.isAdmin = ApplicationService.isAdmin();
         vm.users = [];
         vm.events = [];
         vm.numberOfEventToShow = 6;

@@ -12,18 +12,12 @@ using System.Web.Http;
 
 namespace FoolStuff.Controllers
 {
-    [Authorize(Roles = "SuperAdmin, FoolStackUser")]
     [RoutePrefix("api/task")]
     public class TaskController : ApiController
     {
         private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        [HttpGet]
-        [Route("isalive")]
-        public HttpResponseMessage isAlive()
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, "I'm Alive, Hello!");
-        }
 
+        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
         [HttpGet]
         [Route("getalltask")]
         public HttpResponseMessage getAllTask()
@@ -45,6 +39,7 @@ namespace FoolStuff.Controllers
             }
         }
 
+        [Authorize(Roles = "SuperAdmin")]
         [HttpPost]
         [Route("insertnewtask")]
         public HttpResponseMessage insertNewTask([FromBody]Effort effort)
@@ -75,6 +70,7 @@ namespace FoolStuff.Controllers
             }
         }
 
+        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
         [HttpPost]
         [Route("addusertotask/{userid}")]
         public HttpResponseMessage addUserToTask(string userId, [FromBody]int idEffort)
@@ -100,6 +96,7 @@ namespace FoolStuff.Controllers
             }
         }
 
+        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
         [HttpPost]
         [Route("giveuptask/{userid}")]
         public HttpResponseMessage giveUpTask(string userId, [FromBody]int idEffort)
@@ -118,7 +115,6 @@ namespace FoolStuff.Controllers
                         unitOfWork.Complete();
                     }
 
-                    //var entity = entities.Task.ToList().Where(t => t.Stato == "OPEN").OrderByDescending(t => t.Priorita);
                     var entity = unitOfWork.Efforts.Find(t => t.Stato == "OPEN").OrderByDescending(t => t.Priorita).ToList();
                     log.Debug("giveUpTask - rinuncia al task da parte dell'utente id [" + entityUser.Id + "] avvenuta con successo");
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
@@ -131,6 +127,7 @@ namespace FoolStuff.Controllers
             }
         }
 
+        [Authorize(Roles = "SuperAdmin")]
         [HttpPost]
         [Route("closetask")]
         public HttpResponseMessage closeTask([FromBody]int idEffort)
@@ -159,6 +156,7 @@ namespace FoolStuff.Controllers
             }
         }
 
+        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
         [HttpGet]
         [Route("getclosedtask")]
         public IHttpActionResult getClosedTask()
@@ -167,20 +165,8 @@ namespace FoolStuff.Controllers
             {
                 using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
                 {
-                    //entities.Configuration.LazyLoadingEnabled = false;
-                    //entities.Configuration.ProxyCreationEnabled = false;
-
-                    //var example = from user in entities.UserInfo
-                    //              from tasks in user.Task
-                    //              select new
-                    //              {
-                    //                  user = user,
-                    //                  tasks = tasks
-                    //              };
-
                     var entityTask = unitOfWork.Efforts.Search(t => t.Stato == "CLOSED").Include(u => u.Users).OrderByDescending(t => t.DataChiusura).ToList();
                     log.Debug("getClosedTask - Lista Task chiusi correttamente recuperata");
-                    //var entity = entities.Task.Where(t => t.Stato == "CLOSED").Include(t => t.UserInfo).OrderByDescending(t => t.DataChiusura).ToList(); 
                     return Ok(entityTask);
                 }
             }

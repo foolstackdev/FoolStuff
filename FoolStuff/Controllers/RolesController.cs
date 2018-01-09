@@ -17,20 +17,13 @@ using System.Web.Security;
 
 namespace FoolStuff.Controllers
 {
-
-    //[Authorize]
+    [Authorize(Roles = "SuperAdmin")]
     [RoutePrefix("api/roles")]
     public class RolesController : BaseApiController
     {
         private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        [HttpGet]
-        [Route("isalive")]
-        public HttpResponseMessage isAlive()
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, "I'm Alive, Hello!");
-        }
+        
 
-        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
         [HttpGet]
         [Route("getalluserswithroles")]
         public IHttpActionResult getAllUsersWithRoles()
@@ -43,28 +36,12 @@ namespace FoolStuff.Controllers
                 var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
                 var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
-                //var bbb = (from user in context.Users
-                //           from userRole in user.Roles
-                //           join role in context.Roles
-                //           on userRole.RoleId equals role.Id
-                //           select user);
-
-                //var aaa = (from u in context.Users
-                //           join r in context.Roles
-                //            on u.Roles equals r.Id
-                //           select u);
-
-                //var uuu = context.Users.Where
-                //var usersWithRoles = context.Users.Select(x => new UserWithRolesViewModel { User = x, UserRoles = x.Roles }).ToList();
                 var allUsers = userManager.Users.ToList();
                 var users = allUsers.Select(u => new UsersViewModel {
                     User = u,
                     Roles = String.Join(",", roleManager.Roles.Where(role => role.Users.Any(user => user.UserId == u.Id)).Select(r => r.Name)),
                     UserInfo = new UnitOfWork(new FoolStaffContext()).Users.Find(us => us.Id == u.Id).SingleOrDefault()
                 }).ToList();
-                //var users = userManager.Users.Include(t => t.Roles).ToList();
-                // var roles = this.AppRoleManager.Roles.ToList();
-
 
                 log.Debug("getalluserswithroles - metodo eseguito con successo");
                 return Ok(users);
@@ -77,7 +54,6 @@ namespace FoolStuff.Controllers
             }
         }
 
-        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
         [HttpGet]
         [Route("getroleslist")]
         public IHttpActionResult getRolesList()
@@ -99,7 +75,6 @@ namespace FoolStuff.Controllers
             }
         }
 
-        [Authorize(Roles = "SuperAdmin")]
         [HttpPost]
         [Route("addrole")]
         public IHttpActionResult addRole([FromBody]RoleBindingModels newRole)
@@ -130,7 +105,6 @@ namespace FoolStuff.Controllers
             }
         }
 
-        [Authorize(Roles = "SuperAdmin")]
         [HttpPost]
         [Route("changerole")]
         public IHttpActionResult changeRole([FromBody]RolesUpdateRuolo ruolo)
@@ -171,11 +145,7 @@ namespace FoolStuff.Controllers
             [Display(Name = "UserInfo")]
             public User UserInfo { get; set; }
         }
-        //private class UserWithRolesViewModel
-        //{
-        //    public ApplicationUser User { get; set; }
-        //    public ICollection<IdentityUserRole> UserRoles { get; set; }
-        //}
+
     }
 
 }

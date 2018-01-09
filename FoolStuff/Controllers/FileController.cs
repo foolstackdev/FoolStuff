@@ -16,6 +16,7 @@ namespace FoolStuff.Controllers
     {
         private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        [Authorize(Roles = "SuperAdmin")]
         [HttpGet]
         [Route("getlogfilelist")]
         public HttpResponseMessage getLogFileList()
@@ -47,7 +48,7 @@ namespace FoolStuff.Controllers
             }
         }
 
-
+        [Authorize(Roles = "SuperAdmin")]
         [HttpGet]
         [Route("getlogfile/{sfilename}")]
         public HttpResponseMessage getLogFile(string sfilename)

@@ -20,7 +20,7 @@ namespace FoolStuff.Controllers
     {
         private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        //[Authorize(Roles = "SuperAdmin, FoolStackUser")]
+        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
         [HttpGet]
         [Route("getalleventswithusers")]
         public HttpResponseMessage getAllEventsWithUsers()
@@ -41,6 +41,7 @@ namespace FoolStuff.Controllers
             }
         }
 
+        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
         [HttpGet]
         [Route("getnextevents")]
         public HttpResponseMessage getNextEvents()
@@ -62,6 +63,7 @@ namespace FoolStuff.Controllers
             }
         }
 
+        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
         [HttpGet]
         [Route("getfirstnumeventswithusers/{num}")]
         public HttpResponseMessage getFirstNumEventsWithUsers(string num)
@@ -71,8 +73,9 @@ namespace FoolStuff.Controllers
             {
                 numbersOfRows = Convert.ToInt16(num);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                log.Debug("Passato un parametro non numerico", ex);
                 numbersOfRows = 6;
             }
             try
@@ -92,6 +95,7 @@ namespace FoolStuff.Controllers
             }
         }
 
+        [Authorize(Roles = "SuperAdmin")]
         [HttpPost]
         [Route("insertnewevent")]
         public HttpResponseMessage insertNewEvent([FromBody]Evento evento)
@@ -113,6 +117,7 @@ namespace FoolStuff.Controllers
             }
         }
 
+        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
         [HttpPost]
         [Route("addusertoeventprenotation")]
         public HttpResponseMessage addUsertoEventPrenotation([FromBody]EventsPrenotazione evento)
@@ -136,6 +141,7 @@ namespace FoolStuff.Controllers
             }
         }
 
+        [Authorize(Roles = "SuperAdmin")]
         [HttpPost]
         [Route("adduserstoeventpresence")]
         public HttpResponseMessage addUsertoEventPresence([FromBody]Evento evento)

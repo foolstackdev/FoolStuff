@@ -33,9 +33,9 @@ angular
                         sessionStorage.setItem("userAvatar", JSON.stringify(responseUser.data.userAvatar))
                         ApplicationService.setUserAvatar();
                     }
-                    sessionStorage.setItem('userId', responseUser.data.userInfo.id);
-                    sessionStorage.setItem('user', JSON.stringify(responseUser.data));
-                    sessionStorage.setItem('userRolesList', JSON.stringify(responseUser.data.userRolesList));
+                    ApplicationService.setUserId(responseUser.data.userInfo.id);
+                    ApplicationService.setUser(JSON.stringify(responseUser.data));
+                    ApplicationService.setUserRoleList(JSON.stringify(responseUser.data.userRolesList));
                     ApplicationService.loadUsersAvatar("XS");
                     toastr.success('Cool, you\' re now logged', 'Confirmed');
                     $rootScope.$broadcast('stop-spin');

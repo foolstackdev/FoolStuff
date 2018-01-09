@@ -59,7 +59,7 @@
         </div>
 
 
-        <div class="row" style="margin-top:10px">
+        <div class="row" style="margin-top:10px" data-ng-show="eventsCtrl.isAdmin">
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <form class="form" name="eventsForm" role="form" ng-submit="eventsCtrl.inserisciEvento(eventsForm.$valid)" novalidate>
@@ -108,7 +108,7 @@
         </div>
     </uib-tab>
 
-    <uib-tab index="1">
+    <uib-tab index="1" data-ng-show="eventsCtrl.isAdmin">
         <uib-tab-heading>
             <i class="fa fa-users colorGreen" aria-hidden="true"></i> Gestione Presenze
         </uib-tab-heading>

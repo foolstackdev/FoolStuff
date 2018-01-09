@@ -14,7 +14,7 @@ using System.Web.Http;
 
 namespace FoolStuff.Controllers
 {
-    [Authorize(Roles = "SuperAdmin, FoolStackUser")]
+    
     [RoutePrefix("api/tesoreria")]
     public class TesoreriaController : ApiController
     {
@@ -22,13 +22,8 @@ namespace FoolStuff.Controllers
         private static readonly string VERSAMENTO = "VERSAMENTO";
 
         private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        [HttpGet]
-        [Route("isalive")]
-        public HttpResponseMessage isAlive()
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, "I'm Alive, Hello!");
-        }
 
+        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
         [HttpGet]
         [Route("getallentry")]
         public HttpResponseMessage getAllEntry()
@@ -49,6 +44,7 @@ namespace FoolStuff.Controllers
             }
         }
 
+        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
         [HttpGet]
         [Route("getallexit")]
         public HttpResponseMessage getAllExit()
@@ -69,6 +65,7 @@ namespace FoolStuff.Controllers
             }
         }
 
+        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
         [HttpGet]
         [Route("getsaldo")]
         public HttpResponseMessage getSaldo()
@@ -105,6 +102,7 @@ namespace FoolStuff.Controllers
             }
         }
 
+        [Authorize(Roles = "SuperAdmin")]
         [HttpPost]
         [Route("insertversamento")]
         public HttpResponseMessage insertVersamento([FromBody]TesoreriaInsertVersamento payment)
@@ -137,6 +135,7 @@ namespace FoolStuff.Controllers
             }
         }
 
+        [Authorize(Roles = "SuperAdmin")]
         [HttpPost]
         [Route("insertspesa")]
         public HttpResponseMessage insertSpesa([FromBody]TesoreriaInsertSpesa payment)
@@ -165,72 +164,5 @@ namespace FoolStuff.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
-
-        //[HttpPost]
-        //[Route("insertpayment/{id}")]
-        //public HttpResponseMessage insertPayment(string id, [FromBody]User[] users)
-        //{
-        //    try
-        //    {
-        //        using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
-        //        {
-        //            //Tesoreria oTesoreria = new Tesoreria();
-        //            //oTesoreria.Operazione = "VERSAMENTO";
-        //            //oTesoreria.DataOperazione = DateTime.Now;
-        //            //oTesoreria.Note = "Versamento settimanale 5 Euro";
-
-        //            //entities.Tesoreria.Add(oTesoreria);
-        //            ////entities.SaveChanges();
-        //            int oId = Convert.ToInt32(id);
-        //            Tesoreria oTesoreria = unitOfWork.Tesoreria.SingleOrDefault(e => e.Id == oId);
-
-        //            foreach (User u in users)
-        //            {
-        //                Tesoreria pagamento = new Tesoreria();
-        //                pagamento.user = u;
-        //                pagamento.Quota = 5;
-        //                pagamento.DataOperazione = UtilDate.CurrentTimeMillis();
-        //                unitOfWork.Tesoreria.Add(pagamento);
-        //                unitOfWork.Complete();
-        //            }
-        //            log.Debug("insertPayment - metodo eseguito con successo");
-        //            return Request.CreateResponse(HttpStatusCode.OK);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        log.Error("insertPayment - errore nell'esecuzione ", ex);
-        //        return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
-        //    }
-        //}
-
-        //[HttpPost]
-        //[Route("insertpaymentdate")]
-        //public HttpResponseMessage insertPaymentDate([FromBody]Tesoreria tesoreria)
-        //{
-        //    try
-        //    {
-        //        using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
-        //        {
-        //            Tesoreria oTesoreria = new Tesoreria();
-        //            oTesoreria.Operazione = "VERSAMENTO";
-        //            oTesoreria.DataOperazione = UtilDate.CurrentTimeMillis();
-        //            oTesoreria.Note = tesoreria.Note;
-
-        //            unitOfWork.Tesoreria.Add(oTesoreria);
-        //            unitOfWork.Complete();
-        //            //entities.Configuration.ProxyCreationEnabled = false;
-        //            //var entity = entities.Tesoreria.OrderByDescending(e => e.Operazione.Equals("VERSAMENTO")).ToList();
-        //            var entity = unitOfWork.Tesoreria.Find(x => x.Operazione == "VERSAMENTO").ToList().OrderByDescending(t => t.DataOperazione);
-        //            log.Debug("insertPaymentDate - metodo eseguito con successo");
-        //            return Request.CreateResponse(HttpStatusCode.OK, entity);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        log.Error("insertPaymentDate - errore nell'esecuzione ", ex);
-        //        return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
-        //    }
-        //}
     }
 }
