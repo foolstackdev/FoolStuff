@@ -400,7 +400,12 @@ angular
 
         //local functions
         function _getItemInSession(item) {
-            return JSON.parse(sessionStorage.getItem(item))
+            try {
+                return JSON.parse(sessionStorage.getItem(item));
+            }
+            catch (err) {
+                return sessionStorage.getItem(item);
+            }
         }
 
         function _setItemInSession(itemName, item) {
