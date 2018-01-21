@@ -19,6 +19,7 @@ angular
 
             //functions
             vm.reload = _reload;
+            vm.caricaCorsi = _caricaCorsi;
 
             //button functions
             vm.inserisciCorso = _inserisciCorso;
@@ -35,6 +36,9 @@ angular
                 RestService.GetData(CostantUrl.urlFormazione, "getallcorsi").then(function (response) {
                     console.log(response);
                     vm.corsi = response.data;
+                    for (var i = 0; i < vm.corsi.length; i++) {
+                        vm.corsi[i].utenti = ApplicationService.addAvatarToUsers(vm.corsi[i].utenti);
+                    }
                     vm.visualizzaCorso = vm.corsi[0];
                 }, function (err) {
                     console.log(err)
@@ -89,4 +93,19 @@ angular
                     toastr.error('Problems during insertion', 'Something went wrong [' + err.data.message + ']');
                 });
             }
+
+            function _caricaCorsi() {
+                RestService.GetData(CostantUrl.urlFormazione, "getcorsi/" + userId).then(function (response) {
+                    console.log(response);
+                    vm.corsi = response.data;
+                    for (var i = 0; i < vm.corsi.length; i++) {
+                        vm.corsi[i].utenti = ApplicationService.addAvatarToUsers(vm.corsi[i].utenti);
+                    }
+                    vm.visualizzaCorso = vm.corsi[0];
+                }, function (err) {
+                    console.log(err)
+                    toastr.error('Problems during insertion', 'Something went wrong [' + err + ']');
+                });
+            }
+
         }]);
