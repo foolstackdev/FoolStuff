@@ -16,5 +16,9 @@ namespace FoolStaff.Persistence.Repositories
         public EventoRepository(FoolStaffContext context) : base(context)
         {
         }
+        public FoolStaffContext FoolStaffContext
+        {
+            get { return Context as FoolStaffContext; }
+        }
     }
 }

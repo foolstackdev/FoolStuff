@@ -1,0 +1,221 @@
+﻿<uib-tabset active="active">
+    <!--<uib-tab index="0" select="trainingCtrl.reload()">-->
+    <uib-tab index="0" select="trainingCtrl.reload()">
+        <uib-tab-heading>
+            <i class="fa fa-book colorBlue" aria-hidden="true"></i> Corsi
+        </uib-tab-heading>
+
+        <div class="row" style="margin-top:10px">
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+
+                    <div class="panel-heading">
+                        Corsi disponibili
+                    </div>
+                    <div class="panel-body">
+                        <uib-tabset active="activePill" vertical="true" type="pills">
+                            <uib-tab index="$index" heading="{{corso.titolo}}" data-ng-repeat="corso in trainingCtrl.corsi track by $index" data-ng-click="trainingCtrl.switchCorso(corso)"></uib-tab>
+                        </uib-tabset>
+                    </div>
+                    <div class="panel-footer">
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="panel panel-default">
+
+                    <div class="panel-heading">
+                        <h5 class="pull-left">{{trainingCtrl.visualizzaCorso.titolo}}</h5> <h5 class="pull-right"><a href="{{trainingCtrl.visualizzaCorso.risorsa}}">{{trainingCtrl.visualizzaCorso.risorsa}}</a></h5>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <p>{{trainingCtrl.visualizzaCorso.descrizione}}</p>
+                        </div>
+                        <div class="row">
+                            <ul>
+                                <li data-ng-repeat="capitolo in trainingCtrl.visualizzaCorso.capitoli">
+                                    {{capitolo.numeroCapitolo}} - {{capitolo.titolo}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <button class="btn btn-success btn-sm btn-block" data-ng-click="trainingCtrl.seguiCorso(trainingCtrl.visualizzaCorso)">Segui corso</button>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </uib-tab>
+
+    <uib-tab index="1" data-ng-show="trainingCtrl.isAdmin" select="trainingCtrl.prepareSpesa()">
+        <uib-tab-heading>
+            <i class="fa fa-graduation-cap colorGreen" aria-hidden="true"></i> I tuoi corsi
+        </uib-tab-heading>
+
+        <div class="row" style="margin-top:10px">
+
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+
+                    <div class="panel-heading">
+                        Contributi per utente
+                    </div>
+                    <div class="panel-body">
+
+                    </div>
+                    <div class="panel-footer">
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </uib-tab>
+
+    <uib-tab index="2" data-ng-show="trainingCtrl.isAdmin" select="trainingCtrl.getUsers()">
+        <uib-tab-heading>
+            <i class="fa fa-bolt colorOrange" aria-hidden="true"></i> Gestisci
+        </uib-tab-heading>
+
+        <div class="row" style="margin-top:10px">
+
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="col-lg-12">
+                            <h4>Aggiungi corso</h4>
+                        </div>
+                    </div>
+                    <form class="form" role="form" name="corsoForm" ng-submit="trainingCtrl.inserisciCorso(corsoForm.$valid)">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-sx-12">
+                                    <div class="form-group">
+                                        <input name="titolo" type="text" class="form-control" placeholder="Inserire un titolo" data-ng-model="trainingCtrl.corso.titolo" required />
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-sx-12">
+                                    <div class="form-group">
+                                        <input name="risorsa" type="text" class="form-control" placeholder="Inserire l'indirizzo della risorsa" data-ng-model="trainingCtrl.corso.risorsa" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-sx-12">
+                                    <div class="form-group">
+                                        <input type="text" name="descrizione" class="form-control" placeholder="Inserire una descrizione" data-ng-model="trainingCtrl.corso.descrizione" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="panel-footer">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-block" data-ng-disabled="!corsoForm.$valid">Inserisci corso</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row" style="margin-top:10px">
+
+            <div class="col-lg-12">
+                <div class="panel panel-default" data-ng-repeat="corso in trainingCtrl.corsi track by $index">
+                    <div class="panel-heading">
+                        <div class="col-lg-12">
+                            <h4>{{corso.titolo}}</h4>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <p>{{corso.descrizione}}</p>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <ul>
+                                            <li data-ng-repeat="capitolo in corso.capitoli track by $index">
+                                                {{capitolo.numeroCapitolo}} - {{capitolo.titolo}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <form class="form" name="addcapitoli" ng-submit="trainingCtrl.inserisciCapitolo(corso, addcapitoli.$valid)">
+
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <div class="col-lg-12">
+                                                <h6>Inserisci capitolo</h6>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <p>Capitolo {{corso.capitoli.length +1}}</p>
+                                                <input type="text" name="titolo" class="form-control" placeholder="Inserire un titolo" data-ng-model="corso.capitolo" required>
+                                            </div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <button type="submit" class="btn btn-primary btn-block" data-ng-disabled="!addcapitoli.$valid">Inserisci capitolo</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </uib-tab>
+
+
+
+    <uib-tab index="3" select="trainingCtrl.getContributoUtentiChart()">
+        <uib-tab-heading>
+            <i class="fa fa-line-chart" aria-hidden="true"></i> Grafici
+        </uib-tab-heading>
+
+        <div class="row" style="margin-top:10px">
+
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+
+                    <div class="panel-heading">
+                        Contributi per utente
+                    </div>
+                    <div class="panel-body">
+
+                    </div>
+                    <div class="panel-footer">
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </uib-tab>
+
+</uib-tabset>
+
+
+<!--<uib-tabset active="activePill" vertical="true" type="pills">
+    <uib-tab index="0" heading="Vertical 1">Vertical content 1</uib-tab>
+    <uib-tab index="1" heading="Vertical 2">Vertical content 2</uib-tab>
+</uib-tabset>-->

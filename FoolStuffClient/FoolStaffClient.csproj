@@ -100,6 +100,7 @@
     <Content Include="app\controller\signed.controller.js" />
     <Content Include="app\controller\tesoreria.controller.js" />
     <Content Include="app\controller\task.controller.js" />
+    <Content Include="app\controller\training.controller.js" />
     <Content Include="app\controller\update.controller.js" />
     <Content Include="app\controller\updatePass.controller.js" />
     <Content Include="app\controller\events.controller.js" />
@@ -132,6 +133,7 @@
     <Content Include="app\view\template\private\logs.html" />
     <Content Include="app\view\template\private\profile.html" />
     <Content Include="app\view\template\private\task.html" />
+    <Content Include="app\view\template\private\training.html" />
     <Content Include="app\view\template\private\updatePass.html" />
     <Content Include="app\view\template\private\applications.html" />
     <Content Include="app\view\template\private\roles.html" />
@@ -203,7 +205,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>62736</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

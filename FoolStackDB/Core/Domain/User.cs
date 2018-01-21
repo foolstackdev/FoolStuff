@@ -19,5 +19,15 @@ namespace FoolStaff.Core.Domain
         public IList<Effort> Efforts { get; set; }
         public IList<Evento> Prenotazioni { get; set; }
         public IList<Evento> Presenze { get; set; }
+
+        //Gestione Messaggi e Risposte
+        public IList<Messaggio> Messaggi { get; set; }
+        public IList<Risposta> Risposte { get; set; }
+        //Getsione formazione
+        //public IList<Capitolo> Capitoli { get; set; }
+        public IList<ProgressoFormazione> ProgressiFormazione { get; set; }
+
+        public IList<Corso> Corsi { get; set; }
+
     }
 }

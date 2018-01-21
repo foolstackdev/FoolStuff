@@ -68,6 +68,10 @@ angular
                             url: "signed.logs",
                             title: "Logs",
                             active: false
+                        }, {
+                            url: "signed.training",
+                            title: "Training",
+                            active: false
                         }
                     ];
                     break;
@@ -96,6 +100,10 @@ angular
                        {
                            url: "signed.task",
                            title: "Task",
+                           active: false
+                       }, {
+                           url: "signed.training",
+                           title: "Training",
                            active: false
                        }
                     ];

@@ -135,6 +135,13 @@
                 controller: "LogsController",
                 controllerAs: "logsCtrl",
                 data: { pageTitle: 'Logs view' }
+            })
+            .state('signed.training', {
+                url: "/training",
+                templateUrl: "app/view/template/private/training.html",
+                controller: "TrainingController",
+                controllerAs: "trainingCtrl",
+                data: { pageTitle: 'Training view' }
             });
 
     }])

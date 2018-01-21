@@ -25,6 +25,12 @@ namespace FoolStaff
         public virtual DbSet<Tesoreria> Tesoreria{ get; set; }
         public virtual DbSet<Effort> Efforts { get; set; }
         public virtual DbSet<Evento> Eventi { get; set; }
+        public virtual DbSet<Messaggio> Messaggi { get; set; }
+        public virtual DbSet<Risposta> Risposte { get; set; }
+        public virtual DbSet<Corso> Corsi { get; set; }
+        public virtual DbSet<Capitolo> Capitoli { get; set; }
+        public virtual DbSet<Tag> Tags { get; set; }
+        public virtual DbSet<ProgressoFormazione> ProgressiFormazione { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -32,6 +38,13 @@ namespace FoolStaff
             modelBuilder.Configurations.Add(new TesoreriaConfiguration());
             modelBuilder.Configurations.Add(new EffortConfiguration());
             modelBuilder.Configurations.Add(new EventoConfiguration());
+            modelBuilder.Configurations.Add(new MessaggioConfiguration());
+            modelBuilder.Configurations.Add(new RispostaConfiguration());
+            modelBuilder.Configurations.Add(new CorsoConfiguration());
+            modelBuilder.Configurations.Add(new CapitoloConfiguration());
+            modelBuilder.Configurations.Add(new TagConfiguration());
+            modelBuilder.Configurations.Add(new ProgressoFormazioneConfiguration());
+
         }
     }
 }

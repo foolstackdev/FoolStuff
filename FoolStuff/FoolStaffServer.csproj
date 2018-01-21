@@ -256,6 +256,7 @@
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\FileController.cs" />
+    <Compile Include="Controllers\FormazioneController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
@@ -267,6 +268,8 @@
     <Compile Include="Dto\EventsPrenotazione.cs" />
     <Compile Include="Dto\EventsPresence.cs" />
     <Compile Include="Dto\FileLog.cs" />
+    <Compile Include="Dto\FormazioneInsertTag.cs" />
+    <Compile Include="Dto\FormazioneUserCorso.cs" />
     <Compile Include="Dto\RolesUpdateRuolo.cs" />
     <Compile Include="Dto\TesoreriaInsertVersamento.cs" />
     <Compile Include="Dto\TesoreriaInsertSpesa.cs" />

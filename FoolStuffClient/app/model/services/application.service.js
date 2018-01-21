@@ -5,7 +5,6 @@ angular
 
         var application = {}
         var entities = {};
-        var userAdministrator = false;
         var defaultAvatarLG = "app/view/assets/img/DEFAULTAVATAR/LG/user.png";
         var defaultAvatarMD = "app/view/assets/img/DEFAULTAVATAR/MD/user.png";
         var defaultAvatarSM = "app/view/assets/img/DEFAULTAVATAR/SM/user.png";
@@ -387,7 +386,6 @@ angular
             return _getItemInSession("user");
         };
         application.setUserRoleList = function (item) {
-            userAdministrator = item.indexOf("SuperAdmin") != -1 ? true : false;
             _setItemInSession("userRolesList", item);
         };
         application.getUserRoleList = function () {
@@ -395,7 +393,7 @@ angular
         };
 
         application.isAdmin = function () {
-            return userAdministrator;
+            return sessionStorage.getItem("userRolesList").indexOf("SuperAdmin") != -1 ? true : false;
         }
 
         //local functions

@@ -14,5 +14,9 @@ namespace FoolStaff.Persistence.Repositories
         public EffortRepository(FoolStaffContext context) : base(context)
         {
         }
+        public FoolStaffContext FoolStaffContext
+        {
+            get { return Context as FoolStaffContext; }
+        }
     }
 }

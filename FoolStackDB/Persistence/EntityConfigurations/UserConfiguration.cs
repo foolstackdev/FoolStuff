@@ -37,7 +37,23 @@ namespace FoolStaff.Persistence.EntityConfigurations
 
             HasMany(t => t.Tesoreria)
                 .WithMany(u => u.user);
-            
+
+            HasMany(m => m.Messaggi)
+                .WithRequired(u => u.Submitter)
+                .WillCascadeOnDelete(false);
+
+            HasMany(r => r.Risposte)
+                .WithMany(u => u.Utenti);
+
+            HasMany(p => p.ProgressiFormazione)
+                .WithRequired(u => u.Utente)
+                .WillCascadeOnDelete(false);
+
+            HasMany(e => e.Corsi)
+               .WithMany(u => u.Utenti)
+               .Map(c => {
+                   c.ToTable("CorsiUtenti");
+               });
         }
     }
 }

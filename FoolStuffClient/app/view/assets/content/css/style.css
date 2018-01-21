@@ -107,6 +107,9 @@
 .marginTop0 {
     margin-top: 0px;
 }
+.marginTop15 {
+    margin-top: 15px !important;
+}
 
 .displayInline {
     display: inline;

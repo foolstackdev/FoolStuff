@@ -14,6 +14,14 @@ namespace FoolStaff.Core
         ITesoreriaRepository Tesoreria { get; }
         IEffortRepository Efforts { get; }
         IEventoRepository Eventi { get; }
+        IMessaggioRepository Messaggi { get; }
+        IRispostaRepository Risposte { get; }
+        ICapitoloRepository Capitoli { get; }
+        ICorsoRepository Corsi { get; }
+        ITagRepository Tags { get; }
+        IProgressoFormazioneRepository ProgressiFormazione { get; }
+
+
         int Complete();
     }
 }

@@ -49,14 +49,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Domain\Capitolo.cs" />
+    <Compile Include="Core\Domain\Corso.cs" />
     <Compile Include="Core\Domain\Effort.cs" />
     <Compile Include="Core\Domain\Evento.cs" />
+    <Compile Include="Core\Domain\Messaggio.cs" />
+    <Compile Include="Core\Domain\ProgressoFormazione.cs" />
+    <Compile Include="Core\Domain\Risposta.cs" />
+    <Compile Include="Core\Domain\Tag.cs" />
     <Compile Include="Core\Domain\Tesoreria.cs" />
     <Compile Include="Core\Domain\User.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
+    <Compile Include="Core\Repositories\ICapitoloRepository.cs" />
+    <Compile Include="Core\Repositories\ICorsoRepository.cs" />
     <Compile Include="Core\Repositories\IEffortRepository.cs" />
     <Compile Include="Core\Repositories\IEventoRepository.cs" />
+    <Compile Include="Core\Repositories\IMessaggioRepository.cs" />
+    <Compile Include="Core\Repositories\IProgressoFormazioneRepository.cs" />
     <Compile Include="Core\Repositories\IRepository.cs" />
+    <Compile Include="Core\Repositories\IRispostaRepository.cs" />
+    <Compile Include="Core\Repositories\ITagRepository.cs" />
     <Compile Include="Core\Repositories\ITesoreriaRepository.cs" />
     <Compile Include="Core\Repositories\IUserRepository.cs" />
     <Compile Include="FoolStaffContext.cs" />
@@ -64,14 +76,54 @@
     <Compile Include="Migrations\201801072258052_Creation.Designer.cs">
       <DependentUpon>201801072258052_Creation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801201622285_AddMessaggesAndResponses.cs" />
+    <Compile Include="Migrations\201801201622285_AddMessaggesAndResponses.Designer.cs">
+      <DependentUpon>201801201622285_AddMessaggesAndResponses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801201814596_AddCapitoloCorsiAndTags.cs" />
+    <Compile Include="Migrations\201801201814596_AddCapitoloCorsiAndTags.Designer.cs">
+      <DependentUpon>201801201814596_AddCapitoloCorsiAndTags.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801201831234_AddUsersCapitoliRelation.cs" />
+    <Compile Include="Migrations\201801201831234_AddUsersCapitoliRelation.Designer.cs">
+      <DependentUpon>201801201831234_AddUsersCapitoliRelation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801201953337_AddDescrizioneToCorso.cs" />
+    <Compile Include="Migrations\201801201953337_AddDescrizioneToCorso.Designer.cs">
+      <DependentUpon>201801201953337_AddDescrizioneToCorso.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801211453475_AddProgressoFormazione.cs" />
+    <Compile Include="Migrations\201801211453475_AddProgressoFormazione.Designer.cs">
+      <DependentUpon>201801211453475_AddProgressoFormazione.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801211609124_AddNumeroCapitolo.cs" />
+    <Compile Include="Migrations\201801211609124_AddNumeroCapitolo.Designer.cs">
+      <DependentUpon>201801211609124_AddNumeroCapitolo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801211714409_AddCorsiUtentiRelationship.cs" />
+    <Compile Include="Migrations\201801211714409_AddCorsiUtentiRelationship.Designer.cs">
+      <DependentUpon>201801211714409_AddCorsiUtentiRelationship.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\CapitoloConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\CorsoConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\EffortConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\EventoConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\MessaggioConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\ProgressoFormazioneConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\RispostaConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\TagConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\TesoreriaConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\UserConfiguration.cs" />
+    <Compile Include="Persistence\Repositories\CapitoloRepository.cs" />
+    <Compile Include="Persistence\Repositories\CorsoRepository.cs" />
     <Compile Include="Persistence\Repositories\EventoRepository.cs" />
     <Compile Include="Persistence\Repositories\EffortRepository.cs" />
+    <Compile Include="Persistence\Repositories\MessaggioRepository.cs" />
+    <Compile Include="Persistence\Repositories\ProgressoFormazioneRepository.cs" />
     <Compile Include="Persistence\Repositories\Repository.cs" />
+    <Compile Include="Persistence\Repositories\RispostaRepository.cs" />
+    <Compile Include="Persistence\Repositories\TagRepository.cs" />
     <Compile Include="Persistence\Repositories\TesoreriaRepository.cs" />
     <Compile Include="Persistence\Repositories\UserRepository.cs" />
     <Compile Include="UnitOfWork.cs" />
@@ -86,6 +138,27 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201801072258052_Creation.resx">
       <DependentUpon>201801072258052_Creation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801201622285_AddMessaggesAndResponses.resx">
+      <DependentUpon>201801201622285_AddMessaggesAndResponses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801201814596_AddCapitoloCorsiAndTags.resx">
+      <DependentUpon>201801201814596_AddCapitoloCorsiAndTags.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801201831234_AddUsersCapitoliRelation.resx">
+      <DependentUpon>201801201831234_AddUsersCapitoliRelation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801201953337_AddDescrizioneToCorso.resx">
+      <DependentUpon>201801201953337_AddDescrizioneToCorso.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801211453475_AddProgressoFormazione.resx">
+      <DependentUpon>201801211453475_AddProgressoFormazione.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801211609124_AddNumeroCapitolo.resx">
+      <DependentUpon>201801211609124_AddNumeroCapitolo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801211714409_AddCorsiUtentiRelationship.resx">
+      <DependentUpon>201801211714409_AddCorsiUtentiRelationship.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
