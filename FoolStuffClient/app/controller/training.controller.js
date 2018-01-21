@@ -13,6 +13,7 @@ angular
             vm.capitolo = {};
             vm.capitolo = [];
             vm.visualizzaCorso = {};
+            vm.corsiPersonali = [];
 
 
             vm.isAdmin = ApplicationService.isAdmin();
@@ -97,14 +98,10 @@ angular
             function _caricaCorsi() {
                 RestService.GetData(CostantUrl.urlFormazione, "getcorsi/" + userId).then(function (response) {
                     console.log(response);
-                    vm.corsi = response.data;
-                    for (var i = 0; i < vm.corsi.length; i++) {
-                        vm.corsi[i].utenti = ApplicationService.addAvatarToUsers(vm.corsi[i].utenti);
-                    }
-                    vm.visualizzaCorso = vm.corsi[0];
+                    vm.corsiPersonali = response.data;
                 }, function (err) {
                     console.log(err)
-                    toastr.error('Problems during insertion', 'Something went wrong [' + err + ']');
+                    toastr.error('Problems duringl loading', 'Something went wrong [' + err + ']');
                 });
             }
 

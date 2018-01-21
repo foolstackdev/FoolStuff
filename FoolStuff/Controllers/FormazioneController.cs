@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using ThenInclude;
 
 namespace FoolStuff.Controllers
 {
@@ -48,10 +49,11 @@ namespace FoolStuff.Controllers
             {
                 using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
                 {
-                    var entity = unitOfWork.Users.Search(u => u.Id == id).Include(e => e.Corsi).Include(e=> e.ProgressiFormazione).FirstOrDefault();
-                    //var entity = unitOfWork.Corsi.Search(p => p.Utenti == user).Include(e => e.Utenti).Include(f => f.Capitoli).ToList();
-                    //var entity = unitOfWork.Corsi.GetAllIncluding().Include(u => u.Utenti).Include(c => c.Capitoli.Select(f => f.ProgressiFormazione)).ToList();
-                    //var entity = unitOfWork.Capitoli.GetAllIncluding().Include(c => c.Corso).Include(c => c.ProgressiFormazione).Include(t => t.Tags);
+                    var entity = unitOfWork.Users.Search(u => u.Id == id)
+                        .Include(e => e.Corsi.Select(c => c.Capitoli.Select(f => f.ProgressiFormazione.Select(u => u.Utente))))
+                        .Include(e => e.Corsi.Select(c => c.Utenti.Select(f => f.ProgressiFormazione)))
+                        .Include(e => e.ProgressiFormazione).FirstOrDefault();
+
                     log.Debug("getcorsi - metodo eseguito con successo");
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
