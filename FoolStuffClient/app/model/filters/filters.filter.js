@@ -195,4 +195,31 @@ angular.module("FoolStackApp")
             return false;
         };
     }])
+    .filter('checkIfUserInProgressoFormazione', ["ConstantFilterFunctions", "ApplicationService", function (ConstantFilterFunctions, ApplicationService) {
+        return function (collection) {
+            var userId = ApplicationService.getUserId();
+
+            if (collection != undefined && collection.length != undefined) {
+                for (var i = 0; i < collection.length; i++) {
+                    if (collection[i].utente.id == userId)
+                        return true;
+                }
+            }
+            return false;
+        };
+    }])
+    .filter('returnConclusionDateProgressoFormazione', ["ConstantFilterFunctions", "ApplicationService", "UtilService", function (ConstantFilterFunctions, ApplicationService, UtilService) {
+        return function (collection) {
+            var userId = ApplicationService.getUserId();
+
+            if (collection != undefined && collection.length != undefined) {
+                for (var i = 0; i < collection.length; i++) {
+                    if (collection[i].utente.id == userId)
+                        return UtilService.convertTimestampToDate(collection[i].dataCompletamento);
+                }
+            }
+            return "";
+        };
+    }])
+
     ;

@@ -1,7 +1,9 @@
 ﻿using FoolStackDB.Core.Domain;
 using FoolStaff;
 using FoolStuff.Dto;
+using FoolStuff.Helpers;
 using log4net;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -27,6 +29,7 @@ namespace FoolStuff.Controllers
             {
                 using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
                 {
+                    //get user =>  User.Identity.GetUserId()
                     var entity = unitOfWork.Corsi.GetAllIncluding().Include(u => u.Utenti).Include(c => c.Capitoli.Select(f => f.ProgressiFormazione)).ToList();
                     //var entity = unitOfWork.Capitoli.GetAllIncluding().Include(c => c.Corso).Include(c => c.ProgressiFormazione).Include(t => t.Tags);
                     log.Debug("getallcorsi - metodo eseguito con successo");
@@ -166,6 +169,38 @@ namespace FoolStuff.Controllers
             catch (Exception ex)
             {
                 log.Error("addusertocourse - errore nell'esecuzione ", ex);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
+        [HttpPost]
+        [Route("addprogressoformazione")]
+        public HttpResponseMessage AddProgressoFormazione([FromBody] ProgressoFormazione progressoFormazione)
+        {
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
+                {
+
+                    var entityCapitolo = unitOfWork.Capitoli.Get(progressoFormazione.Capitolo.Id);
+                    var entityUser = unitOfWork.Users.Get(progressoFormazione.Utente.Id);
+                    ProgressoFormazione oProgressoFOrmazione = new ProgressoFormazione();
+                    oProgressoFOrmazione.Utente = entityUser;
+                    oProgressoFOrmazione.DataCompletamento = UtilDate.CurrentTimeMillis();
+                    oProgressoFOrmazione.Capitolo = entityCapitolo;
+                    
+                    unitOfWork.ProgressiFormazione.Add(oProgressoFOrmazione);
+                    unitOfWork.Complete();
+
+                    
+                    log.Debug("addprogressoformazione - metodo eseguito con successo");
+                    return Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error("addprogressoformazione - errore nell'esecuzione ", ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }

@@ -14,7 +14,7 @@ angular
                       ampm = 'AM',
                       time;
 
-                time = yyyy + '/' + mm + '/' + dd;
+                time = dd + '/' + mm + '/' + yyyy;
 
                 return time;
             },

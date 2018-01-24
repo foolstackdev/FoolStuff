@@ -6,7 +6,7 @@
         </uib-tab-heading>
 
         <div class="row" style="margin-top:10px">
-            <div class="col-lg-4">
+            <div class="col-lg-3 col-md-3 col-sm-3">
                 <div class="panel panel-default">
 
                     <div class="panel-heading">
@@ -23,7 +23,7 @@
 
                 </div>
             </div>
-            <div class="col-lg-8">
+            <div class="col-lg-9 col-md-9 col-sm-9">
                 <div class="panel panel-default">
 
                     <div class="panel-heading">
@@ -38,11 +38,40 @@
 
                         </div>
                         <div class="row">
-                            <ul>
+                            <table class="table table table-bordered table-condensed">
+                                <tr>
+                                    <th>
+                                        Capitolo
+                                    </th>
+                                    <th class="textAlignCenter">
+                                        Data conclusione
+                                    </th>
+                                    <th>
+                                        Azioni
+                                    </th>
+
+                                </tr>
+                                <tr data-ng-repeat="capitolo in trainingCtrl.visualizzaCorso.capitoli">
+                                    <td>
+                                        {{capitolo.numeroCapitolo}} - {{capitolo.titolo}}
+                                    </td>
+                                    <td class="textAlignCenter">
+                                        <span data-ng-show="capitolo.progressiFormazione | checkIfUserInProgressoFormazione">{{capitolo.progressiFormazione | returnConclusionDateProgressoFormazione}}</span>
+                                        <span data-ng-hide="capitolo.progressiFormazione | checkIfUserInProgressoFormazione">---</span>
+                                    </td>
+                                    <td>
+                                        <i class="fa fa-book colorRed cursorPointer" title="Visualizza Messaggi" aria-hidden="true"></i>&nbsp;&nbsp;
+                                        <i data-ng-hide="capitolo.progressiFormazione | checkIfUserInProgressoFormazione" class="fa fa-thumbs-o-up colorGreen cursorPointer" title="Lezione Conclusa" aria-hidden="true" data-ng-click="trainingCtrl.capitoloConcluso(capitolo)"></i>&nbsp;&nbsp;
+
+                                        <!--<span data-ng-show="capitolo.progressiFormazione | checkIfUserInProgressoFormazione" class="colorBlue">OK</span>-->
+                                    </td>
+                                </tr>
+                            </table>
+                            <!--<ul>
                                 <li data-ng-repeat="capitolo in trainingCtrl.visualizzaCorso.capitoli">
                                     {{capitolo.numeroCapitolo}} - {{capitolo.titolo}}
                                 </li>
-                            </ul>
+                            </ul>-->
                         </div>
                     </div>
                     <div class="panel-footer">
@@ -73,26 +102,75 @@
         </uib-tab-heading>
 
         <div class="row" style="margin-top:10px">
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+
+                    <div class="panel-heading">
+                        Corsi seguiti
+                    </div>
+                    <div class="panel-body">
+                        <uib-tabset active="activePill" vertical="true" type="pills">
+                            <uib-tab index="$index" heading="{{corso.titolo}}" data-ng-repeat="corso in trainingCtrl.corsiPersonali.corsi track by $index" data-ng-click="trainingCtrl.switchCorsoPersonale(corso)"></uib-tab>
+                        </uib-tabset>
+                    </div>
+                    <div class="panel-footer">
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="panel panel-default">
+
+                    <div class="panel-heading">
+                        <h5 class="pull-left">{{trainingCtrl.visualizzaCorsoPersonale.titolo}}</h5> <h5 class="pull-right"><a href="{{trainingCtrl.visualizzaCorsoPersonale.risorsa}}">{{trainingCtrl.visualizzaCorsoPersonale.risorsa}}</a></h5>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <blockquote>
+                                <p style="font-size: small;">{{trainingCtrl.visualizzaCorsoPersonale.descrizione}}</p>
+                                <!--<footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>-->
+                            </blockquote>
+
+                        </div>
+                        <div class="row">
+                            <ul>
+                                <li data-ng-repeat="capitolo in trainingCtrl.visualizzaCorsoPersonale.capitoli">
+                                    {{capitolo.numeroCapitolo}} - {{capitolo.titolo}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row listWell">
+
+                            <div class="row">
+                                <div class="col-lg-12" style="padding:15px;">
+                                    <p style="margin-left: 15px;">Utenti sottoscritti</p>
+                                    <span class="well well-sm" data-ng-repeat="user in trainingCtrl.visualizzaCorsoPersonale.utenti" style="margin-left:15px;float:left; margin-bottom:3px"> <img src="{{user.avatar}}" />&nbsp;&nbsp;&nbsp;&nbsp;{{user.name}} {{user.surname}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-success btn-sm btn-block" data-ng-hide="trainingCtrl.visualizzaCorsoPersonale.utenti | checkIfUserIn" data-ng-click="trainingCtrl.seguiCorso(trainingCtrl.visualizzaCorsoPersonale)">Segui corso</button>
+                        <h4 class="textAlignCenter colorGreen" data-ng-show="trainingCtrl.visualizzaCorsoPersonale.utenti | checkIfUserIn">Sottoscritto al corso</h4>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
 
             <uib-accordion>
-                <!--<div uib-accordion-group class="panel-primary" heading="Static Header, initially expanded" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
-                    This content is straight in the template.
-                </div>
-
-                <div uib-accordion-group class="panel-success" heading="{{group.title}}" ng-repeat="group in groups">
-                    {{group.content}}
-                </div>
-
-                <div uib-accordion-group class="panel-warning" heading="Dynamic Body Content">
-                    <p>The body of the uib-accordion group grows to fit the contents</p>
-                    <button type="button" class="btn btn-default btn-sm" ng-click="addItem()">Add Item</button>
-                    <div ng-repeat="item in items">{{item}}</div>
-                </div>
-
-                <div uib-accordion-group class="panel-danger" heading="Delete account">
-                    <p>Please, to delete your account, click the button below</p>
-                    <button class="btn btn-danger">Delete</button>
-                </div>-->
 
                 <div uib-accordion-group class="panel-success" data-ng-repeat="corso in trainingCtrl.corsiPersonali.corsi track by $index">
                     <uib-accordion-heading>
@@ -125,9 +203,7 @@
                                     <td>
                                         {{capitolo.titolo}}
                                     </td>
-                                    <td>
-
-                                    </td>
+                                    <td></td>
                                 </tr>
                             </table>
 

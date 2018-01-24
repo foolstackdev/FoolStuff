@@ -13,6 +13,7 @@ angular
             vm.capitolo = {};
             vm.capitolo = [];
             vm.visualizzaCorso = {};
+            vm.visualizzaCorsoPersonale = {};
             vm.corsiPersonali = [];
 
 
@@ -27,6 +28,8 @@ angular
             vm.inserisciCapitolo = _inserisciCapitolo;
             vm.switchCorso = _switchCorso;
             vm.seguiCorso = _seguiCorso;
+            vm.switchCorsoPersonale = _switchCorsoPersonale
+            vm.capitoloConcluso = _capitoloConcluso;
 
             init();
             function init() {
@@ -80,6 +83,10 @@ angular
                 vm.visualizzaCorso = item;
             }
 
+            function _switchCorsoPersonale(item) {
+                vm.visualizzaCorsoPersonale = item;
+            }
+
             function _seguiCorso(item) {
                 console.log(item);
                 var userCorso = {
@@ -102,6 +109,21 @@ angular
                 }, function (err) {
                     console.log(err)
                     toastr.error('Problems duringl loading', 'Something went wrong [' + err + ']');
+                });
+            }
+
+            function _capitoloConcluso(item) {
+                console.log(item);
+                var progressiFormazione = {
+                    Utente: ApplicationService.getUser().userInfo,
+                    Capitolo: item
+                }
+                RestService.PostData(CostantUrl.urlFormazione, "addprogressoformazione", progressiFormazione).then(function (response) {
+                    toastr.success('Registrazione effettuata correttamente', 'Confirmed');
+                    _reload();
+                }, function (err) {
+                    console.log(err)
+                    toastr.error('Problems during insertion', 'Something went wrong [' + err.data.message + ']');
                 });
             }
 
