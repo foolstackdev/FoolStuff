@@ -43,7 +43,7 @@ angular
                     for (var i = 0; i < vm.corsi.length; i++) {
                         vm.corsi[i].utenti = ApplicationService.addAvatarToUsers(vm.corsi[i].utenti);
                     }
-                    vm.visualizzaCorso = vm.corsi[0];
+                    vm.visualizzaCorso = angular.equals(vm.visualizzaCorso, {}) ? vm.corsi[0] : vm.corsi[vm.visualizzaCorso.id -1];
                 }, function (err) {
                     console.log(err)
                     toastr.error('Problems during insertion', 'Something went wrong [' + err + ']');

@@ -61,7 +61,9 @@
                                     </td>
                                     <td>
                                         <i class="fa fa-book colorRed cursorPointer" title="Visualizza Messaggi" aria-hidden="true"></i>&nbsp;&nbsp;
-                                        <i data-ng-hide="capitolo.progressiFormazione | checkIfUserInProgressoFormazione" class="fa fa-thumbs-o-up colorGreen cursorPointer" title="Lezione Conclusa" aria-hidden="true" data-ng-click="trainingCtrl.capitoloConcluso(capitolo)"></i>&nbsp;&nbsp;
+                                        <span data-ng-show="trainingCtrl.visualizzaCorso.utenti | checkIfUserIn">
+                                            <i data-ng-hide="capitolo.progressiFormazione | checkIfUserInProgressoFormazione" class="fa fa-thumbs-o-up colorGreen cursorPointer" title="Lezione Conclusa" aria-hidden="true" data-ng-click="trainingCtrl.capitoloConcluso(capitolo)"></i>&nbsp;&nbsp;
+                                        </span>
 
                                         <!--<span data-ng-show="capitolo.progressiFormazione | checkIfUserInProgressoFormazione" class="colorBlue">OK</span>-->
                                     </td>
