@@ -39,6 +39,9 @@
                             </div>
 
                         </div>
+                        <div class="row" data-ng-show="trainingCtrl.visualizzaCorso.utenti | checkIfUserIn">
+                            <div class="col-lg-12"><uib-progressbar class="progress-striped active" max="trainingCtrl.visualizzaCorso.capitoli.length" value="trainingCtrl.visualizzaCorso | personalProgress" type="success"><i>{{trainingCtrl.visualizzaCorso | personalProgress}} / {{trainingCtrl.visualizzaCorso.capitoli.length}}</i></uib-progressbar></div>
+                        </div>
                         <div class="row">
                             <div class="col-lg-12">
                                 <table class="table table table-bordered table-condensed">
@@ -63,9 +66,10 @@
                                             <span data-ng-hide="capitolo.progressiFormazione | checkIfUserInProgressoFormazione">---</span>
                                         </td>
                                         <td>
-                                            <i class="fa fa-book colorRed cursorPointer" title="Visualizza Messaggi" aria-hidden="true" data-ng-click="trainingCtrl.switchMessaggi(capitolo)"></i>&nbsp;&nbsp;
+                                            <i class="fa fa-commenting colorGreen cursorPointer" title="Visualizza Messaggi" aria-hidden="true" data-ng-click="trainingCtrl.switchMessaggi(capitolo)"></i>&nbsp;&nbsp;
                                             <span data-ng-show="trainingCtrl.visualizzaCorso.utenti | checkIfUserIn">
-                                                <i data-ng-hide="capitolo.progressiFormazione | checkIfUserInProgressoFormazione" class="fa fa-thumbs-o-up colorGreen cursorPointer" title="Lezione Conclusa" aria-hidden="true" data-ng-click="trainingCtrl.capitoloConcluso(capitolo)"></i>&nbsp;&nbsp;
+                                                <i data-ng-hide="capitolo.progressiFormazione | checkIfUserInProgressoFormazione" class="fa fa-check colorGreen cursorPointer" title="Concludi lezione" aria-hidden="true" data-ng-click="trainingCtrl.capitoloConcluso(capitolo)"></i>
+                                                <i data-ng-show="capitolo.progressiFormazione | checkIfUserInProgressoFormazione" class="fa fa-thumbs-o-up colorBlue" title="Lezione Conclusa" aria-hidden="true"></i>&nbsp;&nbsp;
                                             </span>
 
                                             <!--<span data-ng-show="capitolo.progressiFormazione | checkIfUserInProgressoFormazione" class="colorBlue">OK</span>-->
@@ -90,9 +94,10 @@
                                 </div>
                             </div>
                         </div>
-
-                        <button class="btn btn-success btn-sm btn-block" data-ng-hide="trainingCtrl.visualizzaCorso.utenti | checkIfUserIn" data-ng-click="trainingCtrl.seguiCorso(trainingCtrl.visualizzaCorso)">Segui corso</button>
-                        <h4 class="textAlignCenter colorGreen" data-ng-show="trainingCtrl.visualizzaCorso.utenti | checkIfUserIn">Sottoscritto al corso</h4>
+                        <div class="marginTop15">
+                            <button class="btn btn-success btn-sm btn-block" data-ng-hide="trainingCtrl.visualizzaCorso.utenti | checkIfUserIn" data-ng-click="trainingCtrl.seguiCorso(trainingCtrl.visualizzaCorso)">Segui corso</button>
+                            <h4 class="textAlignCenter colorGreen" data-ng-show="trainingCtrl.visualizzaCorso.utenti | checkIfUserIn">Sottoscritto al corso</h4>
+                        </div>
                     </div>
 
                 </div>
@@ -150,7 +155,7 @@
                             <div class="col-lg-12" data-ng-repeat="messaggio in trainingCtrl.capitoliMessaggi.messaggi">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <h5><b>{{messaggio.titolo}}</b></h5>
+                                        <h5><b>{{messaggio.titolo}}</b> <span class="pull-right colorBlue">{{messaggio.dataMessaggio | timestampToHumanWithHours}}</span></h5>
                                     </div>
                                     <div class="panel-body">
                                         <div class="row messageBorder">
@@ -166,14 +171,15 @@
                                                 <p>{{messaggio.testo}}</p>
                                             </div>
                                             <div class="col-lg-10 col-lg-offset-2">
-                                                risposte
+                                                <div data-ng-repeat="risposta in messaggio.risposte">
+
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading"><span><img src="{{risposta.utente.avatar}}" /> {{risposta.utente.name }} {{risposta.utente.surname}}</span></div>
+                                                        <div class="panel-body">{{risposta.testo}}</div>
+                                                        <div class="panel-footer"><p><span class="pull-right">{{risposta.dataRisposta| timestampToHumanWithHours}}</span></p></div>
+                                                    </div>
+                                                </div>
                                                 <br />
-                                                ---
-                                                <br />
-
-
-
-
 
                                                 <uib-accordion>
                                                     <div uib-accordion-group class="panel-success">
@@ -182,19 +188,18 @@
                                                         </uib-accordion-heading>
                                                         <div class="panel panel-default">
                                                             <div class="panel-heading">
-                                                                <!--<h5>Messaggi capitolo <i>{{trainingCtrl.capitoliMessaggi.titolo}}</i></h5>-->
                                                             </div>
                                                             <div class="panel-body">
                                                                 <div class="row">
                                                                     <div class="col-lg-12">
-                                                                        <form class="form-horizontal" role="form" name="forminserimentorisposta">
+                                                                        <form class="form-horizontal" role="form" name="forminserimentorisposta" data-ng-submit="trainingCtrl.inserisciRisposta(messaggio,trainingCtrl.capitoliMessaggi)">
                                                                             <div class="form-group">
                                                                                 <label class="control-label col-sm-2" for="testo">Risposta::</label>
                                                                                 <div class="col-sm-10">
                                                                                     <input type="text" class="form-control" name="testo" data-ng-model="trainingCtrl.nuovaRisposta.testo" required />
                                                                                 </div>
                                                                             </div>
-                                                                            <button type="submit" data-ng-click="trainingCtrl.inserisciRisposta(messaggio)" class="btn btn-success btn-sm pull-right" data-ng-disabled="!forminserimentorisposta.$valid"><i class="fa fa-plus" aria-hidden="true"></i> Inserisci risposta</button>
+                                                                            <button type="submit" class="btn btn-success btn-sm pull-right" data-ng-disabled="!forminserimentorisposta.$valid"><i class="fa fa-plus" aria-hidden="true"></i> Inserisci risposta</button>
                                                                         </form>
                                                                     </div>
                                                                 </div>
@@ -205,43 +210,14 @@
                                                         </div>
                                                     </div>
                                                 </uib-accordion>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                                             </div>
                                         </div>
-
-
                                     </div>
                                     <div class="panel-footer">
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
-
-
-
-
-
-
                     </div>
 
                     <div class="panel-footer">
@@ -251,7 +227,7 @@
             </div>
 
         </div>
-        </div>
+
 
     </uib-tab>
 

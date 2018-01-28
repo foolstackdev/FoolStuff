@@ -116,16 +116,6 @@ angular
                 });
             }
 
-            //function _caricaCorsi() {
-            //    RestService.GetData(CostantUrl.urlFormazione, "getcorsi/" + userId).then(function (response) {
-            //        console.log(response);
-            //        vm.corsiPersonali = response.data;
-            //    }, function (err) {
-            //        console.log(err)
-            //        toastr.error('Problems duringl loading', 'Something went wrong [' + err + ']');
-            //    });
-            //}
-
             function _capitoloConcluso(item) {
                 var progressiFormazione = {
                     Utente: ApplicationService.getUser().userInfo,
@@ -172,15 +162,15 @@ angular
 
             function _getMessaggiPerCapitolo(capitolo) {
                 RestService.PostData(CostantUrl.urlFormazione, "getmessaggipercapitolo", capitolo).then(function (response) {
-                    console.log(response);
                     vm.capitoliMessaggi.messaggi = response.data.messaggi;
-
                     if (vm.capitoliMessaggi.messaggi.length > 0) {
                         for (var i = 0; i < vm.capitoliMessaggi.messaggi.length; i++) {
                             vm.capitoliMessaggi.messaggi[i].submitter = ApplicationService.addAvatarToSingleUser(vm.capitoliMessaggi.messaggi[i].submitter);
+                            for (var j = 0; j < vm.capitoliMessaggi.messaggi[i].risposte.length; j++) {
+                                vm.capitoliMessaggi.messaggi[i].risposte[j].utente = ApplicationService.addAvatarToSingleUser(vm.capitoliMessaggi.messaggi[i].risposte[j].utente);
+                            }
                         }
                     }
-
                     vm.nuovoMessaggio = {};
                 }, function (err) {
                     console.log(err)
@@ -188,9 +178,16 @@ angular
                 });
             }
 
-            function _inserisciRisposta(messaggio) {
-                console.log(messaggio);
-                console.log(vm.nuovaRisposta);
+            function _inserisciRisposta(messaggio, capitolo) {
+                messaggio.risposte = [];
+                messaggio.risposte.push(vm.nuovaRisposta);
+                RestService.PostData(CostantUrl.urlFormazione, "addrispostatomessaggio", messaggio).then(function (response) {
+                    vm.nuovaRisposta = {};
+                    _getMessaggiPerCapitolo(capitolo);
+                }, function (err) {
+                    console.log(err)
+                    toastr.error('Problems retrieving messages', 'Something went wrong [' + err.data.message + ']');
+                });
             }
 
             //END MESSAGGI

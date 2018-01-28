@@ -221,5 +221,25 @@ angular.module("FoolStackApp")
             return "";
         };
     }])
+    .filter('personalProgress', ["ConstantFilterFunctions", "ApplicationService", "UtilService", function (ConstantFilterFunctions, ApplicationService, UtilService) {
+        return function (collection) {
+            var userId = ApplicationService.getUserId();
+            var count = 0;
 
+            if (collection.hasOwnProperty("capitoli") && collection.capitoli.length > 0) {
+                for (var i = 0; i < collection.capitoli.length; i++) {
+                    if (collection.capitoli[i].hasOwnProperty("progressiFormazione") && collection.capitoli[i].progressiFormazione != null && collection.capitoli[i].progressiFormazione.length > 0) {
+                        for (var j = 0; j < collection.capitoli[i].progressiFormazione.length; j++) {
+                            if (collection.capitoli[i].progressiFormazione[j].hasOwnProperty("utente") && collection.capitoli[i].progressiFormazione[j].utente != null) {
+                                if (collection.capitoli[i].progressiFormazione[j].utente.id == userId) {
+                                    count++;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return count;
+        };
+    }])
     ;

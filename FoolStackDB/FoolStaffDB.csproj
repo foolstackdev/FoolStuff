@@ -104,6 +104,10 @@
     <Compile Include="Migrations\201801211714409_AddCorsiUtentiRelationship.Designer.cs">
       <DependentUpon>201801211714409_AddCorsiUtentiRelationship.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801281505412_AddRisposteToMessages.cs" />
+    <Compile Include="Migrations\201801281505412_AddRisposteToMessages.Designer.cs">
+      <DependentUpon>201801281505412_AddRisposteToMessages.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\EntityConfigurations\CapitoloConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\CorsoConfiguration.cs" />
@@ -159,6 +163,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801211714409_AddCorsiUtentiRelationship.resx">
       <DependentUpon>201801211714409_AddCorsiUtentiRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801281505412_AddRisposteToMessages.resx">
+      <DependentUpon>201801281505412_AddRisposteToMessages.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

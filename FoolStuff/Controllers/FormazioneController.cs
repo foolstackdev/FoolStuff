@@ -12,7 +12,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using ThenInclude;
 
 namespace FoolStuff.Controllers
 {
@@ -69,30 +68,30 @@ namespace FoolStuff.Controllers
             }
         }
 
-        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
-        [HttpGet]
-        [Route("getcorsi/{id}")]
-        public HttpResponseMessage Getcorsi(string id)
-        {
-            try
-            {
-                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
-                {
-                    var entity = unitOfWork.Users.Search(u => u.Id == id)
-                        .Include(e => e.Corsi.Select(c => c.Capitoli.Select(f => f.ProgressiFormazione.Select(u => u.Utente))))
-                        .Include(e => e.Corsi.Select(c => c.Utenti.Select(f => f.ProgressiFormazione)))
-                        .Include(e => e.ProgressiFormazione).FirstOrDefault();
+        //[Authorize(Roles = "SuperAdmin, FoolStackUser")]
+        //[HttpGet]
+        //[Route("getcorsi/{id}")]
+        //public HttpResponseMessage Getcorsi(string id)
+        //{
+        //    try
+        //    {
+        //        using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
+        //        {
+        //            var entity = unitOfWork.Users.Search(u => u.Id == id)
+        //                .Include(e => e.Corsi.Select(c => c.Capitoli.Select(f => f.ProgressiFormazione.Select(u => u.Utente))))
+        //                .Include(e => e.Corsi.Select(c => c.Utenti.Select(f => f.ProgressiFormazione)))
+        //                .Include(e => e.ProgressiFormazione).FirstOrDefault();
 
-                    log.Debug("getcorsi - metodo eseguito con successo");
-                    return Request.CreateResponse(HttpStatusCode.OK, entity);
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error("getcorsi - errore nell'esecuzione ", ex);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
-            }
-        }
+        //            log.Debug("getcorsi - metodo eseguito con successo");
+        //            return Request.CreateResponse(HttpStatusCode.OK, entity);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        log.Error("getcorsi - errore nell'esecuzione ", ex);
+        //        return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+        //    }
+        //}
 
         [Authorize(Roles = "SuperAdmin")]
         [HttpPost]
@@ -272,7 +271,7 @@ namespace FoolStuff.Controllers
             {
                 using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
                 {
-                    var entity = unitOfWork.Capitoli.Search(u => u.Id == capitolo.Id).Include(m => m.Messaggi.Select(p => p.Risposte)).Include(s => s.Messaggi.Select(o => o.Submitter)).FirstOrDefault();
+                    var entity = unitOfWork.Capitoli.Search(u => u.Id == capitolo.Id).Include(m => m.Messaggi.Select(p => p.Risposte.Select(u => u.Utente))).Include(s => s.Messaggi.Select(o => o.Submitter)).FirstOrDefault();
                     log.Debug("getmessaggipercapitolo - metodo eseguito con successo");
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
@@ -298,8 +297,12 @@ namespace FoolStuff.Controllers
 
                     Risposta oRisposta = new Risposta();
                     oRisposta.DataRisposta = UtilDate.CurrentTimeMillis();
-                    
+                    oRisposta.Testo = messaggio.Risposte[0].Testo;
+                    oRisposta.Messaggio = entityMessaggio;
+                    oRisposta.Utente = entityUser;
 
+                    unitOfWork.Risposte.Add(oRisposta);
+                    unitOfWork.Complete();
                     //var entity = unitOfWork.Capitoli.Search(u => u.Id == capitolo.Id).Include(m => m.Messaggi.Select(p => p.Risposte)).Include(s => s.Messaggi.Select(o => o.Submitter)).FirstOrDefault();
                     //log.Debug("addrispostatomessaggio - metodo eseguito con successo");
                     return Request.CreateResponse(HttpStatusCode.OK);
