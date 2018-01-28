@@ -9,7 +9,6 @@ angular
                 var urltoCall = path + method;
                 $http.get(urltoCall)
                     .then(function (result) {
-                        console.log("Success");
                         deferred.resolve(result);
                     }, function (err) {
                         if (err.status == 401) {
@@ -25,7 +24,6 @@ angular
                 var deferred = $q.defer();
                 $http.post(path + method, json)
                     .then(function (result) {
-                        console.log("Success");
                         deferred.resolve(result);
                     }, function (err) {
                         if (err.status == 401) {

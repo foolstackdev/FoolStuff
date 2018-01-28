@@ -13,8 +13,7 @@ namespace FoolStackDB.Core.Domain
         public long DataRisposta { get; set; }
         public string Testo { get; set; }
 
-        public IList<Messaggio> Messaggi { get; set; }
-
-        public IList<User> Utenti { get; set; }
+        public Messaggio Messaggio { get; set; }
+        public User Utente { get; set; }
     }
 }

@@ -15,13 +15,17 @@ angular
             vm.visualizzaCorso = {};
             vm.visualizzaCorsoPersonale = {};
             vm.corsiPersonali = [];
-
+            //messaggi
+            vm.nuovoMessaggio = {};
+            vm.nuovaRisposta = {};
 
             vm.isAdmin = ApplicationService.isAdmin();
 
             //functions
             vm.reload = _reload;
-            vm.caricaCorsi = _caricaCorsi;
+            //vm.caricaCorsi = _caricaCorsi;
+            vm.switchMessaggiInit = _switchMessaggiInit;
+            vm.switchMessaggi = _switchMessaggi;
 
             //button functions
             vm.inserisciCorso = _inserisciCorso;
@@ -30,6 +34,9 @@ angular
             vm.seguiCorso = _seguiCorso;
             vm.switchCorsoPersonale = _switchCorsoPersonale
             vm.capitoloConcluso = _capitoloConcluso;
+            //Messaggi
+            vm.inserisciMessaggio = _inserisciMessaggio;
+            vm.inserisciRisposta = _inserisciRisposta;
 
             init();
             function init() {
@@ -38,12 +45,9 @@ angular
 
             function _reload() {
                 RestService.GetData(CostantUrl.urlFormazione, "getallcorsi").then(function (response) {
-                    console.log(response);
                     vm.corsi = response.data;
-                    for (var i = 0; i < vm.corsi.length; i++) {
-                        vm.corsi[i].utenti = ApplicationService.addAvatarToUsers(vm.corsi[i].utenti);
-                    }
-                    vm.visualizzaCorso = angular.equals(vm.visualizzaCorso, {}) ? vm.corsi[0] : vm.corsi[vm.visualizzaCorso.id -1];
+                    vm.visualizzaCorso = angular.equals(vm.visualizzaCorso, {}) ? vm.corsi[0] : vm.corsi[vm.visualizzaCorso.id - 1];
+                    _caricaCorso(vm.visualizzaCorso);
                 }, function (err) {
                     console.log(err)
                     toastr.error('Problems during insertion', 'Something went wrong [' + err + ']');
@@ -64,7 +68,6 @@ angular
             function _inserisciCapitolo(item) {
                 var corsoCopy = angular.copy(item);
                 corsoCopy.capitoli = [];
-                console.log(corsoCopy);
                 var obj = {
                     numeroCapitolo: item.capitoli.length + 1,
                     titolo: item.capitolo
@@ -80,7 +83,8 @@ angular
             }
 
             function _switchCorso(item) {
-                vm.visualizzaCorso = item;
+                _caricaCorso(item)
+                _switchMessaggiInit(vm.visualizzaCorso);
             }
 
             function _switchCorsoPersonale(item) {
@@ -88,7 +92,6 @@ angular
             }
 
             function _seguiCorso(item) {
-                console.log(item);
                 var userCorso = {
                     corso: item,
                     userId: userId
@@ -102,18 +105,28 @@ angular
                 });
             }
 
-            function _caricaCorsi() {
-                RestService.GetData(CostantUrl.urlFormazione, "getcorsi/" + userId).then(function (response) {
-                    console.log(response);
-                    vm.corsiPersonali = response.data;
+            function _caricaCorso(item) {
+                RestService.PostData(CostantUrl.urlFormazione, "getcorso", item).then(function (response) {
+                    vm.visualizzaCorso = response.data[0];
+                    vm.visualizzaCorso.utenti = ApplicationService.addAvatarToUsers(vm.visualizzaCorso.utenti);
+                    _switchMessaggiInit(vm.visualizzaCorso);
                 }, function (err) {
                     console.log(err)
                     toastr.error('Problems duringl loading', 'Something went wrong [' + err + ']');
                 });
             }
 
+            //function _caricaCorsi() {
+            //    RestService.GetData(CostantUrl.urlFormazione, "getcorsi/" + userId).then(function (response) {
+            //        console.log(response);
+            //        vm.corsiPersonali = response.data;
+            //    }, function (err) {
+            //        console.log(err)
+            //        toastr.error('Problems duringl loading', 'Something went wrong [' + err + ']');
+            //    });
+            //}
+
             function _capitoloConcluso(item) {
-                console.log(item);
                 var progressiFormazione = {
                     Utente: ApplicationService.getUser().userInfo,
                     Capitolo: item
@@ -126,5 +139,60 @@ angular
                     toastr.error('Problems during insertion', 'Something went wrong [' + err.data.message + ']');
                 });
             }
+
+            //MESSAGGI
+            vm.capitoliMessaggi = {};
+            function _switchMessaggiInit(item) {
+                if (item == undefined)
+                    return;
+                vm.capitoliMessaggi = item.capitoli[0];
+                _getMessaggiPerCapitolo(vm.capitoliMessaggi);
+            }
+
+            function _switchMessaggi(item) {
+                if (item == undefined)
+                    return;
+                vm.capitoliMessaggi = item;
+                _getMessaggiPerCapitolo(vm.capitoliMessaggi);
+            }
+
+            function _inserisciMessaggio() {
+                vm.capitoliMessaggi.messaggi = [];
+                vm.capitoliMessaggi.messaggi.push(vm.nuovoMessaggio);
+
+                RestService.PostData(CostantUrl.urlFormazione, "addusermessageforcapitolo", vm.capitoliMessaggi).then(function (response) {
+                    toastr.success('Inserimento messaggio effettuato correttamente', 'Confirmed');
+                    vm.nuovoMessaggio = {};
+                    _getMessaggiPerCapitolo(vm.capitoliMessaggi);
+                }, function (err) {
+                    console.log(err)
+                    toastr.error('Problems during insertion', 'Something went wrong [' + err.data.message + ']');
+                });
+            }
+
+            function _getMessaggiPerCapitolo(capitolo) {
+                RestService.PostData(CostantUrl.urlFormazione, "getmessaggipercapitolo", capitolo).then(function (response) {
+                    console.log(response);
+                    vm.capitoliMessaggi.messaggi = response.data.messaggi;
+
+                    if (vm.capitoliMessaggi.messaggi.length > 0) {
+                        for (var i = 0; i < vm.capitoliMessaggi.messaggi.length; i++) {
+                            vm.capitoliMessaggi.messaggi[i].submitter = ApplicationService.addAvatarToSingleUser(vm.capitoliMessaggi.messaggi[i].submitter);
+                        }
+                    }
+
+                    vm.nuovoMessaggio = {};
+                }, function (err) {
+                    console.log(err)
+                    toastr.error('Problems retrieving messages', 'Something went wrong [' + err.data.message + ']');
+                });
+            }
+
+            function _inserisciRisposta(messaggio) {
+                console.log(messaggio);
+                console.log(vm.nuovaRisposta);
+            }
+
+            //END MESSAGGI
 
         }]);

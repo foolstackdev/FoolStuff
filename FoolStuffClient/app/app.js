@@ -4,6 +4,7 @@
         'ui.router',
         'toastr',
         'ui.bootstrap',
-        'chart.js'
+        'chart.js',
+        'ngAnimate'
     ]);
 })();

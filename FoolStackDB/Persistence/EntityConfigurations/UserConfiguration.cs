@@ -43,7 +43,8 @@ namespace FoolStaff.Persistence.EntityConfigurations
                 .WillCascadeOnDelete(false);
 
             HasMany(r => r.Risposte)
-                .WithMany(u => u.Utenti);
+                .WithRequired(u => u.Utente)
+                .WillCascadeOnDelete(false);
 
             HasMany(p => p.ProgressiFormazione)
                 .WithRequired(u => u.Utente)

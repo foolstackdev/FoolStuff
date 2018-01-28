@@ -1,5 +1,6 @@
 ﻿using FoolStackDB.Core.Domain;
 using FoolStaff;
+using FoolStaff.Core.Domain;
 using FoolStuff.Dto;
 using FoolStuff.Helpers;
 using log4net;
@@ -30,8 +31,33 @@ namespace FoolStuff.Controllers
                 using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
                 {
                     //get user =>  User.Identity.GetUserId()
-                    var entity = unitOfWork.Corsi.GetAllIncluding().Include(u => u.Utenti).Include(c => c.Capitoli.Select(f => f.ProgressiFormazione)).ToList();
-                    //var entity = unitOfWork.Capitoli.GetAllIncluding().Include(c => c.Corso).Include(c => c.ProgressiFormazione).Include(t => t.Tags);
+                    //var entity = unitOfWork.Corsi.GetAllIncluding().Include(u => u.Utenti).Include(c => c.Capitoli.Select(f => f.ProgressiFormazione)).Include(c => c.Capitoli.Select(m => m.Messaggi)).ToList();
+                    //var entity = unitOfWork.Corsi.GetAllIncluding().Include(u => u.Utenti).Include(c => c.Capitoli.Select(f => f.ProgressiFormazione)).ToList();
+                    var entity = unitOfWork.Corsi.GetAllIncluding().Include(c => c.Capitoli).ToList();
+                    log.Debug("getallcorsi - metodo eseguito con successo");
+                    return Request.CreateResponse(HttpStatusCode.OK, entity);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error("getallcorsi - errore nell'esecuzione ", ex);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
+        [HttpPost]
+        [Route("getcorso")]
+        public HttpResponseMessage GetCorso([FromBody] Corso corso)
+        {
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
+                {
+                    //get user =>  User.Identity.GetUserId()
+                    //var entity = unitOfWork.Corsi.GetAllIncluding().Include(u => u.Utenti).Include(c => c.Capitoli.Select(f => f.ProgressiFormazione)).Include(c => c.Capitoli.Select(m => m.Messaggi)).ToList();
+                    var entity = unitOfWork.Corsi.Search(c => c.Id == corso.Id).Include(u => u.Utenti).Include(c => c.Capitoli.Select(f => f.ProgressiFormazione.Select(u => u.Utente))).ToList();
+
                     log.Debug("getallcorsi - metodo eseguito con successo");
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
@@ -189,11 +215,11 @@ namespace FoolStuff.Controllers
                     oProgressoFOrmazione.Utente = entityUser;
                     oProgressoFOrmazione.DataCompletamento = UtilDate.CurrentTimeMillis();
                     oProgressoFOrmazione.Capitolo = entityCapitolo;
-                    
+
                     unitOfWork.ProgressiFormazione.Add(oProgressoFOrmazione);
                     unitOfWork.Complete();
 
-                    
+
                     log.Debug("addprogressoformazione - metodo eseguito con successo");
                     return Request.CreateResponse(HttpStatusCode.OK);
                 }
@@ -201,6 +227,87 @@ namespace FoolStuff.Controllers
             catch (Exception ex)
             {
                 log.Error("addprogressoformazione - errore nell'esecuzione ", ex);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
+        [HttpPost]
+        [Route("addusermessageforcapitolo")]
+        public HttpResponseMessage AddUserMessageForCapitolo([FromBody] Capitolo capitolo)
+        {
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
+                {
+                    Capitolo oCapitolo = unitOfWork.Capitoli.Search(u => u.Id == capitolo.Id).Include(m => m.Messaggi).FirstOrDefault();
+                    User oUser = unitOfWork.Users.Get(User.Identity.GetUserId());
+
+                    Messaggio oMessaggio = new Messaggio();
+                    oMessaggio.Submitter = oUser;
+                    oMessaggio.DataMessaggio = UtilDate.CurrentTimeMillis();
+                    oMessaggio.Testo = capitolo.Messaggi[0].Testo;
+                    oMessaggio.Titolo = capitolo.Messaggi[0].Titolo;
+
+                    oCapitolo.Messaggi.Add(oMessaggio);
+                    unitOfWork.Complete();
+
+                    log.Debug("addusermessageforcapitolo - metodo eseguito con successo");
+                    return Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error("addusermessageforcapitolo - errore nell'esecuzione ", ex);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
+        [HttpPost]
+        [Route("getmessaggipercapitolo")]
+        public HttpResponseMessage GetMessaggiPerCapitolo([FromBody] Capitolo capitolo)
+        {
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
+                {
+                    var entity = unitOfWork.Capitoli.Search(u => u.Id == capitolo.Id).Include(m => m.Messaggi.Select(p => p.Risposte)).Include(s => s.Messaggi.Select(o => o.Submitter)).FirstOrDefault();
+                    log.Debug("getmessaggipercapitolo - metodo eseguito con successo");
+                    return Request.CreateResponse(HttpStatusCode.OK, entity);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error("getmessaggipercapitolo - errore nell'esecuzione ", ex);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
+        [HttpPost]
+        [Route("addrispostatomessaggio")]
+        public HttpResponseMessage AddRispostatoMessaggio([FromBody] Messaggio messaggio)
+        {
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
+                {
+                    var entityUser = unitOfWork.Users.Get(User.Identity.GetUserId());
+                    var entityMessaggio = unitOfWork.Messaggi.Get(messaggio.Id);
+
+                    Risposta oRisposta = new Risposta();
+                    oRisposta.DataRisposta = UtilDate.CurrentTimeMillis();
+                    
+
+                    //var entity = unitOfWork.Capitoli.Search(u => u.Id == capitolo.Id).Include(m => m.Messaggi.Select(p => p.Risposte)).Include(s => s.Messaggi.Select(o => o.Submitter)).FirstOrDefault();
+                    //log.Debug("addrispostatomessaggio - metodo eseguito con successo");
+                    return Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error("addrispostatomessaggio - errore nell'esecuzione ", ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }

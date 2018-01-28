@@ -57,6 +57,27 @@ angular
             return avatars;
         }
 
+        application.addAvatarToSingleUser = function (user) {
+            var avatars = JSON.parse(sessionStorage.getItem("usersAvatar"));
+            if (user.hasOwnProperty("Id")) {
+                for (var j = 0; j < avatars.length; j++) {
+                    if (user.Id == avatars[j].userId) {
+                        user.avatar = avatars[j].dataHtml;
+                        break;
+                    }
+                }
+            }
+            if (user.hasOwnProperty("id")) {
+                for (var j = 0; j < avatars.length; j++) {
+                    if (user.id == avatars[j].userId) {
+                        user.avatar = avatars[j].dataHtml;
+                        break;
+                    }
+                }
+            }
+            return user;
+        }
+
         application.addAvatarToUsers = function (collection) {
             var avatars = JSON.parse(sessionStorage.getItem("usersAvatar"));
 

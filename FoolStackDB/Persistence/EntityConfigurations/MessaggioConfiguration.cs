@@ -13,7 +13,8 @@ namespace FoolStackDB.Persistence.EntityConfigurations
         public MessaggioConfiguration()
         {
             HasMany(m => m.Risposte)
-                .WithMany(r => r.Messaggi);
+                .WithRequired(r => r.Messaggio)
+                .WillCascadeOnDelete(false);
 
         }
     }
