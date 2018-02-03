@@ -11,8 +11,7 @@ angular
         confirmPassword: ""
     };
 
-    vm.updatePass = _updatePass;
-
+     vm.updatePass = _updatePass;
 
     init();
     function init() {

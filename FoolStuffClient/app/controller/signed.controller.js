@@ -8,6 +8,11 @@ angular
         vm.logout = _logout;
         vm.userAvatar = ApplicationService.getSpecificAvatar("MD");
 
+        vm.setActive = _setActive;
+        vm.setLastActive = _setLastActive;
+
+        var lastActive;
+
         vm.menu = [];
 
         vm.userName = {};
@@ -27,8 +32,21 @@ angular
             toastr.success('You are now just mister nobody :)', 'Confirmed');
             $state.go("unlogged.home");
         }
+        //To set the HOMEPAGE false after first click
+        function _setLastActive(elem) {
+            if(elem.active)
+                lastActive = elem;
+        }
+        //Set last clicked elem as active, and lastActive false
+        //Last active then becomes current elem
+        function _setActive(elem) {
+            elem.active = true;
+            lastActive.active = false;
+            lastActive = elem;
+        }
 
         function _manageUserRole(value) {
+            //URL
             switch (value) {
                 case "SuperAdmin":
 
