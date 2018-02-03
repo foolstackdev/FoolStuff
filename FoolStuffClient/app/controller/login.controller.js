@@ -4,23 +4,31 @@ angular
 .controller('LoginController', ["$scope", "RestService", "CostantUrl", "toastr", "$state", "$rootScope", "ApplicationService",
     function ($scope, RestService, CostantUrl, toastr, $state, $rootScope, ApplicationService) {
 
+
         var vm = this;
         vm.login = _login;
+        vm.isLogging = _isLogging;
         vm.user = {
             username: "",
             password: "",
             grant_type: "password"
         }
 
+        var loggin_in = false;
+
         init();
         function init() {
             console.log("Inside Login controller");
         }
 
+        function _isLogging(){
+            return loggin_in;
+        }
+
         function _login() {
+            loggin_in = true;
             sessionStorage.clear();
             var JsonObj = "userName=" + vm.user.username + "&password=" + vm.user.password + "&grant_type=password";
-
             RestService.PostContentTypeText(CostantUrl.urlToken, "token", JsonObj).then(function (response) {
                 sessionStorage.setItem('accessToken', response.data.access_token);
                 RestService.GetData(CostantUrl.urlUserAccount, "getuserinfo/" + vm.user.username + "/").then(function (responseUser) {
@@ -44,6 +52,7 @@ angular
                     console.log(err);
                     sessionStorage.clear();
                     $rootScope.$broadcast('stop-spin');
+                    loggin_in = false;
                     throw err;
                 });
             }, function (err) {
@@ -54,6 +63,8 @@ angular
                     toastr.error('Problems during login, maybe username or password are incorrect', 'Something went wrong');
                 else
                     toastr.error('Problems during login [' + err.data.error_description + ']', 'Something went wrong');
+
+                loggin_in = false;
             });
 
         }
