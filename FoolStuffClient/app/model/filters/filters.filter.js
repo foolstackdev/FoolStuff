@@ -242,4 +242,14 @@ angular.module("FoolStackApp")
             return count;
         };
     }])
+    .filter('numberOrZero', ["ConstantFilterFunctions", "ApplicationService", "UtilService", function (ConstantFilterFunctions, ApplicationService, UtilService) {
+        return function (number) {
+            if (number == null || number == undefined) {
+                return 0;
+            }
+            return number;
+        };
+    }])
     ;
+
+

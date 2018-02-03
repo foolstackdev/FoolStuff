@@ -37,6 +37,7 @@ angular
             //Messaggi
             vm.inserisciMessaggio = _inserisciMessaggio;
             vm.inserisciRisposta = _inserisciRisposta;
+            vm.manageProgress = _manageProgress;
 
             init();
             function init() {
@@ -188,6 +189,10 @@ angular
                     console.log(err)
                     toastr.error('Problems retrieving messages', 'Something went wrong [' + err.data.message + ']');
                 });
+            }
+
+            function _manageProgress(item) {
+                console.log(item);
             }
 
             //END MESSAGGI

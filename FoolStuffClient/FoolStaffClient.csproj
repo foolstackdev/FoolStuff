@@ -153,6 +153,7 @@
     <Content Include="app\view\assets\lib\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
     <Content Include="app\view\assets\lib\font-awesome-4.7.0\fonts\FontAwesome.otf" />
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\foolstaff.pubxml" />
     <None Include="Properties\PublishProfiles\sss.pubxml" />
     <None Include="Web.Debug.config">

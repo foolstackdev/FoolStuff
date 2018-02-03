@@ -90,7 +90,17 @@
                             <div class="row">
                                 <div class="col-lg-12" style="padding:15px;">
                                     <p style="margin-left: 15px;">Utenti sottoscritti</p>
-                                    <span class="well well-sm" data-ng-repeat="user in trainingCtrl.visualizzaCorso.utenti" style="margin-left:15px;float:left; margin-bottom:3px"> <img src="{{user.avatar}}" />&nbsp;&nbsp;&nbsp;&nbsp;{{user.name}} {{user.surname}}</span>
+                                    <div data-ng-repeat="user in trainingCtrl.visualizzaCorso.utenti">
+                                        
+                                        <div class="well well-sm" data-ng-init="trainingCtrl.manageProgress(user)" style="margin-left:15px;float:left; margin-bottom:3px; width: 233px;">
+                                            <uib-progressbar style="height:4px;" class="progress-striped active" max="trainingCtrl.visualizzaCorso.capitoli.length" value="user.progressiFormazione.length | numberOrZero" type="success"><i>{{user.progressiFormazione.length != null  ? user.progressiFormazione.length : 0}} / {{trainingCtrl.visualizzaCorso.capitoli.length}}</i></uib-progressbar>
+                                            <p>
+                                                <img src="{{user.avatar}}" />&nbsp;&nbsp;&nbsp;&nbsp;{{user.name}} {{user.surname}}
+                                                <span class="pull-right">{{user.progressiFormazione.length | numberOrZero}}/{{trainingCtrl.visualizzaCorso.capitoli.length}}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
