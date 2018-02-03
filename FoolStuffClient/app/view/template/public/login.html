@@ -18,7 +18,7 @@
         <div class="panel-footer">
             <div class="form-group">
                 <div class="col-sm-9 col-sm-offset-3">
-                    <button type="submit" class="btn btn-primary btn-block" data-ng-click="loginCtrl.login()" data-ng-disabled="loginCtrl.isLoading">Login</button>
+                    <button type="submit" class="btn btn-primary btn-block" data-ng-click="loginCtrl.login()" data-ng-disabled="!loginform.$valid || loginCtrl.isLoading"><i class="fa fa-spinner fa-spin" data-ng-show="loginCtrl.isLoading"></i>{{loginCtrl.isLoading ? ' Loading..' : 'Login'}}</button>
                 </div>
             </div>
         </div>
