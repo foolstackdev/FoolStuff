@@ -65,8 +65,8 @@ namespace FoolStuff.Controllers
 
         [Authorize(Roles = "SuperAdmin, FoolStackUser")]
         [HttpGet]
-        [Route("getfirstnumeventswithusers/{num}")]
-        public HttpResponseMessage getFirstNumEventsWithUsers(string num)
+        [Route("getfirstnumevents/{num}")]
+        public HttpResponseMessage getFirstNumEvents(string num)
         {
             int numbersOfRows;
             try
@@ -83,22 +83,48 @@ namespace FoolStuff.Controllers
                 using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
                 {
 
-                    var entity = unitOfWork.Eventi.GetAllIncluding().OrderByDescending(t => t.DataEvento).Take(numbersOfRows).Include(e => e.Prenotazioni).Include(e => e.Presenze).ToList();
-                    log.Debug("getfirstnumeventswithusers - metodo eseguito con successo");
+                    //var entity = unitOfWork.Eventi.GetAllIncluding().OrderByDescending(t => t.DataEvento).Take(numbersOfRows).Include(e => e.Prenotazioni).Include(e => e.Presenze).ToList();
+                    var entity = unitOfWork.Eventi.GetAll().Take(numbersOfRows).OrderByDescending(t => t.DataEvento).ToList();
+                    log.Debug("getfirstnumevents - metodo eseguito con successo");
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
             }
             catch (Exception ex)
             {
-                log.Error("getfirstnumeventswithusers - errore nell'esecuzione ", ex);
+                log.Error("getfirstnumevents - errore nell'esecuzione ", ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
 
+        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
+        [HttpGet]
+        [Route("geteventswithpresence/{id}")]
+        public HttpResponseMessage getFirstNumEventsWithUsers(int id)
+        {
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
+                {
+                    var entity = unitOfWork.Eventi.Search(e => e.Id == id).Include(p => p.Prenotazioni).Include(f => f.Presenze).FirstOrDefault();
+                    log.Debug("geteventswithpresence - metodo eseguito con successo");
+                    var ooo = Request.CreateResponse(HttpStatusCode.OK, entity);
+                    var aaa = ooo.Content.Headers.ContentLength;
+                    var bbb = ooo.Headers.ToString().Length;
+                    return Request.CreateResponse(HttpStatusCode.OK, entity);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error("geteventswithpresence - errore nell'esecuzione ", ex);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+
         [Authorize(Roles = "SuperAdmin")]
         [HttpPost]
         [Route("insertnewevent")]
-        public HttpResponseMessage insertNewEvent([FromBody]Evento evento)
+        public HttpResponseMessage InsertNewEvent([FromBody]Evento evento)
         {
             try
             {
@@ -144,7 +170,7 @@ namespace FoolStuff.Controllers
         [Authorize(Roles = "SuperAdmin")]
         [HttpPost]
         [Route("adduserstoeventpresence")]
-        public HttpResponseMessage addUsertoEventPresence([FromBody]Evento evento)
+        public HttpResponseMessage AddUsertoEventPresence([FromBody]Evento evento)
         {
             try
             {
@@ -170,7 +196,7 @@ namespace FoolStuff.Controllers
 
 
                     entityEvent.Presenze.Clear();
-                    foreach(User u in evento.Presenze)
+                    foreach (User u in evento.Presenze)
                     {
                         User entityUser = unitOfWork.Users.Find(us => us.Id == u.Id).FirstOrDefault();
                         entityEvent.Presenze.Add(entityUser);

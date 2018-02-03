@@ -48,7 +48,6 @@ angular
         function _inserisciEvento() {
             vm.evento.dataEvento = vm.evento.dataEvento.getTime();
             RestService.PostData(CostantUrl.urlEvents, "insertnewevent", vm.evento).then(function (response) {
-                console.log(response);
                 toastr.success("Event [" + vm.evento.titolo + "] added successfully", "Confirmed");
                 vm.evento = {};
                 vm.evento.dataEvento = new Date();
@@ -68,10 +67,8 @@ angular
                         check: false,
                         user: value
                     }
-                    console.log(item);
                     vm.userSelected.push(item);
                 });
-                console.log(vm.users);
             }, function (err) {
                 console.log(err);
                 toastr.error("Problems retrieving data [" + err.data.message + "]", "Error");
@@ -79,9 +76,8 @@ angular
             _refreshEventView();
         }
         function _refreshEventView() {
-            RestService.GetData(CostantUrl.urlEvents, "getfirstnumeventswithusers/" + vm.numberOfEventToShow).then(function (response) {
+            RestService.GetData(CostantUrl.urlEvents, "getfirstnumevents/" + vm.numberOfEventToShow).then(function (response) {
                 vm.events = response.data;
-                console.log(response);
             }, function (err) {
                 console.log(err);
             })
@@ -106,22 +102,26 @@ angular
         function _changeEventToManage(item) {
             vm.presence = null;
             vm.presence = angular.copy(JSON.parse(item));
-            vm.presence.prenotazioni = ApplicationService.addAvatarToUsers(vm.presence.prenotazioni);
+            RestService.GetData(CostantUrl.urlEvents, "geteventswithpresence/" + vm.presence.id).then(function (response) {
+                vm.presence.prenotazioni = response.data.prenotazioni;
+                vm.presence.presenze = response.data.presenze;
+                vm.presence.prenotazioni = ApplicationService.addAvatarToUsers(vm.presence.prenotazioni);
 
-            //Gestisco utenti gia presenti per eventuali update
-            angular.forEach(vm.userSelected, function (valueUsers) {
-                valueUsers.check = false;
-            });
-            angular.forEach(vm.presence.presenze, function (valuePresenze) {
+                //Gestisco utenti gia presenti per eventuali update
                 angular.forEach(vm.userSelected, function (valueUsers) {
-                    if (valuePresenze.id == valueUsers.user.id) {
-                        valueUsers.check = true;
-                    }
+                    valueUsers.check = false;
                 });
+                angular.forEach(vm.presence.presenze, function (valuePresenze) {
+                    angular.forEach(vm.userSelected, function (valueUsers) {
+                        if (valuePresenze.id == valueUsers.user.id) {
+                            valueUsers.check = true;
+                        }
+                    });
+                });
+
+            }, function (err) {
+                console.log(err);
             });
-
-
-            console.log(vm.presence);
         }
         function _updatePresenza() {
             vm.presence.presenze = [];
@@ -130,7 +130,6 @@ angular
                     vm.presence.presenze.push(value.user);
             });
             RestService.PostData(CostantUrl.urlEvents, "adduserstoeventpresence", vm.presence).then(function (response) {
-                console.log(response);
                 toastr.success("Presence [" + vm.presence.titolo + "] updated successfully", "Confirmed");
                 $state.reload();
             }, function (err) {
