@@ -8,8 +8,8 @@
         </div>
         <div class="collapse navbar-collapse" id="js-navbar-collapse">
             <ul class="nav navbar-nav">
-                <li data-ng-repeat="menu in signedCtrl.menu" data-ng-class="menu.active ? 'active' : ''">
-                    <a ui-sref="{{menu.url}}">{{menu.title}}</a>
+                <li data-ng-repeat="menu in signedCtrl.menu" data-ng-class="menu.active ? 'active' : ''" data-ng-init="signedCtrl.setLastActive(menu)">
+                    <a data-ng-click="signedCtrl.activeMenu(menu)" ui-sref="{{menu.url}}">{{menu.title}}</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

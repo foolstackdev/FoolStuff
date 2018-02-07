@@ -7,6 +7,9 @@ angular
         var vm = this;
         vm.logout = _logout;
         vm.userAvatar = ApplicationService.getSpecificAvatar("MD");
+        vm.activeMenu = _activateMenu;
+        vm.setLastActive = _setLastActive;
+        var lastActive;
 
         vm.menu = [];
 
@@ -104,5 +107,35 @@ angular
                     _logout();
             }
         }
+
+
+        $scope.attivaMenu = function () {
+            //var id = $(this).attr('ui-sref');
+
+            var activePage = this.menu.title;
+            this.menu.active = true;
+            //console.log(activePage); // il titolo della pagina
+            alert(activePage);
+            
+
+            var itemsCount = this.menu.length;
+             
+        }
+
+        function _setLastActive(elem) {
+            if (elem.active)
+                lastActive = elem;
+
+        }
+
+        function  _activateMenu(elem) {
+            elem.active = true;
+
+            lastActive.active = false;
+            lastActive = elem;
+            
+        }
+
+
 
     }]);

@@ -17,6 +17,7 @@ angular
         vm.giveUpTask = _giveUpTask;
         vm.closeTask = _closeTask;
         vm.riepilogoTaskChiusi = _riepilogoTaskChiusi;
+        vm.reopenTask = _reopenTask;
 
         init();
         function init() {
@@ -100,5 +101,17 @@ angular
             }
             return false;
         }
+
+        function _reopenTask(taskIndex) {
+            RestService.PostData(CostantUrl.urlTask, "reopentask", vm.taskClosedList[taskIndex].id).then(function (response) {
+                toastr.success('Great! Task correctly reopened', 'Confirmed');
+                console.log(response);
+                $state.reload();
+            }, function (err) {
+                console.log(err)
+                toastr.error('Problems reopening the task', 'Something went wrong [' + err.data.exceptionMessage + ']');
+            });
+        }
+
 
     }]);

@@ -156,6 +156,35 @@ namespace FoolStuff.Controllers
             }
         }
 
+        [Authorize(Roles = "SuperAdmin")]
+        [HttpPost]
+        [Route("reopentask")]
+        public HttpResponseMessage reopenTask([FromBody]int idEffort)
+        {
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
+                {
+                    var entityTask = unitOfWork.Efforts.SingleOrDefault(t => t.Id == idEffort);
+
+                    if (entityTask != null)
+                    {
+                        //entityTask.DataChiusura = UtilDate.CurrentTimeMillis();
+                        entityTask.Stato = "OPEN";
+                        unitOfWork.Complete();
+                    }
+                    var entity = unitOfWork.Efforts.Find(t => t.Stato == "CLOSED").OrderByDescending(t => t.Priorita).ToList();
+                    log.Debug("reopenTask - Task id [" + entityTask.Id + "] riaperto correttamente");
+                    return Request.CreateResponse(HttpStatusCode.OK, entity);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error("reopenTask - errore nella riaperture del task ", ex);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
         [Authorize(Roles = "SuperAdmin, FoolStackUser")]
         [HttpGet]
         [Route("getclosedtask")]

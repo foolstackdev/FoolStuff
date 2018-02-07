@@ -133,10 +133,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel-footer">
+                <div class="panel-footer" ng-switch="taskCtrl.userIsAlreadyAssigned($index)">
+                    <button ng-switch-when="false" class="btn btn-primary pull-left" data-ng-click="taskCtrl.reopenTask($index)">I forgot something</button>
                     <!--<button ng-switch-when="false" class="btn btn-primary pull-right" data-ng-click="taskCtrl.takeTask($index)">Take care of this</button>
-                    <button ng-switch-when="true" class="btn btn-warning" data-ng-click="taskCtrl.giveUpTask($index)">Give up</button>
-                    <button ng-switch-when="true" class="btn btn-success pull-right" data-ng-click="taskCtrl.closeTask($index)">Task Completed</button>-->
+    <button ng-switch-when="true" class="btn btn-warning" data-ng-click="taskCtrl.giveUpTask($index)">Give up</button>
+    <button ng-switch-when="true" class="btn btn-success pull-right" data-ng-click="taskCtrl.closeTask($index)">Task Completed</button>-->
                     <div class="clearfix"></div>
                 </div>
             </div>

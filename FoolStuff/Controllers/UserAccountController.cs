@@ -146,7 +146,7 @@ namespace FoolStuff.Controllers
                         UserInfoWithRoles oUserInfoWithRoles = new UserInfoWithRoles();
                         oUserInfoWithRoles.userInfo = entity;
                         oUserInfoWithRoles.userRolesList = sListaRuoli;
-                        oUserInfoWithRoles.userAvatar = new Avatar().getAvatarByUser(entity.Id);
+                        //oUserInfoWithRoles.userAvatar = new Avatar().getAvatarByUser(entity.Id);
                         //return Request.CreateResponse(HttpStatusCode.OK, entity);
                         return Request.CreateResponse(HttpStatusCode.OK, oUserInfoWithRoles);
                     }
