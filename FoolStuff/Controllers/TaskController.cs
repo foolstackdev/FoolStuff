@@ -170,6 +170,7 @@ namespace FoolStuff.Controllers
                     if (entityTask != null)
                     {
                         //entityTask.DataChiusura = UtilDate.CurrentTimeMillis();
+                        entityTask.DataChiusura = 0;
                         entityTask.Stato = "OPEN";
                         unitOfWork.Complete();
                     }
