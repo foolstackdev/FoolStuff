@@ -22,5 +22,6 @@ namespace FoolStaff.Core.Repositories
         IQueryable<TEntity> Search(Expression<Func<TEntity, bool>> predicate);
         IEnumerable<TEntity> GetAllWithInclude(Expression<Func<TEntity, object>> predicate);
         IQueryable<TEntity> GetAllIncluding();
+        //IQueryable<TEntity> AllIncluding();
     }
 }

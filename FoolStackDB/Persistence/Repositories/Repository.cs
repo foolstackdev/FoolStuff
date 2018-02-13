@@ -76,5 +76,17 @@ namespace FoolStaff.Persistence.Repositories
         {
             return _entities;
         }
+
+
+
+        //public IQueryable<TEntity> AllIncluding(params Expression<Func<TEntity, object>>[] includeProperties)
+        //{
+        //    IQueryable<TEntity> query = _entities;
+        //    foreach (var includeProperty in includeProperties)
+        //    {
+        //        query = query.Include(includeProperty);
+        //    }
+        //    return query;
+        //}
     }
 }

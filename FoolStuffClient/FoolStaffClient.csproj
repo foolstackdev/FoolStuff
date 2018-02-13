@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\controller\applications.controller.js" />
+    <Content Include="app\controller\home.controller.js" />
     <Content Include="app\controller\logs.controller.js" />
     <Content Include="app\controller\roles.controller.js" />
     <Content Include="app\controller\profile.controller.js" />

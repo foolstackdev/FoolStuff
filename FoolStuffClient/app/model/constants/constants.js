@@ -10,5 +10,6 @@ angular.module("FoolStackApp")
     urlUpload: "http://localhost:51989/api/upload/",
     urlEvents: "http://localhost:51989/api/events/",
     urlFile: "http://localhost:51989/api/file/",
+    urlHome: "http://localhost:51989/api/home/",
     urlToken: "http://localhost:51989/"
 });

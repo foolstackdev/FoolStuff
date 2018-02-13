@@ -64,7 +64,9 @@
             .state('signed.homepage', {
                 url: "/homepage",
                 templateUrl: "app/view/template/private/homepage.html",
-                data: { pageTitle: 'Users view' }
+                controller: "HomeController",
+                controllerAs: "homeCtrl",
+                data: { pageTitle: 'Home view' }
             })
             .state('signed.users', {
                 url: "/users",

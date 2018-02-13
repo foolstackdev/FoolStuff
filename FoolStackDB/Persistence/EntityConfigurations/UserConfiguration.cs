@@ -52,7 +52,8 @@ namespace FoolStaff.Persistence.EntityConfigurations
 
             HasMany(e => e.Corsi)
                .WithMany(u => u.Utenti)
-               .Map(c => {
+               .Map(c =>
+               {
                    c.ToTable("CorsiUtenti");
                });
         }

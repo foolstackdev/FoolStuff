@@ -12,6 +12,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Z.EntityFramework.Plus;
 
 namespace FoolStuff.Controllers
 {
@@ -29,10 +30,16 @@ namespace FoolStuff.Controllers
             {
                 using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
                 {
+                    //Recupera l'utente corrente dalla sessione del servizio rest
                     //get user =>  User.Identity.GetUserId()
-                    //var entity = unitOfWork.Corsi.GetAllIncluding().Include(u => u.Utenti).Include(c => c.Capitoli.Select(f => f.ProgressiFormazione)).Include(c => c.Capitoli.Select(m => m.Messaggi)).ToList();
-                    //var entity = unitOfWork.Corsi.GetAllIncluding().Include(u => u.Utenti).Include(c => c.Capitoli.Select(f => f.ProgressiFormazione)).ToList();
-                    var entity = unitOfWork.Corsi.GetAllIncluding().Include(c => c.Capitoli).ToList();
+
+                    var entity = unitOfWork.Corsi.GetAllIncluding().Include(c => c.Capitoli).AsNoTracking().ToList();
+                    //List<Corso> listcorsi = unitOfWork.Corsi.GetAll().ToList();
+                    //foreach(Corso oCorso in listcorsi)
+                    //{
+                    //    oCorso.Capitoli = unitOfWork.Capitoli.Find(c => c.Corso.Id == oCorso.Id).ToList();
+                    //}
+
                     log.Debug("getallcorsi - metodo eseguito con successo");
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
@@ -54,16 +61,55 @@ namespace FoolStuff.Controllers
                 using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
                 {
                     //get user =>  User.Identity.GetUserId()
-                    //var entity = unitOfWork.Corsi.GetAllIncluding().Include(u => u.Utenti).Include(c => c.Capitoli.Select(f => f.ProgressiFormazione)).Include(c => c.Capitoli.Select(m => m.Messaggi)).ToList();
-                    var entity = unitOfWork.Corsi.Search(c => c.Id == corso.Id).Include(u => u.Utenti).Include(c => c.Capitoli.Select(f => f.ProgressiFormazione.Select(u => u.Utente))).ToList();
+                    string _id = User.Identity.GetUserId();
 
-                    log.Debug("getallcorsi - metodo eseguito con successo");
+                    var entity = unitOfWork.Corsi.Search(r => r.Id == corso.Id)
+                        .Include(u => u.Utenti)
+                        .Include(c => c.Capitoli.Select(f => f.ProgressiFormazione.Select(o => o.Utente)))
+                        .Include(c => c.Capitoli.Select(m => m.Messaggi))
+                        .AsNoTracking()
+                        .FirstOrDefault();
+
+                    log.Debug("getcorso - metodo eseguito con successo");
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
             }
             catch (Exception ex)
             {
-                log.Error("getallcorsi - errore nell'esecuzione ", ex);
+                log.Error("getcorso - errore nell'esecuzione ", ex);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+        [Authorize(Roles = "SuperAdmin, FoolStackUser")]
+        [HttpPost]
+        [Route("getprogressoformazionebyidcorso")]
+        public HttpResponseMessage GetProgressoFormazioneByIdECorso([FromBody] FormazioneGetProgressoFormazione progressoformazione)
+        {
+            try
+            {
+                using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
+                {
+                    //var entity = unitOfWork.ProgressiFormazione.Find(e => e.Utente.Id == progressoformazione.idUtente && e.Capitolo.Corso.Id == progressoformazione.idCorso).ToList();
+
+                    //var entity = unitOfWork.Users.Search(e => e.ProgressiFormazione.Any(g => g.Capitolo.Corso.Id == progressoformazione.idCorso))
+                    //    .Include(p => p.ProgressiFormazione)
+                    //    .Where(f => f.ProgressiFormazione.Any(g => g.Capitolo.Corso.Id == progressoformazione.idCorso))
+                    //    .AsNoTracking().ToList();
+
+                    List<User> entity = unitOfWork.Users.Search(e => e.Corsi.Any(g => g.Id == progressoformazione.idCorso)).ToList();
+                    foreach(User u in entity)
+                    {
+                        u.ProgressiFormazione = unitOfWork.ProgressiFormazione.Find(e => e.Utente.Id == u.Id && e.Capitolo.Corso.Id == progressoformazione.idCorso).ToList();
+                    }
+
+                    log.Debug("getprogressoformazionebyidcorso - metodo eseguito con successo");
+                    return Request.CreateResponse(HttpStatusCode.OK, entity);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error("getprogressoformazionebyidcorso - errore nell'esecuzione ", ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }

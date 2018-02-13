@@ -72,41 +72,9 @@
     <Compile Include="Core\Repositories\ITesoreriaRepository.cs" />
     <Compile Include="Core\Repositories\IUserRepository.cs" />
     <Compile Include="FoolStaffContext.cs" />
-    <Compile Include="Migrations\201801072258052_Creation.cs" />
-    <Compile Include="Migrations\201801072258052_Creation.Designer.cs">
-      <DependentUpon>201801072258052_Creation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801201622285_AddMessaggesAndResponses.cs" />
-    <Compile Include="Migrations\201801201622285_AddMessaggesAndResponses.Designer.cs">
-      <DependentUpon>201801201622285_AddMessaggesAndResponses.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801201814596_AddCapitoloCorsiAndTags.cs" />
-    <Compile Include="Migrations\201801201814596_AddCapitoloCorsiAndTags.Designer.cs">
-      <DependentUpon>201801201814596_AddCapitoloCorsiAndTags.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801201831234_AddUsersCapitoliRelation.cs" />
-    <Compile Include="Migrations\201801201831234_AddUsersCapitoliRelation.Designer.cs">
-      <DependentUpon>201801201831234_AddUsersCapitoliRelation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801201953337_AddDescrizioneToCorso.cs" />
-    <Compile Include="Migrations\201801201953337_AddDescrizioneToCorso.Designer.cs">
-      <DependentUpon>201801201953337_AddDescrizioneToCorso.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801211453475_AddProgressoFormazione.cs" />
-    <Compile Include="Migrations\201801211453475_AddProgressoFormazione.Designer.cs">
-      <DependentUpon>201801211453475_AddProgressoFormazione.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801211609124_AddNumeroCapitolo.cs" />
-    <Compile Include="Migrations\201801211609124_AddNumeroCapitolo.Designer.cs">
-      <DependentUpon>201801211609124_AddNumeroCapitolo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801211714409_AddCorsiUtentiRelationship.cs" />
-    <Compile Include="Migrations\201801211714409_AddCorsiUtentiRelationship.Designer.cs">
-      <DependentUpon>201801211714409_AddCorsiUtentiRelationship.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801281505412_AddRisposteToMessages.cs" />
-    <Compile Include="Migrations\201801281505412_AddRisposteToMessages.Designer.cs">
-      <DependentUpon>201801281505412_AddRisposteToMessages.cs</DependentUpon>
+    <Compile Include="Migrations\201802111658421_FirstMigration.cs" />
+    <Compile Include="Migrations\201802111658421_FirstMigration.Designer.cs">
+      <DependentUpon>201802111658421_FirstMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\EntityConfigurations\CapitoloConfiguration.cs" />
@@ -140,32 +108,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201801072258052_Creation.resx">
-      <DependentUpon>201801072258052_Creation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801201622285_AddMessaggesAndResponses.resx">
-      <DependentUpon>201801201622285_AddMessaggesAndResponses.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801201814596_AddCapitoloCorsiAndTags.resx">
-      <DependentUpon>201801201814596_AddCapitoloCorsiAndTags.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801201831234_AddUsersCapitoliRelation.resx">
-      <DependentUpon>201801201831234_AddUsersCapitoliRelation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801201953337_AddDescrizioneToCorso.resx">
-      <DependentUpon>201801201953337_AddDescrizioneToCorso.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801211453475_AddProgressoFormazione.resx">
-      <DependentUpon>201801211453475_AddProgressoFormazione.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801211609124_AddNumeroCapitolo.resx">
-      <DependentUpon>201801211609124_AddNumeroCapitolo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801211714409_AddCorsiUtentiRelationship.resx">
-      <DependentUpon>201801211714409_AddCorsiUtentiRelationship.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801281505412_AddRisposteToMessages.resx">
-      <DependentUpon>201801281505412_AddRisposteToMessages.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201802111658421_FirstMigration.resx">
+      <DependentUpon>201802111658421_FirstMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

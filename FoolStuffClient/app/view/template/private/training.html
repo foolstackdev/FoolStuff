@@ -68,7 +68,8 @@
                                         <td>
                                             <i class="fa fa-commenting colorGreen cursorPointer" title="Visualizza Messaggi" aria-hidden="true" data-ng-click="trainingCtrl.switchMessaggi(capitolo)"></i>&nbsp;&nbsp;
                                             <span data-ng-show="trainingCtrl.visualizzaCorso.utenti | checkIfUserIn">
-                                                <i data-ng-hide="capitolo.progressiFormazione | checkIfUserInProgressoFormazione" class="fa fa-check colorGreen cursorPointer" title="Concludi lezione" aria-hidden="true" data-ng-click="trainingCtrl.capitoloConcluso(capitolo)"></i>
+                                                <i data-ng-if="!capitolo.isLoading" data-ng-hide="capitolo.progressiFormazione | checkIfUserInProgressoFormazione" class="fa fa-check colorGreen cursorPointer" title="Concludi lezione" aria-hidden="true" data-ng-click="trainingCtrl.capitoloConcluso(capitolo);"></i>
+                                                <i class="fa fa-spinner fa-spin fa-fw"  data-ng-show="capitolo.isLoading"></i>
                                                 <i data-ng-show="capitolo.progressiFormazione | checkIfUserInProgressoFormazione" class="fa fa-thumbs-o-up colorBlue" title="Lezione Conclusa" aria-hidden="true"></i>&nbsp;&nbsp;
                                             </span>
 
@@ -91,11 +92,13 @@
                                 <div class="col-lg-12" style="padding:15px;">
                                     <p style="margin-left: 15px;">Utenti sottoscritti</p>
                                     <div data-ng-repeat="user in trainingCtrl.visualizzaCorso.utenti">
-                                        
-                                        <div class="well well-sm" data-ng-init="trainingCtrl.manageProgress(user)" style="margin-left:15px;float:left; margin-bottom:3px; width: 233px;">
+
+                                        <!--<div class="well well-sm" data-ng-init="trainingCtrl.manageProgress(user)" style="margin-left:15px;float:left; margin-bottom:3px; width: 233px;">-->
+                                        <div class="well well-sm" style="margin-left:15px;float:left; margin-bottom:3px; width: 233px;">
                                             <uib-progressbar style="height:4px;" class="progress-striped active" max="trainingCtrl.visualizzaCorso.capitoli.length" value="user.progressiFormazione.length | numberOrZero" type="success"><i>{{user.progressiFormazione.length != null  ? user.progressiFormazione.length : 0}} / {{trainingCtrl.visualizzaCorso.capitoli.length}}</i></uib-progressbar>
                                             <p>
-                                                <img src="{{user.avatar}}" />&nbsp;&nbsp;&nbsp;&nbsp;{{user.name}} {{user.surname}}
+                                                <i class="fa fa-spinner fa-spin fa-fw" data-ng-show="user.progressiFormazione == null || user.isLoading"></i>
+                                                <img src="{{user.avatar}}" />&nbsp;&nbsp;&nbsp;&nbsp;<span class="spanImageName">{{user.name}} {{user.surname}}</span>
                                                 <span class="pull-right">{{user.progressiFormazione.length | numberOrZero}}/{{trainingCtrl.visualizzaCorso.capitoli.length}}</span>
                                             </p>
                                         </div>

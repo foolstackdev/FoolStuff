@@ -18,7 +18,7 @@ namespace FoolStaff
             : base("name=FooStaffContext")
         {
             this.Configuration.LazyLoadingEnabled = false;
-            //this.Configuration.ProxyCreationEnabled = false;
+            this.Configuration.ProxyCreationEnabled = false;
         }
 
         public virtual DbSet<User> Users { get; set; }

@@ -1,8 +1,8 @@
 ﻿"use strict";
 angular
     .module('FoolStackApp')
-    .controller('TrainingController', ["$scope", "RestService", "CostantUrl", "toastr", "UtilService", "$sce", "$state", "ApplicationService",
-        function ($scope, RestService, CostantUrl, toastr, UtilService, $sce, $state, ApplicationService) {
+    .controller('TrainingController', ["$scope", "RestService", "CostantUrl", "toastr", "UtilService", "$sce", "$state", "ApplicationService","$timeout",
+        function ($scope, RestService, CostantUrl, toastr, UtilService, $sce, $state, ApplicationService, $timeout) {
 
             var vm = this;
 
@@ -47,8 +47,9 @@ angular
             function _reload() {
                 RestService.GetData(CostantUrl.urlFormazione, "getallcorsi").then(function (response) {
                     vm.corsi = response.data;
-                    vm.visualizzaCorso = angular.equals(vm.visualizzaCorso, {}) ? vm.corsi[0] : vm.corsi[vm.visualizzaCorso.id - 1];
-                    _caricaCorso(vm.visualizzaCorso);
+                    //vm.visualizzaCorso = angular.equals(vm.visualizzaCorso, {}) ? vm.corsi[0] : vm.corsi[vm.visualizzaCorso.id - 1];
+                    var showCorso = angular.equals(vm.visualizzaCorso, {}) ? vm.corsi[0] : vm.corsi[vm.visualizzaCorso.id - 1];
+                    _caricaCorso(showCorso);
                 }, function (err) {
                     console.log(err)
                     toastr.error('Problems during insertion', 'Something went wrong [' + err + ']');
@@ -108,8 +109,13 @@ angular
 
             function _caricaCorso(item) {
                 RestService.PostData(CostantUrl.urlFormazione, "getcorso", item).then(function (response) {
-                    vm.visualizzaCorso = response.data[0];
-                    vm.visualizzaCorso.utenti = ApplicationService.addAvatarToUsers(vm.visualizzaCorso.utenti);
+                    //vm.visualizzaCorso = response.data[0];
+                    vm.visualizzaCorso = response.data;
+
+                    for (var i = 0; i < vm.visualizzaCorso.capitoli.length; i++) {
+                        vm.visualizzaCorso.capitoli[i].isLoading = false;
+                    }
+                    _manageProgress();
                     _switchMessaggiInit(vm.visualizzaCorso);
                 }, function (err) {
                     console.log(err)
@@ -118,6 +124,11 @@ angular
             }
 
             function _capitoloConcluso(item) {
+
+                _asyncApply(function () {
+                    item.isLoading = true;
+                });
+
                 var progressiFormazione = {
                     Utente: ApplicationService.getUser().userInfo,
                     Capitolo: item
@@ -191,8 +202,24 @@ angular
                 });
             }
 
-            function _manageProgress(item) {
-                console.log(item);
+            function _manageProgress() {
+                var obj = {
+                    idCorso: vm.visualizzaCorso.id
+                }
+                RestService.PostData(CostantUrl.urlFormazione, "getprogressoformazionebyidcorso", obj).then(function (response) {
+                    console.log(response);
+                    vm.visualizzaCorso.utenti = response.data;
+                    vm.visualizzaCorso.utenti = ApplicationService.addAvatarToUsers(vm.visualizzaCorso.utenti);
+                }, function (err) {
+                    console.log(err)
+                    toastr.error('Problems duringl loading', 'Something went wrong [' + err + ']');
+                });
+            }
+
+            function _asyncApply(func) {
+                $timeout(function () {
+                    func();
+                }, 0, true)
             }
 
             //END MESSAGGI

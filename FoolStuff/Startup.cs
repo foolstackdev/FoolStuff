@@ -39,44 +39,6 @@ namespace FoolStuff
                 //create super admin role
                 var role = new IdentityRole("SuperAdmin");
                 roleManager.Create(role);
-
-
-                //create default user
-                //var user = new ApplicationUser();
-                //user.UserName = "admin@admin.it";
-                //user.Email = "admin@admin.it";
-                //string pwd = "F00lStack101!";
-
-                //var newuser = userManager.Create(user, pwd);
-                //if (newuser.Succeeded)
-                //{
-                //    userManager.AddToRole(user.Id, "SuperAdmin");
-                //}
-
-                //User oUser = new User();
-                //oUser.Name = "Admin";
-                //oUser.Surname = "Admin";
-                //oUser.Phone = "555";
-                //oUser.Email = user.Email;
-                //oUser.Password = pwd;
-                //oUser.Id = user.Id;
-
-                //using (var unitOfWork = new UnitOfWork(new FoolStaffContext()))
-                //{
-                //    var entity = unitOfWork.Users.SingleOrDefault(u => u.Email == user.Email);
-
-                //    if (entity != null)
-                //    {
-                //        unitOfWork.Users.Add(oUser);
-                //    }
-                //    else
-                //    {
-                //        entity.Id = user.Id;
-                //        unitOfWork.Users.Add(entity);
-                //    }
-                //    unitOfWork.Complete();
-                //}
-
             }
 
             if (!roleManager.RoleExists("SimpleUser"))
